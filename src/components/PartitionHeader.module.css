@@ -1,0 +1,21 @@
+.bar {
+    background-color: #040404;
+  color: white;
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Abel', sans-serif;
+  font-size: 2rem;
+  letter-spacing: 1px;
+  height: 105px;
+  font-weight: 400;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
