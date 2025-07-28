@@ -1,0 +1,7 @@
+.doubleLine {
+  height: 4px; /* space between the borders */
+  border-top: 1px solid #E38012;
+  border-bottom: 1px solid #E38012;
+  background-color: #040404; /* matches background */
+  /* margin: 20px 0; */
+}

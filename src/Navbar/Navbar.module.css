@@ -1,0 +1,46 @@
+.navbar {
+  background-color: #000;
+  color: white;
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Abel', sans-serif;
+  height: 113px;
+}
+
+.leftMenu {
+  display: flex;
+  gap: 24px;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.menuItem {
+  cursor: pointer;
+}
+
+.dropdown {
+  font-size: 10px;
+  margin-left: 4px;
+}
+
+.logoImage {
+  width: 46.62px;
+  height: 48px;
+}
+
+.iconGroup {
+  display: flex;
+  gap: 20px;
+  font-size: 20px;
+}
+
+.icon {
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.icon:hover {
+  color: orange;
+}

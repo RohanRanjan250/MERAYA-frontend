@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  font-family: 'Abel', sans-serif;
+  margin-top: 32px;
+}
+
+.left, .right {
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.textOverlay {
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: white;
+}
+
+.brand {
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+.heading {
+  font-size: 48px;
+  font-weight: 400;
+  letter-spacing: 6px;
+}
