@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Meddon&display=swap');
+
+
+.heroSection {
+  position: relative;
+  background-color: #040404;
+  padding: 6vw 2vw 0vw 2vw;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 80vw;
+}
+
+.imageGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12vw, 1fr));
+  gap: 1vw;
+  max-width: 100%;
+  width: 100%;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.TopImage {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.Topleft{
+    display: flex;
+}
+
+.BottomImage {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 8vw;
+}
+
+.BottomLeft {
+  display: flex;
+}
+
+.BottomRight {
+  display: flex;
+}
+
+.img1{
+  width: 27.44vw;
+  height: 26.19vw;
+  aspect-ratio: 439 / 419;
+}
+
+.img2 {
+  width: 20.25vw;
+  height: 24.31vw;
+  aspect-ratio: 324 / 389;
+  margin-right: 2vw;
+}
+
+.img3{
+  width: 20.25vw;
+  height: 26.19vw;
+  aspect-ratio: 324 / 419;
+  margin-top: 6.5vw;
+}
+
+.img4{
+  width: 19.5vw;
+  height: 26.19vw;
+  aspect-ratio: 324 / 419;
+  margin-top: 10vw;
+}
+
+.img5{
+  width: 20.25vw;
+  height: 26.19vw;
+  aspect-ratio: 324 / 419;
+  margin-top: 5vw;
+  margin-left: 1.5vw;
+}
+
+.img6{
+  width: 17.69vw;
+  height: 21.75vw;
+  aspect-ratio: 283 / 348;
+  margin-right: 1.5vw;
+}
+
+.img7{
+  width: 22.81vw;
+  height: 21.75vw;
+  aspect-ratio: 365 / 348;
+  margin-top: 5vw;
+}
+
+
+.centerText {
+  position: absolute;
+  top: 40vw;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2;
+  color: white;
+}
+
+.subtitle {
+  font-size: 1.5vw;
+  color: rgba(244, 243, 241, 1);
+  font-family: 'Abel', sans-serif;
+  margin-bottom: 1vw;
+}
+
+.title {
+  font-size: 5vw;
+  font-family: 'Meddon', sans-serif;
+  color: rgba(244, 243, 241, 1);
+  margin-bottom: 0.5vw;
+  white-space: nowrap;
+}
+
+.link {
+  font-size: 1.2vw;
+  text-decoration: none;
+  color: #e38012;
+  border-bottom: 1px solid #e38012;
+  font-family: 'Abel', sans-serif;
+}

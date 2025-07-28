@@ -137,3 +137,12 @@
   overflow: hidden;
   margin-top: 7.5vw;
 }
+
+.divider {
+  border: none;
+  height: 0.1vw;
+  background-color: white;
+  margin: 1.2vw 0;
+  width: 100%;
+  opacity: 0.6;
+}

@@ -30,6 +30,7 @@ const ProductDisplay = () => {
               <button>ADD TO CART ↙</button>
             </div>
           </div>
+          <hr className={styles.divider} />
         </div>
         <div className={styles.card}>
           <img src={fallbackImg2} alt="Fallback 2" className={styles.productIm} loading="lazy" />
@@ -43,6 +44,7 @@ const ProductDisplay = () => {
               <button>ADD TO CART ↙</button>
             </div>
           </div>
+            <hr className={styles.divider} />
         </div>
       </div>
 
