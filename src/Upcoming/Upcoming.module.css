@@ -1,0 +1,144 @@
+.container {
+  position: relative;
+  background-color: #040404;
+  margin: 1.5vw 0vw 0vw 1.5vw;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 50vw;
+}
+
+.imageGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12vw, 1fr));
+  max-width: 100%;
+  width: 100%;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.Top{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.Bottom{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.BottomLeft {
+  display: flex;
+  flex-direction: column;
+}
+
+.BottomRight {
+  display: flex;
+}
+
+.centerText {
+  position: absolute;
+  top: 23vw;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2;
+  color: rgba(244, 243, 241, 1);
+}
+
+.releaseText {
+  font-size: 1vw;
+  color: #ccc;
+  margin-bottom: 1rem;
+  font-family: 'Abel', sans-serif;
+  letter-spacing: 1px;
+}
+
+.brand {
+  font-family: 'Khand', sans-serif;
+  font-size: 2vw;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+
+.title {
+  font-family: 'Meddon', cursive;
+  font-size: 4vw;
+  margin-bottom: 2.5vw;
+  color: #fff;
+}
+
+.doubleLine {
+    height: 4px; /* space between the borders */
+    border-top: 1px solid #E38012;
+    border-bottom: 1px solid #E38012;
+    background-color: #040404;
+    width: 60%;
+    margin: 0 auto;
+}
+
+.description {
+  font-size: 0.85rem;
+  color: #ccc;
+  line-height: 1.6;
+  font-family: 'Abel', sans-serif;
+  margin-bottom: 1rem;
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 2vw;
+  margin-bottom: 1vw;
+}
+
+.buyNow {
+  font-size: 1.2vw;
+  text-decoration: none;
+  color: #e38012;
+  border-bottom: 1px solid #e38012;
+  font-family: 'Abel', sans-serif;
+}
+
+.image1 {
+  width: 14.58vw;           /* 280 / 1920 */
+  height: 17.71vw;          /* 340 / 1920 */
+  aspect-ratio: 280 / 340;
+  margin-top: 0;
+}
+
+.image2 {
+  width: 15.52vw;           /* 298 / 1920 */
+  height: 11.93vw;          /* 229 / 1920 */
+  margin-right: 7vw;
+  aspect-ratio: 298 / 229;
+  margin-top: 10vw;
+}
+
+.image3 {
+  width: 18.13vw;           /* 348 / 1920 */
+  height: 13.91vw;          /* 267 / 1920 */
+  aspect-ratio: 348 / 267;
+  margin-left: 10vw;
+  margin-bottom: 5vw;
+}
+
+.image4 {
+  width: 34.11vw;           /* 655 / 1920 */
+}
+
+.image5 {
+  width: 21.98vw;           /* 422 / 1920 */
+  height: 14.53vw;          /* 279 / 1920 */
+  aspect-ratio: 422 / 279;
+  margin-top: 10vw;
+  margin-right: 7vw;
+}
+
+.image6 {
+  height: 10vw;          /* 239 / 1920 */
+  margin-top: 6vw;
+}

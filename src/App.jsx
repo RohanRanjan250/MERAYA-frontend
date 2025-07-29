@@ -7,6 +7,7 @@ import ProductDisplay from './NewArrival/ProductDisplay';
 import HeroGallery from './HeroGallery/HeroGallery';
 import CollegeEditionSection from './CheckMore/CollegeEditionSection';
 import AboutUs from './AboutUs/AboutUs';
+import Upcoming from './Upcoming/Upcoming';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
       <AboutUs />
       <PartitionHeader leftText="XIX" rightText="UPCOMING" />
       <DoubleLine />
+      <Upcoming />
     </>
   )
 }

@@ -107,7 +107,7 @@
   transform: translate(-50%, -50%);
   text-align: center;
   z-index: 2;
-  color: white;
+  color: rgba(244, 243, 241, 1);
 }
 
 .subtitle {
