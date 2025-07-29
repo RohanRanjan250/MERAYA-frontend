@@ -3,7 +3,7 @@
 .collegeEditionSection {
   width: 100vw;
   background-color: #040404;
-  color: #fff;
+  color: rgba(244, 243, 241, 1);
   padding: 4vw 0vw 0vw 3vw;
 
 }
@@ -53,7 +53,7 @@
   font-family: 'Abel', sans-serif;
   font-weight: 300;
   line-height: 1.6;
-  color: #ccc;
+  color: rgba(244, 243, 241, 1);
   margin-bottom: 2vw;
 }
 
@@ -61,7 +61,7 @@
   display: inline-block;
   width: 3vw;
   height: 0.15vw;
-  background-color: #fff;
+  background-color: rgba(244, 243, 241, 1);
   margin: 0 1vw;
   vertical-align: middle;
 }
@@ -106,19 +106,19 @@
 }
 
 .thumbTitle {
-  font-size: 1vw;
+  font-size: 1.2vw;
   font-weight: 300;
   display: flex;
   align-items: center;
   gap: 1vw;
-  margin-bottom: 0.5vw;
+  margin-bottom: 0.3vw;
   font-family: 'Khand', sans-serif;
 }
 
 .thumbDesc {
   font-size: 0.8vw;
   font-weight: 300;
-  color: #ccc;
+  color: rgba(244, 243, 241, 1);
   font-family: 'Abel', sans-serif;
   width: 264px;
 }

@@ -3,9 +3,10 @@ import Navbar from './Navbar/Navbar';
 import DoubleLine from './components/DoubleLine';
 import FashionSplit from './FashionSplit/FashionSpilt';
 import PartitionHeader from './components/PartitionHeader';
-import ProductDisplay from './ProductDisplay/ProductDisplay';
+import ProductDisplay from './NewArrival/ProductDisplay';
 import HeroGallery from './HeroGallery/HeroGallery';
-import CollegeEditionSection from './CollegeEdition/CollegeEditionSection';
+import CollegeEditionSection from './CheckMore/CollegeEditionSection';
+import AboutUs from './AboutUs/AboutUs';
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
       <DoubleLine />
       <CollegeEditionSection />
       <PartitionHeader leftText="XVIII" rightText="ABOUT US" />
+      <DoubleLine />
+      <AboutUs />
+      <PartitionHeader leftText="XIX" rightText="UPCOMING" />
       <DoubleLine />
     </>
   )
