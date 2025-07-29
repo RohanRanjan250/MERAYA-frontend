@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './FashionSplit.module.css';
-import leftImg from '../assets/kurti_1.png';
-import rightImg from '../assets/kurti_2.png';
+import leftImg from '../assets/kurti1.png';
+import rightImg from '../assets/kurti2.png';
 
 const FashionSplit = () => {
   return (
@@ -11,8 +11,8 @@ const FashionSplit = () => {
         style={{ backgroundImage: `url(${leftImg})` }}
       >
         <div className={styles.textOverlay}>
-          {/* <p className={styles.brand}>MERAYA’S</p>
-          <h1 className={styles.heading}>COOL COLLEGE</h1> */}
+          <p className={styles.brand}>MERAYA’S</p>
+          <h1 className={styles.heading}>COOL COLLEGE</h1>
         </div>
       </div>
 
@@ -21,8 +21,8 @@ const FashionSplit = () => {
         style={{ backgroundImage: `url(${rightImg})` }}
       >
         <div className={styles.textOverlay}>
-          {/* <p className={styles.brand}>MERAYA’S</p>
-          <h1 className={styles.heading}>AESTHETIC</h1> */}
+          <p className={styles.brand}>MERAYA’S</p>
+          <h1 className={styles.headingg}>AESTHETIC</h1>
         </div>
       </div>
     </div>

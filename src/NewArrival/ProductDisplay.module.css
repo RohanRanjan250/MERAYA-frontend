@@ -67,26 +67,6 @@
   text-align: right;
 }
 
-
-/* .meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 1.2rem;
-  color: rgba(244, 243, 241, 1);
-    font-family: Abel, sans-serif;
-}
-
-.meta button {
-  background: none;
-  border: none;
-  color: rgba(244, 243, 241, 1);
-  cursor: pointer;
-  font-weight: bold;
-  font-family: Abel, sans-serif;
-    font-size: 1.2rem;
-} */
-
 .meta {
   display: flex;
   flex-direction: column;
@@ -94,8 +74,6 @@
   color: rgba(244, 243, 241, 1);
   font-family: Abel, sans-serif;
 }
-
-
 
 .metaBottom {
   display: flex;
@@ -141,7 +119,7 @@
 .divider {
   border: none;
   height: 0.1vw;
-  background-color: white;
+  background-color: rgba(244, 243, 241, 1);
   margin: 1.2vw 0;
   width: 100%;
   opacity: 0.6;

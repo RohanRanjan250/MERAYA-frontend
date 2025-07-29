@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=ABeeZee&display=swap');
+
 .container {
   display: flex;
   width: 100%;
@@ -15,20 +17,36 @@
 
 .textOverlay {
   position: absolute;
-  bottom: 20%;
+  bottom: 46.5%;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
-  color: white;
+  color: rgba(244, 243, 241, 1);
 }
 
 .brand {
-  font-size: 18px;
+  font-size: 2vw; 
+  font-family: 'ABeeZee', sans-serif;
+  width: 7.6vw;
+  height: 1vw;
+  margin: 0 auto;
+  font-weight: 400;
   letter-spacing: 2px;
 }
 
-.heading {
-  font-size: 48px;
+.heading{
+  font-size: 5vw;
   font-weight: 400;
-  letter-spacing: 6px;
+  font-family: 'Aboreto', sans-serif;
+  width: 38.33vw;
+  height: 5vw;
+}
+
+.headingg {
+  font-size: 5vw;
+  font-weight: 400;
+  font-family: 'Aboreto', sans-serif;
+  width: 38.33vw;
+  height: 5vw;
+  letter-spacing: 0.3vw;
 }

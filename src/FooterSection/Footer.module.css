@@ -1,6 +1,6 @@
 .footer {
   background-color: #040404;
-  color: #fff;
+  color: rgba(244, 243, 241, 1);
   padding: 4vw 2vw 0vw 2vw;
   font-family: 'Abel', sans-serif;
   min-height: 100vh;
@@ -35,7 +35,7 @@
   display: inline-block;
   height: 1px;
   width: 30px;
-  background-color: #fff;
+  background-color: rgba(244, 243, 241, 1);
   margin-left: 2px;
   vertical-align: middle;
 }
@@ -48,7 +48,7 @@
 }
 
 .description {
-  color: #ccc;
+  color: rgba(244, 243, 241, 1);
   font-size: 0.9vw;
   line-height: 1.6;
 }
@@ -63,16 +63,16 @@
 .label {
   font-size: 0.9vw;
   margin-bottom: 0.5rem;
-  color: #ccc;
+  color: rgba(244, 243, 241, 1);
 }
 
 .input {
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid #aaa;
+  border-bottom: 1px solid rgba(244, 243, 241, 1);
   padding: 0.5rem 0;
   margin-bottom: 1rem;
-  color: #fff;
+  color: rgba(244, 243, 241, 1);
   font-size: 0.9vw;
   outline: none;
   width: 15vw;

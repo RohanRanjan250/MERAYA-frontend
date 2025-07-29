@@ -1,6 +1,6 @@
 .navbar {
-  background-color: #000;
-  color: white;
+  background-color: #040404;
+  color: rgba(244, 243, 241, 1);
   padding: 16px 32px;
   display: flex;
   justify-content: space-between;
@@ -42,5 +42,5 @@
 }
 
 .icon:hover {
-  color: orange;
+  color: #e38012;
 }

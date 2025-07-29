@@ -54,7 +54,7 @@
 
 .releaseText {
   font-size: 1vw;
-  color: #ccc;
+  color: rgba(244, 243, 241, 1);
   margin-bottom: 1rem;
   font-family: 'Abel', sans-serif;
   letter-spacing: 1px;
@@ -71,7 +71,7 @@
   font-family: 'Meddon', cursive;
   font-size: 4vw;
   margin-bottom: 2.5vw;
-  color: #fff;
+  color: rgba(244, 243, 241, 1);
 }
 
 .doubleLine {
@@ -85,7 +85,7 @@
 
 .description {
   font-size: 0.85rem;
-  color: #ccc;
+  color: rgba(244, 243, 241, 1);
   line-height: 1.6;
   font-family: 'Abel', sans-serif;
   margin-bottom: 1rem;
