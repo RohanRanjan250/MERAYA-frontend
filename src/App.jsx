@@ -5,6 +5,7 @@ import FashionSplit from './FashionSplit/FashionSpilt';
 import PartitionHeader from './components/PartitionHeader';
 import ProductDisplay from './ProductDisplay/ProductDisplay';
 import HeroGallery from './HeroGallery/HeroGallery';
+import CollegeEditionSection from './CollegeEdition/CollegeEditionSection';
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
       <ProductDisplay />
       <HeroGallery />
       <PartitionHeader leftText="XVII" rightText="CHECK MORE" />
+      <DoubleLine />
+      <CollegeEditionSection />
+      <PartitionHeader leftText="XVIII" rightText="ABOUT US" />
       <DoubleLine />
     </>
   )

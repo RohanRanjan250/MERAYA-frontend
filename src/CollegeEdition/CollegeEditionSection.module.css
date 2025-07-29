@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Khand:wght@500&family=Meddon&display=swap');
+
+.collegeEditionSection {
+  width: 100vw;
+  background-color: #040404;
+  color: #fff;
+  padding: 4vw 0vw 0vw 3vw;
+
+}
+
+.collegeEditionContainer {
+  display: flex;
+  gap: 6vw;
+  flex-wrap: wrap;
+}
+
+.collegeEditionLeft {
+  flex: 1 1 40vw;
+  max-width: 40vw;
+}
+
+.mainModelImg {
+  height: 60vw;
+  object-fit: cover;
+}
+
+.collegeEditionRight {
+  flex: 1 1 50vw;
+  max-width: 50vw;
+  position: relative;
+  margin-top: 10vw;
+}
+
+.collegeEditionText{
+    width: 40vw;
+}
+
+.editionCode {
+  font-size: 1.2vw;
+  margin-bottom: 1vw;
+  font-family: 'Abel', sans-serif;
+}
+
+.editionTitle {
+  font-size: 2.6vw;
+  font-weight: 300;
+  margin-bottom: 1.5vw;
+  font-family: 'Aboreto', sans-serif;
+}
+
+.editionDescription {
+  font-size: 1vw;
+  font-family: 'Abel', sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
+  color: #ccc;
+  margin-bottom: 2vw;
+}
+
+.whiteLine {
+  display: inline-block;
+  width: 3vw;
+  height: 0.15vw;
+  background-color: #fff;
+  margin: 0 1vw;
+  vertical-align: middle;
+}
+
+.buyNow {
+  font-size: 1.2vw;
+  text-decoration: none;
+  color: #e38012;
+  border-bottom: 1px solid #e38012;
+  font-family: 'Abel', sans-serif;
+  margin-bottom: 3vw;
+}
+
+.collegeThumbnails {
+  display: flex;
+  gap: 2vw;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  padding-bottom: 1vw;
+  margin-top: 2vw;
+  scrollbar-width: thin;
+}
+
+.collegeThumbCard {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5vw;
+}
+
+
+.thumbImg {
+  width: 264px;
+  height: 200px;
+  margin-bottom: 0.8vw;
+}
+
+.thumbCode {
+  font-size: 0.8vw;
+  margin-bottom: 0.3vw;
+  font-family: 'Abel', sans-serif;
+}
+
+.thumbTitle {
+  font-size: 1vw;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  margin-bottom: 0.5vw;
+  font-family: 'Khand', sans-serif;
+}
+
+.thumbDesc {
+  font-size: 0.8vw;
+  font-weight: 300;
+  color: #ccc;
+  font-family: 'Abel', sans-serif;
+  width: 264px;
+}
+
+
+@media (max-width: 500px) {
+  .collegeEditionContainer {
+    flex-direction: column;
+  }
+
+  .collegeEditionLeft,
+  .collegeEditionRight {
+    max-width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .mainModelImg {
+    width: 100%;
+    height: auto;
+  }
+
+  .collegeThumbnails {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+
+  .collegeThumbCard {
+    flex: 0 0 auto;
+    width: 40vw; 
+  }
+} 
