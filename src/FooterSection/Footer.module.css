@@ -120,3 +120,115 @@
 .siteLink {
   color: #e38012;
 }
+
+
+@media (max-width: 1024px) {
+  .footer {
+    padding: 6vw 4vw 2vw 4vw;
+  }
+
+  .content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4vw;
+  }
+
+  .left {
+    max-width: 100%;
+  }
+
+  .brand,
+  .title {
+    font-size: 4.5vw;
+  }
+
+  .description {
+    font-size: 2vw;
+    max-width: 90%;
+  }
+
+  .right {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .label {
+    font-size: 2.5vw;
+  }
+
+  .input {
+    font-size: 1.5vw;
+    width: 50vw;
+  }
+
+  .button {
+    font-size: 1.5vw;
+    text-align: right;
+  }
+
+  .bottom {
+    align-items: flex-start;
+    font-size: 1.8vw;
+    gap: 2vw;
+  }
+
+  .links a {
+    font-size: 2.5vw;
+  }
+}
+
+
+/* ========== MOBILE (max-width: 500px) ========== */
+@media (max-width: 500px) {
+  .footer {
+    padding: 8vw 5vw 4vw 5vw;
+  }
+
+  .content {
+    flex-direction: column;
+    gap: 6vw;
+    align-items: flex-start;
+  }
+
+  .left {
+    max-width: 100%;
+  }
+
+  .brand,
+  .title {
+    font-size: 6vw;
+  }
+
+  .description {
+    font-size: 4vw;
+    max-width: 100%;
+  }
+
+  .right {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .label {
+    font-size: 4vw;
+  }
+
+  .input {
+    font-size: 4vw;
+    width: 100%;
+  }
+
+  .button {
+    font-size: 4vw;
+    text-align: right;
+  }
+
+  .bottom {
+    font-size: 3.5vw;
+    gap: 4vw;
+  }
+
+  .links a {
+    font-size: 4vw;
+  }
+}

@@ -149,8 +149,31 @@
     text-align: center;
   }
 
-  .productImg {
+  .productImg,
+  .productIm {
     margin-top: 0px;
+    width: 40vw;
+  }
+
+  .card{
+    width: 40vw;
+  }
+
+  .meta{
+    font-size: 2vw;
+  }
+
+  .meta button{
+    font-size: 2vw;
+  }
+
+  .metaBottom{
+    font-size: 2vw;
+  }
+
+  .description {
+    font-size: 1.5vw;
+    text-align: center;
   }
 }
 
@@ -162,7 +185,7 @@
 
   .productImg,
   .productIm {
-    width: 40vw;
+    width: 70vw;
     margin-top: 2rem;
   }
 
@@ -173,6 +196,28 @@
   }
 
   .card{
-    width: 40vw;
+    width: 70vw;
+  }
+
+  .gridContainer{
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .meta{
+    font-size: 3vw;
+  }
+
+  .meta button{
+    font-size: 3vw;
+  }
+
+  .metaBottom{
+    font-size: 3vw;
+  }
+
+  .description {
+    font-size: 2.5vw;
+    text-align: center;
   }
 }

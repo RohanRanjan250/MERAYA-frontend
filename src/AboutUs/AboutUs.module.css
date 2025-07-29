@@ -112,10 +112,96 @@
     flex-direction: column;
   }
 
-  .right .textOverlay,
+  .right 
   .right .signature {
     position: static;
     margin: 1rem 0;
     text-align: center;
+  }
+}
+
+@media (max-width: 1024px) {
+  .showcaseSection {
+    flex-direction: column;
+    padding: 5vw 3vw;
+  }
+
+  .left,
+  .right {
+    max-width: 100%;
+    flex: 100%;
+  }
+
+  .heading {
+    font-size: 4vw;
+  }
+
+  .topLine {
+    font-size: 2vw;
+  }
+
+  .description {
+    font-size: 1.2rem;
+  }
+
+  .learnMore {
+    font-size: 1.5rem;
+  }
+
+  .textOverlay {
+    margin-top: 2rem;
+    max-width: 40%;
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .signature {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 2.2rem;
+  }
+}
+
+
+/* ========== MOBILE (max-width: 500px) ========== */
+@media (max-width: 500px) {
+  .showcaseSection {
+    padding: 8vw 4vw;
+  }
+
+  .topLine {
+    font-size: 3.5vw;
+  }
+
+  .heading {
+    font-size: 6.5vw;
+  }
+
+  .description {
+    font-size: 3.5vw;
+    max-width: 100%;
+  }
+
+  .learnMore {
+    font-size: 4vw;
+  }
+
+  .textOverlay{
+    max-width: 40%;
+    font-size: 2.5vw;
+  }
+
+  .signature {
+    font-size: 6vw;
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  .handImage {
+    max-width: 90%;
+  }
+
+  .modelImage{
+    margin-top: 2vw;
   }
 }

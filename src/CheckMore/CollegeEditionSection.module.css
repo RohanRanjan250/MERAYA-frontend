@@ -124,7 +124,7 @@
 }
 
 
-@media (max-width: 500px) {
+/* @media (max-width: 500px) {
   .collegeEditionContainer {
     flex-direction: column;
   }
@@ -149,4 +149,118 @@
     flex: 0 0 auto;
     width: 40vw; 
   }
-} 
+}  */
+
+
+@media (max-width: 1024px) {
+  .collegeEditionSection {
+    padding: 2vw 4vw;
+  }
+
+  .collegeEditionContainer {
+    flex-direction: column;
+    gap: 5vw;
+  }
+
+  .collegeEditionLeft,
+  .collegeEditionRight,
+  .collegeEditionText {
+    max-width: 100%;
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .collegeEditionRight{
+    margin-top: 0vw;
+  }
+
+  .mainModelImg {
+    width: 100%;
+    height: auto;
+  }
+
+  .editionCode {
+    font-size: 2.5vw;
+  }
+
+  .editionTitle {
+    font-size: 4.5vw;
+  }
+
+  .editionDescription {
+    font-size: 2vw;
+  }
+
+  .buyNow {
+    font-size: 2.5vw;
+  }
+
+  .whiteLine {
+    width: 5vw;
+    height: 0.4vw;
+  }
+
+  .thumbCode,
+  .thumbDesc {
+    font-size: 1.8vw;
+  }
+
+  .thumbTitle {
+    font-size: 2.5vw;
+  }
+}
+
+
+/* ===== Mobile (<=500px) ===== */
+@media (max-width: 500px) {
+  .collegeEditionSection {
+    padding: 4vw 4vw;
+  }
+
+  .collegeEditionText {
+    width: 100%;
+  }
+
+  .editionCode {
+    font-size: 3.2vw;
+  }
+
+  .editionTitle {
+    font-size: 6vw;
+  }
+
+  .editionDescription {
+    font-size: 3vw;
+  }
+
+  .buyNow {
+    font-size: 3.2vw;
+  }
+
+  .whiteLine {
+    width: 8vw;
+    height: 0.6vw;
+  }
+
+  .collegeThumbnails {
+    gap: 4vw;
+    margin-top: 4vw;
+  }
+
+  .collegeThumbCard {
+    width: 60vw;
+  }
+
+  .thumbCode {
+    font-size: 2.5vw;
+  }
+
+  .thumbTitle {
+    font-size: 3.5vw;
+  }
+
+  .thumbDesc {
+    font-size: 2.5vw;
+    width: 100%;
+  }
+}

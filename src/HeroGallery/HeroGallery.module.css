@@ -132,3 +132,40 @@
   border-bottom: 1px solid #e38012;
   font-family: 'Abel', sans-serif;
 }
+
+@media (max-width: 1024px) {
+
+  .title {
+    font-size: 7vw;
+  }
+
+  .subtitle {
+    font-size: 3.5vw;
+  }
+
+  .link {
+    font-size: 3vw;
+  }
+
+  .heroSection {
+    padding-top: 8vw;
+  }
+}
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 9vw;
+  }
+
+  .subtitle {
+    font-size: 4vw;
+  }
+
+  .link {
+    font-size: 3vw;
+  }
+
+  .heroSection {
+    padding-top: 10vw;
+  }
+}
