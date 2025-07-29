@@ -7,5 +7,9 @@ export default defineConfig({
   build: {
     outDir: 'dist', // Vercel expects this
   },
-  base: '/home', // Base path for the application
+  resolve: {
+    alias: {
+      '@': '/src',
+    },
+  },
 })

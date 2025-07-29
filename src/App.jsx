@@ -6,11 +6,11 @@ import Landing from './pages/Landing';
 
 function App() {
   return (
-      <Router>
+      <BrowserRouter>
         <Routes>
           <Route path="/home" element={<Landing />} />
         </Routes>
-      </Router>
+      </BrowserRouter>
   );
 }
 
