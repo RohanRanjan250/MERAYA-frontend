@@ -8,6 +8,7 @@ import HeroGallery from './HeroGallery/HeroGallery';
 import CollegeEditionSection from './CheckMore/CollegeEditionSection';
 import AboutUs from './AboutUs/AboutUs';
 import Upcoming from './Upcoming/Upcoming';
+import Footer from './FooterSection/Footer';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
       <PartitionHeader leftText="XIX" rightText="UPCOMING" />
       <DoubleLine />
       <Upcoming />
+      <Footer />
     </>
   )
 }
