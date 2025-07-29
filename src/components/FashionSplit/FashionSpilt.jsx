@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './FashionSplit.module.css';
-import leftImg from '../assets/kurti1.png';
-import rightImg from '../assets/kurti2.png';
+import leftImg from '../../assets/kurti1.png';
+import rightImg from '../../assets/kurti2.png';
 
 const FashionSplit = () => {
   return (

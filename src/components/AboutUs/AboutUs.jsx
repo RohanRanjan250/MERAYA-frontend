@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './AboutUs.module.css';
-import modelImage from '../assets/model.png'; // replace with actual image
-import handImage from '../assets/hand.png'; // replace with actual image
+import modelImage from '../../assets/model.png';
+import handImage from '../../assets/hand.png';
 
 const AboutUs = () => {
   return (

@@ -1,13 +1,11 @@
 import React from 'react';
 import styles from './Upcoming.module.css';
-
-// Replace with actual image imports
-import img1 from '../assets/upcoming1.png';
-import img2 from '../assets/upcoming2.png';
-import img3 from '../assets/upcoming3.png';
-import img4 from '../assets/upcoming4.png';
-import img5 from '../assets/upcoming5.png';
-import img6 from '../assets/upcoming6.png';
+import img1 from '../../assets/upcoming1.png';
+import img2 from '../../assets/upcoming2.png';
+import img3 from '../../assets/upcoming3.png';
+import img4 from '../../assets/upcoming4.png';
+import img5 from '../../assets/upcoming5.png';
+import img6 from '../../assets/upcoming6.png';
 
 const Upcoming = () => {
   return (
