@@ -1,0 +1,87 @@
+.container {
+  display: flex;
+  height: 100vh;
+  font-family: 'Abel', sans-serif;
+}
+
+/* Left side with blurred logo */
+.left {
+  flex: 1; /* takes half width */
+  position: relative;
+  margin-left: 20px; /* extra margin on the left if you want */
+}
+
+.logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* filter: blur(8px); */
+  opacity: 0.3;
+}
+
+/* Right side form */
+.right {
+  flex: 1; /* takes the other half */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.4); /* optional: add background overlay */
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  gap: 25px;
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.05); /* optional glass look */
+  border-radius: 12px;
+}
+
+.form h2 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #f4f3f1;
+}
+
+.form input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(244, 243, 241, 1);
+  padding: 0.5rem 0;
+  margin-bottom: 1rem;
+  color: rgba(244, 243, 241, 1);
+  font-size: 0.9vw;
+  outline: none;
+  width: 100%;
+}
+
+.form button {
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  background-color: #e38012;
+  color: #f4f3f1;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+  margin-top: 1vw;
+}
+
+.form button:hover {
+  background-color: #cf7208;
+}
+
+form p {
+  text-align: center;
+  color: rgba(244, 243, 241, 1);
+  font-size: 0.9vw;
+}
+
+form a {
+  color: #e38012;
+  text-decoration: underline;
+  font-size: 0.9vw;
+  text-align: center;
+}
+
