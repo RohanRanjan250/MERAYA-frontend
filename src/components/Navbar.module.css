@@ -87,36 +87,35 @@
   background-color: #756d51;
 }
 
-.searchSection {
+.searchWrapper {
+  position: relative; /* keeps input aligned with icon */
+}
+
+.searchInput {
   position: absolute;
-  top: 70px; /* Below navbar */
-  
-  width: 100%;
-  background: #1b1a1a;
-  box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
-  padding: 10px 20px;
-  z-index: 100;
+  right: 35px; /* push left of search icon */
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+  width: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: width 0.3s ease, opacity 0.3s ease;
+  color: black;
 }
 
-.searchBar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+/* When active */
+.searchWrapper.active .searchInput {
+  width: 40vh;   /* expands smoothly */
+  opacity: 1;
+  pointer-events: all;
+  height: 4vh;
 }
 
-.searchBar input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 16px;
-}
 
-.closeIcon {
-  font-size: 20px;
-  cursor: pointer;
-  color: #555;
-}
 
 .results {
   margin-top: 10px;
