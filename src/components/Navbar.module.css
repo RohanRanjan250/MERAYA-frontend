@@ -50,13 +50,11 @@
   color: #e38012;
 }
 
-/* User dropdown container */
 .userMenu {
   position: relative;
   display: inline-block;
 }
 
-/* Dropdown menu */
 .dropdownMenu {
   position: absolute;
   top: 35px; /* Adjust spacing below icon */
@@ -70,7 +68,6 @@
   z-index: 1000;
 }
 
-/* Dropdown items */
 .dropdownMenu a,
 .dropdownMenu button {
   padding: 10px 15px;

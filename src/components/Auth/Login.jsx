@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Signup.module.css";
 import logo from "../../assets/logo-removebg-preview.png"; // Adjust the path if needed
+import { login } from "../../API/authApi";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -9,9 +10,11 @@ const Login = () => {
   });
 
   const [otpSent, setOtpSent] = useState(false);
+  const [error, setError] = useState(""); // 🔹 state for error message
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError(""); // clear error while typing
   };
 
   // 🔹 Request OTP via email
@@ -22,25 +25,31 @@ const Login = () => {
       body: JSON.stringify({ email: formData.email })
     })
       .then((res) => res.json())
-      .then(() => {
-        setOtpSent(true);
+      .then((data) => {
+        if (data.success) {
+          setOtpSent(true);
+          setError(""); // clear error
+        } else {
+          setError(data.message || "Email not registered"); // 🔹 show error
+        }
       })
-      .catch((err) => console.error(err));
+      .catch(() => setError("Something went wrong. Try again!"));
   };
 
   // 🔹 Verify OTP and login
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    fetch("/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData)
-    })
-      .then((res) => res.json())
-      .then((data) => {
+    try {
+      const data = await login(formData); // ✅ fixed formData typo
+      if (data.success) {
         alert("Login successful!");
-      })
-      .catch((err) => console.error(err));
+        setError("");
+      } else if ( data.status == 400){
+        setError(data.message || "Invalid OTP or Email not registered"); // 🔹 show error
+      }
+    } catch (err) {
+      setError(err.message || "Something went wrong. Try again!"); // ✅ fixed catch
+    }
   };
 
   return (
@@ -82,6 +91,9 @@ const Login = () => {
               <button type="submit">Login</button>
             </>
           )}
+
+          {/* 🔹 Error message placeholder */}
+          <p className={styles.error}>{error}</p>
 
           <p>
             Don’t have an account? <a href="/signup">Sign up</a>
