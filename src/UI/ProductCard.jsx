@@ -35,9 +35,9 @@ const ProductCard = ({ product, type, onAddToCart, onRemove, onMove, onSave, onQ
             {type === "cart" && (
             <>
                 <div className={styles.qtyControl}>
-                <button onClick={() => onQtyChange(product.id, -1)}>-</button>
-                <span>{product.qty}</span>
-                <button onClick={() => onQtyChange(product.id, +1)}>+</button>
+                <button onClick={() => onQtyChange(product.id, -1)} className={styles.qtybutton}>-</button>
+                <span className={styles.qtyy}>{product.qty}</span>
+                <button onClick={() => onQtyChange(product.id, +1)} className={styles.qtybutton}>+</button>
                 </div>
                 {/* <button className={styles.secondary} onClick={() => onSave(product.id)}>
                 Save for later

@@ -1,6 +1,6 @@
 // src/pages/Cart/Cart.jsx
 import React, { useState } from "react";
-import ProductCard from "../../components/ProductCard/ProductCard";
+import ProductCard from "../../UI/ProductCard";
 import styles from "./Cart.module.css";
 
 const Cart = () => {

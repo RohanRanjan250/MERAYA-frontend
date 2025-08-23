@@ -117,3 +117,23 @@ color: #b12704;
 .deleteButton:hover {
   background-color: #f0f2f2;
 }
+
+.qtyy{
+    color: #f4f3f1;
+    font-size: 14px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.qtybutton{
+    background-color: #e38013;
+    border: 1px solid #e38030;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s;
+}

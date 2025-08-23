@@ -4,3 +4,9 @@
     text-align: center;
     margin-top: 1rem;
 }
+
+.container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+}

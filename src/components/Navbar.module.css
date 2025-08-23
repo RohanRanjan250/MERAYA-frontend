@@ -44,6 +44,7 @@
 .icon {
   cursor: pointer;
   transition: color 0.3s;
+  color: #f4f3f1;
 }
 
 .icon:hover {
@@ -84,4 +85,54 @@
 .dropdownMenu a:hover,
 .dropdownMenu button:hover {
   background-color: #756d51;
+}
+
+.searchSection {
+  position: absolute;
+  top: 70px; /* Below navbar */
+  
+  width: 100%;
+  background: #1b1a1a;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+  padding: 10px 20px;
+  z-index: 100;
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.searchBar input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.closeIcon {
+  font-size: 20px;
+  cursor: pointer;
+  color: #555;
+}
+
+.results {
+  margin-top: 10px;
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.resultItem {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.resultItem:hover {
+  background: #f0f0f0;
 }
