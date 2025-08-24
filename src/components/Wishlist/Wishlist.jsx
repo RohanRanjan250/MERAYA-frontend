@@ -6,7 +6,7 @@ const WishlistPage = () => {
   const [wishlist, setWishlist] = useState([
     {
       id: 1,
-      name: "Classic White T-Shirt",
+      name: "Classic White Kurti",
       selling_price: 499,
       show_price: 799,
       discount_percent: 38,
@@ -14,7 +14,7 @@ const WishlistPage = () => {
     },
     {
       id: 2,
-      name: "Blue Denim Jeans",
+      name: "Blue Kurti with Embroidery",
       selling_price: 1299,
       show_price: 1799,
       discount_percent: 28,
@@ -22,7 +22,7 @@ const WishlistPage = () => {
     },
     {
       id: 3,
-      name: "Sports Running Shoes",
+      name: "Kurti Set for Festive Wear",
       selling_price: 1999,
       show_price: 2499,
       discount_percent: 20,

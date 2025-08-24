@@ -8,7 +8,7 @@ const Cart = () => {
   const [cart, setCart] = useState([
     {
       id: 1,
-      name: "Blue Denim Jacket",
+      name: "Blue Kurti with Embroidery",
       selling_price: 1299,
       show_price: 1999,
       discount_percent: 35,
@@ -17,7 +17,7 @@ const Cart = () => {
     },
     {
       id: 2,
-      name: "White Sneakers",
+      name: "White Kurti",
       selling_price: 899,
       show_price: 1499,
       discount_percent: 40,

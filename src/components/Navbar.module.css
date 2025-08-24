@@ -88,14 +88,17 @@
 }
 
 .searchWrapper {
-  position: relative; /* keeps input aligned with icon */
-}
+  position: relative;  /* keeps input aligned with icon  */
+  display: flex;
+  align-items: center;
+} 
+
 
 .searchInput {
   position: absolute;
+  transform: translateY(-50%);
   right: 35px; /* push left of search icon */
   top: 50%;
-  transform: translateY(-50%);
   padding: 6px 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -115,23 +118,99 @@
   height: 4vh;
 }
 
-
-
-.results {
-  margin-top: 10px;
-  background: #fafafa;
-  border: 1px solid #eee;
-  border-radius: 6px;
-  max-height: 200px;
-  overflow-y: auto;
+.searchResults {
+  position: absolute;
+  top: calc(100% + 4px); /* just below input with a tiny gap */
+  left: 0;
+  width: 100%; /* match input width */
+  background: #fff;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  z-index: 999;
 }
 
 .resultItem {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
+  padding: 8px 12px;
   cursor: pointer;
 }
 
 .resultItem:hover {
-  background: #f0f0f0;
+  background: #f5f5f5;
+}
+
+.noResult {
+  padding: 8px 12px;
+  color: #666;
+}
+/*
+.searchResults {
+  position: absolute;
+  top: 100%;   /* directly below input 
+  left: 0;
+  width: 100%; /* same width as input 
+  background: #fff;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  z-index: 999;
+}
+  */
+  
+.searchWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchInput {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+  width: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: width 0.3s ease, opacity 0.3s ease;
+  color: black;
+  position: absolute;
+  transform: translateY(-50%);
+}
+
+/* When active */
+.searchWrapper.active .searchInput {
+  width: 40vh;   /* expands smoothly */
+  opacity: 1;
+  pointer-events: all;
+  height: 4vh;
+}
+
+.searchResults {
+  position: absolute;
+  top: calc(100% + 4px); /* just below input with a tiny gap */
+  left: 0;
+  width: 100%; /* match input width */
+  background: #fff;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  z-index: 999;
+  
+}
+
+.resultItem {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.resultItem:hover {
+  background: #f5f5f5;
+}
+
+.noResult {
+  padding: 8px 12px;
+  color: #666;
 }
