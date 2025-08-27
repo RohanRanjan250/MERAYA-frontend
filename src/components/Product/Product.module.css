@@ -1,0 +1,152 @@
+.container {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+  background: #000;
+  color: #f4f3f1;
+  max-width: 120vh;
+  margin: 20px auto;
+  padding: 20px;
+  min-height: 70vh;
+}
+
+.left {
+  flex: 1;
+}
+
+.mainImage {
+  width: 100%;
+  border-radius: 12px;
+  min-height: 30rem;
+}
+
+.thumbnails {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.thumb {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border: 2px solid transparent;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.thumb.active {
+  border-color: orange;
+}
+
+.right {
+  flex: 1;
+}
+
+.brand {
+  color: #ccc;
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.priceRow {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.oldPrice {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.newPrice {
+  font-size: 1.5rem;
+  color: orange;
+}
+
+.sold, .rating {
+  font-size: 0.9rem;
+  color: #bbb;
+}
+
+.description {
+  margin: 1rem 0;
+  line-height: 1.5;
+}
+
+.colorSection, .sizeSection {
+  margin: 1rem 0;
+}
+
+.colorOptions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.colorBtn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid #444;
+  cursor: pointer;
+}
+
+.colorBtn.activeColor {
+  border-color: orange;
+}
+
+.sizeOptions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.sizeBtn {
+  padding: 0.5rem 1rem;
+  border: 1px solid #444;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+.sizeBtn.activeSize {
+  border-color: orange;
+  background: #222;
+}
+
+.sizeChart {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: orange;
+  font-size: 0.85rem;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.cartBtn, .checkoutBtn {
+  flex: 1;
+  padding: 1rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.cartBtn {
+  background: orange;
+  color: black;
+}
+
+.checkoutBtn {
+  background: #ff6600;
+  color: #fff;
+}
