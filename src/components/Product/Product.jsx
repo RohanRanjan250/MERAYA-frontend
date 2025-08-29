@@ -3,6 +3,11 @@ import { useParams } from "react-router-dom";
 // import axios from "../api/axios";
 import styles from "./Product.module.css";
 import { ArrowDownLeft } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
+import { faShareFromSquare } from "@fortawesome/free-regular-svg-icons";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faIndianRupeeSign } from "@fortawesome/free-solid-svg-icons";
 
 export default function ProductPage() {
   const { id } = useParams();
@@ -15,13 +20,13 @@ export default function ProductPage() {
     // Example mock product (remove later when backend is ready)
     const mockProduct = {
       id: 1,
-      title: "Air Max 270 Sneakers",
+      title: "CLASSIC WHITE KURTI",
       price: 120,
       discountPrice: 89,
       sold: 542,
       rating: 4.5,
       description:
-        "Step into comfort and style with Nike Air Max 270 Sneakers. Featuring lightweight cushioning and a bold design, perfect for everyday wear.",
+        "Step into comfort and style with MERAYA CLASSIC WHITE KURTI. Featuring breathable and a bold design, perfect for everyday wear.",
       images: [
         "https://via.placeholder.com/400x400.png?text=Main+Image",
         "https://via.placeholder.com/100x100.png?text=Side",
@@ -65,7 +70,12 @@ export default function ProductPage() {
       </div>
 
       <div className={styles.center}>
-
+        <button className={styles.iconButton}>
+          <FontAwesomeIcon icon={faShareFromSquare} size="lg" />
+        </button>
+        <button className={styles.iconButton}>
+          <FontAwesomeIcon icon={farHeart} size="lg" />
+        </button>
       </div>
 
       {/* Right Section - Details */}
@@ -77,11 +87,11 @@ export default function ProductPage() {
 
         <div className={styles.priceRow}>
             <div className={styles.price}>
-                <span className={styles.oldPrice}>£{product.price}</span>
-                <span className={styles.newPrice}>£{product.discountPrice}</span>
+                <span className={styles.oldPrice}><FontAwesomeIcon icon={faIndianRupeeSign} size="xs" />{product.price}</span>
+                <span className={styles.newPrice}><FontAwesomeIcon icon={faIndianRupeeSign} size="xs"/>{product.discountPrice}</span>
             </div>
           {/* <span className={styles.sold}>{product.sold} Sold</span> */}
-          <span className={styles.rating}>⭐ {product.rating}</span>
+          <span className={styles.rating}><FontAwesomeIcon icon={faStar} /> {product.rating}</span>
         </div>
 
 
@@ -111,7 +121,7 @@ export default function ProductPage() {
                 <p className={styles.selectedSize}>{selectedSize}</p>
             </div>
             <a href="#" className={styles.sizeChart}>
-                View Size Chart
+                VIEW SIZE CHART
             </a>
           </div>
           <div className={styles.sizeOptions}>
@@ -134,6 +144,9 @@ export default function ProductPage() {
           <button className={styles.cartBtn}>ADD TO CART<ArrowDownLeft className={styles.arrow}  /></button>
           {/* <button className={styles.checkoutBtn}>Checkout Now</button> */}
         </div>
+        <a href="#" className={styles.delivery}>
+            DELIVERY T&C
+        </a>
       </div>
     </div>
   );
