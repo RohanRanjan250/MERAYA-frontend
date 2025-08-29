@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 // import axios from "../api/axios";
 import styles from "./Product.module.css";
+import { ArrowDownLeft } from "lucide-react";
 
 export default function ProductPage() {
   const { id } = useParams();
@@ -63,18 +64,26 @@ export default function ProductPage() {
         </div>
       </div>
 
+      <div className={styles.center}>
+
+      </div>
+
       {/* Right Section - Details */}
       <div className={styles.right}>
-        <h2 className={styles.title}>{product.title}</h2>
+        <p className={styles.brand}>MERAYA's</p>
+        <p className={styles.title}>{product.title}</p>
+
+        <p className={styles.description}>{product.description}</p>
 
         <div className={styles.priceRow}>
-          <span className={styles.oldPrice}>£{product.price}</span>
-          <span className={styles.newPrice}>£{product.discountPrice}</span>
-          <span className={styles.sold}>{product.sold} Sold</span>
+            <div className={styles.price}>
+                <span className={styles.oldPrice}>£{product.price}</span>
+                <span className={styles.newPrice}>£{product.discountPrice}</span>
+            </div>
+          {/* <span className={styles.sold}>{product.sold} Sold</span> */}
           <span className={styles.rating}>⭐ {product.rating}</span>
         </div>
 
-        <p className={styles.description}>{product.description}</p>
 
         {/* Color options */}
         {/* <div className={styles.colorSection}>
@@ -95,7 +104,16 @@ export default function ProductPage() {
 
         {/* Size options */}
         <div className={styles.sizeSection}>
-          <p>Size: {selectedSize}</p>
+          <div className={styles.sizeHeader}>
+            <div className={styles.sizeLabel}>
+                <p className={styles.Size}>Size: </p>
+                <span className={styles.whiteLine}></span>
+                <p className={styles.selectedSize}>{selectedSize}</p>
+            </div>
+            <a href="#" className={styles.sizeChart}>
+                View Size Chart
+            </a>
+          </div>
           <div className={styles.sizeOptions}>
             {product.sizes.map((size, index) => (
               <button
@@ -109,14 +127,11 @@ export default function ProductPage() {
               </button>
             ))}
           </div>
-          <a href="#" className={styles.sizeChart}>
-            View Size Chart
-          </a>
         </div>
 
         {/* Action Buttons */}
         <div className={styles.actions}>
-          <button className={styles.cartBtn}>Add To Cart</button>
+          <button className={styles.cartBtn}>ADD TO CART<ArrowDownLeft className={styles.arrow}  /></button>
           {/* <button className={styles.checkoutBtn}>Checkout Now</button> */}
         </div>
       </div>

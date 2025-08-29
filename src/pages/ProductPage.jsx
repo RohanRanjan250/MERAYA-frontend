@@ -1,6 +1,7 @@
 import Product from "../components/Product/Product";
 import Navbar from "../components/Navbar";
 import DoubleLine from "../UI/DoubleLine";
+import Footer from "../components/FooterSection/Footer";
 
 export default function ProductPage() {
   return (
@@ -8,6 +9,7 @@ export default function ProductPage() {
       <Navbar />
       <DoubleLine />
       <Product />
+      <Footer />
     </>
   )
 }
