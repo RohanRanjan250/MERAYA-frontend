@@ -1,39 +1,43 @@
 .orderSummary {
-  background: #111;
-  color: #fff;
+  background: transparent;
+  color: #ffffff;
   padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  /* box-shadow: 0 2px 6px rgba(0,0,0,0.2); */
+  font-family: 'Abel', sans-serif;
 }
 
-.orderSummary h2 {
-  font-size: 18px;
+.orderSummary p {
+  font-size: 2.2vh;
   margin-bottom: 15px;
 }
 
 .row {
   display: flex;
   justify-content: space-between;
-  margin: 6px 0;
+  margin-bottom: 2.5vh;
   font-size: 14px;
+}
+
+.heading {
+  color: #A2A3B1;
 }
 
 .total {
   font-weight: bold;
-  font-size: 16px;
-  margin-top: 10px;
+  font-size: 1.7vh;
+  margin-top: 2.5vh;
 }
 
 .totalPrice {
   color: #4caf50;
-  font-size: 18px;
+  font-size: 1.7vh;
 }
 
-.delivery {
-  font-size: 13px;
+/* .delivery {
+  font-size: 1.7vh;
   margin: 12px 0;
   color: #ccc;
-}
+} */
 
 .couponBox {
   display: flex;
@@ -44,20 +48,21 @@
 .couponBox input {
   flex: 1;
   padding: 8px;
-  border-radius: 8px;
-  border: 1px solid #444;
-  background: #222;
+  border: 1px solid #D1D1D8;
+  background: transparent;
   color: #fff;
+  font-family: 'Abel', sans-serif;
+  border-radius: 0;
 }
 
 .couponBox button {
-  background: #333;
+  background: transparent;
   border: none;
   padding: 8px 14px;
-  border-radius: 8px;
   color: #fff;
   cursor: pointer;
   transition: background 0.3s ease;
+  font-family: 'Abel', sans-serif;
 }
 
 .couponBox button:hover {
@@ -67,17 +72,15 @@
 .checkoutBtn {
   width: 100%;
   padding: 12px;
-  background: #4caf50;
+  background: #00C9B7;
   border: none;
-  border-radius: 10px;
   color: white;
   font-weight: bold;
   font-size: 15px;
   cursor: pointer;
   margin-top: 10px;
   transition: background 0.3s ease;
+  font-family: 'Abel', sans-serif;
 }
 
-.checkoutBtn:hover {
-  background: #43a047;
-}
+

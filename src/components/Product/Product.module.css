@@ -219,7 +219,7 @@
   padding: 1rem;
   border: none;
   cursor: pointer;
-  border-radius: 6px;
+  /* border-radius: 6px; */
   font-size: 1rem;
   font-family: 'Abel', sans-serif;
   background: transparent;

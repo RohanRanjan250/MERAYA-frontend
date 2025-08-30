@@ -4,21 +4,21 @@ import styles from "./OrderSummary.module.css";
 const OrderSummary = ({ price, discount, shipping, total }) => {
   return (
     <div className={styles.orderSummary}>
-      <h2>Order Summary</h2>
+      <p>Order Summary</p>
       <div className={styles.row}>
-        <span>Price</span>
+        <span className={styles.heading}>Price</span>
         <span>₹{price.toFixed(2)}</span>
       </div>
       <div className={styles.row}>
-        <span>Discount</span>
+        <span className={styles.heading}>Discount</span>
         <span>-₹{discount.toFixed(2)}</span>
       </div>
       <div className={styles.row}>
-        <span>Shipping</span>
+        <span className={styles.heading}>Shipping</span>
         <span>{shipping > 0 ? `$${shipping.toFixed(2)}` : "Free"}</span>
       </div>
       <div className={styles.row}>
-        <span>Coupon Applied</span>
+        <span className={styles.heading}>Coupon Applied</span>
         <span>₹0.00</span>
       </div>
 
@@ -29,9 +29,9 @@ const OrderSummary = ({ price, discount, shipping, total }) => {
         <span className={styles.totalPrice}>₹{total.toFixed(2)}</span>
       </div>
 
-      <p className={styles.delivery}>
+      {/* <p className={styles.delivery}>
         Estimated Delivery by <b>01 Feb, 2023</b>
-      </p>
+      </p> */}
 
       <div className={styles.couponBox}>
         <input type="text" placeholder="Coupon Code" />

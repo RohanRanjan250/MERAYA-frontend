@@ -21,6 +21,14 @@ const Cartt = () => {
       price: 149.99,
       image: "/images/kurti.jpg",
     },
+    {
+      id: 3,
+      name: "Sleeveless Kurti",
+      size: "S",
+      quantity: 1,
+      price: 149.99,
+      image: "/images/kurti.jpg",
+    },
   ]);
 
   const handleQuantityChange = (id, change) => {

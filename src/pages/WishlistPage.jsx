@@ -1,6 +1,7 @@
 import Wishlist from "../components/Wishlist/Wishlist";
 import Navbar from "../components/Navbar";
 import DoubleLine from "../UI/DoubleLine";
+import Footer from '../components/FooterSection/Footer'
 
 export default function WishlistPage() {
   return (
@@ -8,6 +9,7 @@ export default function WishlistPage() {
       <Navbar />
       <DoubleLine />
       <Wishlist />
+      <Footer />
     </>
   )
 }

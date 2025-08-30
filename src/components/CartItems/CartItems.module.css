@@ -1,21 +1,21 @@
 .cartItems {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1vh;
 }
 
 .item {
   display: flex;
   align-items: flex-start;
-  background: #fff;
-  padding: 15px;
-  border-radius: 12px;
+  background: transparent;
+  padding: 2vh 0 3vh;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  border-bottom: 1px solid #D1D1D8;
 }
 
 .image {
-  width: 100px;
-  height: 120px;
+  width: 120px;
+  height: 160px;
   object-fit: cover;
   border-radius: 8px;
   margin-right: 15px;
@@ -26,31 +26,68 @@
 }
 
 .details h3 {
-  font-size: 16px;
+  font-size: 2.2vh;
   margin: 0;
-  color: #111;
+  color: #ffffff;
+  font-family: 'Aboreto', sans-serif;
 }
 
-.details p {
-  font-size: 14px;
-  color: #666;
-  margin: 4px 0;
+.sizeLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1vh;
+  font-size: 1rem;
+}
+
+.Size {
+  font-size: 1.7vh;
+  margin-bottom: 0.5rem;
+  font-family: 'Abel', sans-serif;
+  color: #BABABA;
+}
+
+.whiteLine {
+  display: inline-block;
+  width: 3vw;
+  height: 0.08vw;
+  background-color: rgba(244, 243, 241, 1);
+  margin-left: 1.5vw;
+  margin-bottom: 1vh;
+  vertical-align: middle;
+}
+
+.selectedSize {
+  font-size: 1.7vh;
+  margin-bottom: 0.5rem;
+  font-family: 'Abel', sans-serif;
+  color: #f4f3f1;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  gap: 15px;
 }
 
 .quantity {
   display: flex;
   align-items: center;
   margin: 8px 0;
+  border: 1px solid #A2A3B1;
+  color: #FFFFFF;
+  font-size: large;
+  font-family: 'Abel', sans-serif;
 }
 
 .quantity button {
-  width: 28px;
-  height: 28px;
-  border: 1px solid #ddd;
-  background: #f5f5f5;
+  width: 5vh;
+  height: 5vh;
   cursor: pointer;
-  border-radius: 6px;
-  font-size: 16px;
+  font-size: 3vh;
+  background: none;
+  border: none;
 }
 
 .quantity span {
@@ -65,12 +102,13 @@
   font-size: 14px;
   cursor: pointer;
   margin-top: 6px;
-  text-decoration: underline;
+  text-decoration: none;
+  font-family: 'Abel', sans-serif;
 }
 
 .price {
-  font-weight: bold;
-  font-size: 16px;
-  color: #111;
+  font-size: 2.2vh;
+  color: #e38012;
   margin-left: 15px;
+  font-family: 'Abel', sans-serif;
 }

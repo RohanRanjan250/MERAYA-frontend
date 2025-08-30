@@ -9,7 +9,7 @@
 }
 
 .cartItemsSection {
-  flex: 2; /* takes more space */
+  flex: 1.7; /* takes more space */
 }
 
 .orderSummarySection {
