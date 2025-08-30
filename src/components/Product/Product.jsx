@@ -148,6 +148,7 @@ export default function ProductPage() {
             DELIVERY T&C
         </a>
       </div>
+      <div className={styles.backgroundText}>MERAYA</div>
     </div>
   );
 }

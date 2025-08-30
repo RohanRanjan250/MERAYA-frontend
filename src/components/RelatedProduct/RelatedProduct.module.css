@@ -1,0 +1,37 @@
+.relatedContainer {
+  width: 100%;
+  background: #040404;
+  color: #f4f3f1;
+  padding: 20px 40px;
+  margin-top: 9vh;
+  font-family: 'Abel', sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header h2 {
+  font-size: 4vh;
+}
+
+.viewAll {
+  font-size: 3vh;
+  text-decoration: none;
+  color: #f4f3f1;
+}
+
+.viewAll:hover {
+  text-decoration: underline;
+  color: #e38012;
+}
+
+.productsRow {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}

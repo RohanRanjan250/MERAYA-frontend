@@ -1,0 +1,17 @@
+.cartPage {
+  max-width: 1000px;
+  margin: 0 auto; /* centers the cart page */
+  padding: 20px;
+  display: flex;
+  justify-content: space-between; /* left and right spacing */
+  align-items: flex-start; /* align to the top */
+  gap: 20px; /* spacing between left & right sections */
+}
+
+.cartItemsSection {
+  flex: 2; /* takes more space */
+}
+
+.orderSummarySection {
+  flex: 1; /* smaller width for summary */
+}

@@ -1,0 +1,83 @@
+.orderSummary {
+  background: #111;
+  color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.orderSummary h2 {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin: 6px 0;
+  font-size: 14px;
+}
+
+.total {
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.totalPrice {
+  color: #4caf50;
+  font-size: 18px;
+}
+
+.delivery {
+  font-size: 13px;
+  margin: 12px 0;
+  color: #ccc;
+}
+
+.couponBox {
+  display: flex;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.couponBox input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background: #222;
+  color: #fff;
+}
+
+.couponBox button {
+  background: #333;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.couponBox button:hover {
+  background: #444;
+}
+
+.checkoutBtn {
+  width: 100%;
+  padding: 12px;
+  background: #4caf50;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.3s ease;
+}
+
+.checkoutBtn:hover {
+  background: #43a047;
+}
