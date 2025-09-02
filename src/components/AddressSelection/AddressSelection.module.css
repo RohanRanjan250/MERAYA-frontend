@@ -1,0 +1,113 @@
+.addressSelection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  color: #fff;
+  font-family: 'Abel', sans-serif;
+}
+
+.addressCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 7vh;
+  border-bottom: 1px solid #D1D1D8;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.addressCard:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.left {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.radio {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #E38012;
+  margin-top: 4px;
+}
+
+.checked {
+  background-color: #E38012;
+  border: 2px solid #E38012;
+}
+
+.nameRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.name {
+  font-size: 2.7vh;
+  font-weight: 600;
+  color: #FFFFFF;;
+}
+
+.tag {
+  font-size: 1.3vh;
+  padding: 2px 6px;
+  border: 1px solid #3AA39F;
+  border-radius: 4px;
+  color: #3AA39F;
+  margin-left: 8vh;
+}
+
+.text {
+  font-size: 1.7vh;
+  color: #A2A3B1;
+  padding: 0.8vh 0vh;
+}
+
+.phone {
+  font-size: 1.7vh;
+  color: #FFFFFF;
+  padding: 0.8vh 0vh;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  align-items: center;
+}
+
+.editBtn,
+.removeBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #bbb;
+  transition: color 0.2s ease;
+  font-family: 'Abel', sans-serif;
+}
+
+.editBtn:hover {
+  color: #fff;
+}
+
+.removeBtn {
+  color: #E14B4B;
+}
+
+.removeBtn:hover {
+  color: #ff7777;
+}
+
+.addNew {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  color: #bbb;
+  transition: color 0.2s ease;
+}
+
+.addNew:hover {
+  color: #fff;
+}
