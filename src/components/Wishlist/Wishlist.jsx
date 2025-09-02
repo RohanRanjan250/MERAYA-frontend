@@ -1,68 +1,63 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./Wishlist.module.css";
 import ProductCard from "../../UI/ProductCard"; // adjust path as per your folder
 
-const WishlistPage = () => {
-  const [wishlist, setWishlist] = useState([
-    {
-      id: 1,
-      name: "Classic White Kurti",
-      selling_price: 499,
-      show_price: 799,
-      discount_percent: 38,
-      image: "https://via.placeholder.com/150?text=White+T-Shirt",
-    },
-    {
-      id: 2,
-      name: "Blue Kurti with Embroidery",
-      selling_price: 1299,
-      show_price: 1799,
-      discount_percent: 28,
-      image: "https://via.placeholder.com/150?text=Denim+Jeans",
-    },
-    {
-      id: 3,
-      name: "Kurti Set for Festive Wear",
-      selling_price: 1999,
-      show_price: 2499,
-      discount_percent: 20,
-      image: "https://via.placeholder.com/150?text=Running+Shoes",
-    },
-  ]);
+const products = [
+  {
+    image: "https://via.placeholder.com/371x400",
+    title: "Piece Title",
+    desc: "A placeholder text is a block of nonsensical",
+    price: 899,
+  },
+  {
+    image: "https://via.placeholder.com/371x400",
+    title: "Piece Title",
+    desc: "A placeholder text is a block of nonsensical",
+    price: 899,
+  },
+  {
+    image: "https://via.placeholder.com/371x400",
+    title: "Piece Title",
+    desc: "A placeholder text is a block of nonsensical",
+    price: 899,
+  },
+  {
+    image: "https://via.placeholder.com/371x400",
+    title: "Piece Title",
+    desc: "A placeholder text is a block of nonsensical",
+    price: 899,
+  },
+  {
+    image: "https://via.placeholder.com/371x400",
+    title: "Piece Title",
+    desc: "A placeholder text is a block of nonsensical",
+    price: 899,
+  },
+  {
+    image: "https://via.placeholder.com/371x400",
+    title: "Piece Title",
+    desc: "A placeholder text is a block of nonsensical",
+    price: 899,
+  },
+];
 
-  // Remove item from wishlist
-  const removeFromWishlist = (id) => {
-    setWishlist(wishlist.filter((item) => item.id !== id));
-  };
-
-  // Move item to cart (mock action for now)
-  const moveToCart = (id) => {
-    const item = wishlist.find((p) => p.id === id);
-    console.log("Moved to Cart:", item); // replace with API call later
-    removeFromWishlist(id);
-  };
-
+const Wishlist = () => {
   return (
-    <div className={styles.container}>
-      <h2 className={styles.heading}>My Wishlist</h2>
-
-      {wishlist.length === 0 ? (
-        <p className={styles.emptyText}>Your wishlist is empty.</p>
-      ) : (
+    <>
+      <div className={styles.heading}>
+        <p className={styles.wishlist}>MY WISHLIST</p>
+        <p>{products.length} ITEMS</p>
+      </div>
+      <div className={styles.container}>
         <div className={styles.grid}>
-          {wishlist.map((item) => (
-            <ProductCard
-              key={item.id}
-              product={item}         // ✅ pass the whole product
-              type="wishlist"        // ✅ let ProductCard know this is wishlist
-              onAddToCart={() => moveToCart(item.id)}
-              onRemove={() => removeFromWishlist(item.id)}
-            />
+          {products.map((p, i) => (
+            <ProductCard key={i} {...p} />
           ))}
         </div>
-      )}
-    </div>
+      </div>
+      <div className={styles.backgroundText}>MERAYA</div>
+    </>
   );
 };
 
-export default WishlistPage;
+export default Wishlist;

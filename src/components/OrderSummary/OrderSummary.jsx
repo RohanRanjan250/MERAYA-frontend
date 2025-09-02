@@ -15,7 +15,7 @@ const OrderSummary = ({ price, discount, shipping, total }) => {
       </div>
       <div className={styles.row}>
         <span className={styles.heading}>Shipping</span>
-        <span>{shipping > 0 ? `$${shipping.toFixed(2)}` : "Free"}</span>
+        <span className={styles.free}>{shipping > 0 ? `$${shipping.toFixed(2)}` : "Free"}</span>
       </div>
       <div className={styles.row}>
         <span className={styles.heading}>Coupon Applied</span>
@@ -38,7 +38,7 @@ const OrderSummary = ({ price, discount, shipping, total }) => {
         <button>Apply</button>
       </div>
 
-      <button className={styles.checkoutBtn}>Proceed to Checkout</button>
+      <button className={styles.checkoutBtn}>PROCEED TO CHECKOUT</button>
     </div>
   );
 };

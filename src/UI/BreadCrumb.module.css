@@ -1,0 +1,33 @@
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #8F8F8F;
+  font-family: 'Abel', sans-serif;
+  padding: 3.5vh 3.5vh 2vh ;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+}
+
+.link {
+  text-decoration: none;
+  color: #8F8F8F;
+  transition: color 0.2s ease-in-out;
+}
+
+.link:hover {
+  color: #f97316; /* orange hover like screenshot */
+}
+
+.current {
+  color: #E38012; /* active item (Wishlist) */
+  font-weight: 500;
+}
+
+.separator {
+  margin: 0 6px;
+  color: #8F8F8F;
+}

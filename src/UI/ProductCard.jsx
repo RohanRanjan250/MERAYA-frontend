@@ -1,54 +1,31 @@
-import React from "react";
+import { ArrowRight } from "lucide-react";
 import styles from "./ProductCard.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
-const ProductCard = ({ product, type, onAddToCart, onRemove, onMove, onSave, onQtyChange }) => {
+const ProductCard = ({ image, title, desc, price }) => {
   return (
     <div className={styles.card}>
-      {/* Product Image */}
+      {/* Image */}
       <div className={styles.imageWrapper}>
-        <img src={product.image} alt={product.name} className={styles.image} />
+        <img src={image} alt={title} className={styles.image} />
+        <button className={styles.wishlistBtn}>
+          <FontAwesomeIcon icon={faXmark} />
+        </button>
       </div>
-      <div className={styles.info}>
-        {/* Product Details */}
-        <div className={styles.details}>
-            <h3 className={styles.title}>{product.name}</h3>
-            <p className={styles.price}>
-            ₹{product.selling_price}{" "}
-            <span className={styles.oldPrice}>₹{product.show_price}</span>
-            </p>
-            <p className={styles.discount}>({product.discount_percent}% off)</p>
-        </div>
 
-        {/* Action Buttons */}
-        <div className={styles.actions}>
-            {type === "wishlist" && (
-            <>
-                <button className={styles.addToCart} onClick={onAddToCart}>
-                Move to Cart
-                </button>
-                <button className={styles.delete} onClick={onRemove}>
-                Remove
-                </button>
-            </>
-            )}
-
-            {type === "cart" && (
-            <>
-                <div className={styles.qtyControl}>
-                <button onClick={() => onQtyChange(product.id, -1)} className={styles.qtybutton}>-</button>
-                <span className={styles.qtyy}>{product.qty}</span>
-                <button onClick={() => onQtyChange(product.id, +1)} className={styles.qtybutton}>+</button>
-                </div>
-                {/* <button className={styles.secondary} onClick={() => onSave(product.id)}>
-                Save for later
-                </button> */}
-                <button className={styles.delete} onClick={onRemove}>
-                Delete
-                </button>
-            </>
-            )}
+      {/* Details */}
+      <div className={styles.meta}>
+          <p className={styles.desc}>{desc}</p>
+        <h3 className={styles.title}>{title}</h3>
+        <div className={styles.metaBottom}>
+          <p className={styles.price}>₹{price}</p>
+          <button className={styles.button}>
+            Add to Cart ↙
+          </button>
         </div>
       </div>
+      <hr className={styles.divider} />
     </div>
   );
 };

@@ -96,6 +96,15 @@
   font-size: 1.2vw;
 }
 
+.divider {
+  border: none;
+  height: 0.1vw;
+  background-color: rgba(244, 243, 241, 1);
+  margin: 1.2vw 0;
+  width: 100%;
+  opacity: 0.6;
+}
+
 .backgroundText {
   position: absolute;
   top: 50%;
@@ -116,14 +125,6 @@
   margin-top: 7.5vw;
 }
 
-.divider {
-  border: none;
-  height: 0.1vw;
-  background-color: rgba(244, 243, 241, 1);
-  margin: 1.2vw 0;
-  width: 100%;
-  opacity: 0.6;
-}
 
 @media (max-width: 1024px) {
   .sectionWrapper {
