@@ -76,7 +76,11 @@ export default function Checkout() {
   return (
     <>
         <div className={styles.heading}>
+          <div className={styles.steps}>
             <p className={styles.wishlist}>MY CART</p>
+            <p className={styles.whiteLine}></p>
+            <p className={styles.current}>ADDRESS</p>
+          </div>
             <p>{totalItems} ITEMS</p>
         </div>
         <div className={styles.checkout}>

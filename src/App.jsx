@@ -1,5 +1,5 @@
 import './App.css'
-import React from "react";
+import {React,useEffect} from "react";
 import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, BrowserRouter } from 'react-router-dom';
 import Landing from './pages/Landing';
@@ -10,8 +10,12 @@ import Wishlist from './pages/WishlistPage';
 import CartPage from './pages/CartPage';
 import ProductPage from './pages/ProductPage';
 import Checkout from './pages/CheckoutPage';
+import setupInterceptors from './API/interceptor';
 
 function App() {
+  useEffect(()=>{
+    setupInterceptors() ;
+  })
   return (
       <BrowserRouter>
         <Routes>
@@ -29,3 +33,5 @@ function App() {
 }
 
 export default App
+
+

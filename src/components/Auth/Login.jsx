@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Signup.module.css";
 import logo from "../../assets/logo-removebg-preview.png"; // Adjust the path if needed
-import { login } from "../../API/authApi";
+import { login,emailloginverify } from "../../API/authApi";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -18,22 +18,19 @@ const Login = () => {
   };
 
   // 🔹 Request OTP via email
-  const handleSendOtp = () => {
-    fetch("/api/send-email-otp", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: formData.email })
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          setOtpSent(true);
-          setError(""); // clear error
-        } else {
-          setError(data.message || "Email not registered"); // 🔹 show error
-        }
-      })
-      .catch(() => setError("Something went wrong. Try again!"));
+  const handleSendOtp = async () => {
+    try {
+      const response = await emailloginverify(formData.email) ;
+      if (response?.status === 200) {
+        console.log("OTP sent");
+        setOtpSent(true);
+      } else {
+        console.log("Unexpected response", response);
+      }
+    } catch (err) {
+      console.error("OTP send failed", err);
+      setError(err.message || "Failed to send OTP. Try again!"); // 🔹 show error
+    }
   };
 
   // 🔹 Verify OTP and login
@@ -105,3 +102,5 @@ const Login = () => {
 };
 
 export default Login;
+
+

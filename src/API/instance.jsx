@@ -1,11 +1,17 @@
 import axios from "axios";
 
-const BASE_URL = "https://your-api.com";
+const BASE_URL = "http://127.0.0.1:8000";
 
 const API = axios.create({
   baseURL: BASE_URL,
   headers: { "Content-Type": "application/json" },
-  withCredentials: true // so cookies are sent (for refresh token)
+  withCredentials: true 
 });
 
-export default API;
+export const refreshAPI = axios.create({
+  baseURL: BASE_URL,
+  withCredentials: true 
+});
+
+export default API 
+

@@ -1,35 +1,45 @@
 import API from "./instance";
-import { setAccessToken, clearAccessToken } from "../utils/tokensLocalstorage";
 
 // ✅ Login API
 export const login = async (formData) => {
   try {
-    const response = await API.post("/auth/login", formData, {
-      headers: {
-        "Content-Type": "application/json", 
-      }
-    });
-
-    setAccessToken(response.data.accessToken);
+    const response = await API.post("/login", formData);
     console.log(response.data) ;
-    return response.data;
+    return response;
 
   } catch (error) {
     throw error.response?.data || error.message;
   }
 };
 
+// Mail Verification @signup
+
+export const emailVerify = async (email) => {
+  try{
+    const response  = await API.post("/signupotp",{'email':email});
+    console.log(response);
+    return response ;
+  }catch (err){
+    throw err.response?.data || err.message ;
+  }
+}
+
+// Mail Verification @ Login
+export const emailloginverify = async (email) => {
+  try{
+    const response  = await API.post("/loginotp",{'email':email});
+    console.log(response) ;
+    return response ;
+  }catch (err){
+    throw err.response?.data || err.message ;
+  }
+}
+
 // ✅ Signup API
 export const signup = async (formData) => {
   try {
-    const response = await API.post("/auth/signup", formData, {
-      headers: {
-        "Content-Type": "application/json",
-      }
-    });
+    const response = await API.post("/signupotp_verify", formData);
 
-
-    setAccessToken(response.data.accessToken);
     return response.data;
   } catch (error) {
     throw error.response?.data || error.message;
@@ -39,8 +49,8 @@ export const signup = async (formData) => {
 // ✅ Logout API
 export const logout = async () => {
   try {
-    await API.post("/auth/logout", {}, { withCredentials: true });
-    clearAccessToken();
+    const response = await API.post("/logout");
+    return response ;
   } catch (error) {
     throw error.response?.data || error.message;
   }

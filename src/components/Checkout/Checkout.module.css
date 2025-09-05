@@ -26,8 +26,19 @@
   color: #FBFBFB;
 }
 
-.wishlist {
-  font-weight: 700;
-  -webkit-text-stroke: 0.5px #fff;
+.steps {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
 
+.whiteLine {
+  width: 15vh;
+  height: 2px;
+  background-color: #ffffff;
+}
+
+.current {
+  font-weight: 700;
+  -webkit-text-stroke: 0.5px #FBFBFB;
 }

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Signup.module.css";
-import logo from "../../assets/logo-removebg-preview.png"; // Adjust the path as necessary
+import logo from "../../assets/logo-removebg-preview.png"; 
+import {emailVerify, signup } from "../../API/authApi.jsx"
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -17,33 +18,26 @@ const Login = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleVerify = () => {
-    // 🔹 Send OTP request to backend
-    fetch("/api/send-otp", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ phone: formData.phone })
-    })
-      .then((res) => res.json())
-      .then(() => {
+  const handleVerify = async () => {
+    try {
+      const response = await emailVerify(formData.email);
+      if (response?.status === 200) {
+        console.log("OTP sent");
         setOtpSent(true);
-      })
-      .catch((err) => console.error(err));
+      } else {
+        console.log("Unexpected response", response);
+      }
+    } catch (err) {
+      console.error("verify failed", err);
+      // handle/show error to user
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // 🔹 Send full data with OTP to backend
-    fetch("/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData)
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        alert("User registered successfully!");
-      })
-      .catch((err) => console.error(err));
+    const data  = await signup(formData) ;
+    console.log(data) ;
   };
 
   return (
@@ -108,7 +102,7 @@ const Login = () => {
               <button type="submit">Submit</button>
             </>
           )}
-        <p>Already have an account?      <a href="/auth">Click here</a></p>
+        <p>Already have an account?      <a href="/login">Click here</a></p>
         </form>
       </div>
     </div>

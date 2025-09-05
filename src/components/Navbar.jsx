@@ -3,6 +3,7 @@ import styles from './Navbar.module.css';
 import logo from '../assets/image.png';
 import { FaSearch, FaUser, FaHeart, FaShoppingBag } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { logout } from '../API/authApi';  
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -21,9 +22,20 @@ const Navbar = () => {
     }, 100);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    window.location.href = "/";
+  const handleLogout = async () => {
+    try{
+      const response  =  await logout() ;
+      if(response.status == 200){
+        console.log("hat benchor") ;
+        window.location.href = "/";
+      }else{
+        console.log("some error ocured") ;
+      }
+    }
+    catch(err){
+      console.log(err) ;
+    }
+    
   };
 
   // Dummy search results (replace with API later)
