@@ -13,5 +13,10 @@ export const refreshAPI = axios.create({
   withCredentials: true 
 });
 
+export const openAPI = axios.create({
+  baseURL : BASE_URL,
+  withCredentials : true 
+})
+
 export default API 
 

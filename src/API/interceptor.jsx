@@ -1,18 +1,21 @@
 import API, { refreshAPI } from "./instance";
 
-
 const setupInterceptors = () => {
-
   API.interceptors.request.use(
-    config => {
-      
-      return config;
+    (config) => {
+      console.log(config) ;
+      const isAuth = JSON.parse(localStorage.getItem("isAuth"));
+      if (!(config.url=="/login" || config.url=="signupotp_verify" || config.url=="/signupotp" || config.url=="/loginotp" ) && !isAuth) {
+        window.location.href = "/login";
+      } else {
+        return config;
+      }
     },
-    error => Promise.reject(error)
+    (error) => Promise.reject(error)
   );
 
   API.interceptors.response.use(
-    response => response,
+    (response) => response,
     async (error) => {
       const originalRequest = error.config;
 
@@ -20,11 +23,8 @@ const setupInterceptors = () => {
         originalRequest._retry = true;
         try {
           await refreshAPI.post("/refresh");
-          console.log("chutiya hain tu bhag ja madar chod login kar pahele ")
-
           return API(originalRequest);
-        } catch (err) { 
-          console.log(err)
+        } catch (err) {
           return Promise.reject(err);
         }
       }

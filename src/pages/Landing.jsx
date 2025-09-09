@@ -1,4 +1,4 @@
-import React from 'react'
+import  React from 'react'
 import Navbar from '../components/Navbar.jsx'
 import DoubleLine from '../UI/DoubleLine.jsx'
 import FashionSplit from '../components/FashionSplit/FashionSpilt'
@@ -9,27 +9,30 @@ import CollegeEditionSection from '../components/CheckMore/CollegeEditionSection
 import AboutUs from '../components/AboutUs/AboutUs'
 import Upcoming from '../components/Upcoming/Upcoming'
 import Footer from '../components/FooterSection/Footer'
+import { LandingProvider } from '../Context/LandingpageContext.jsx'
 
 export default function Landing() {
   return (
     <>
-      <Navbar />
-      <DoubleLine />
-      <FashionSplit />
-      <PartitionHeader leftText="XVI" rightText="NEW ARRIVAL" />
-      <DoubleLine />
-      <ProductDisplay />
-      <HeroGallery />
-      <PartitionHeader leftText="XVII" rightText="CHECK MORE" />
-      <DoubleLine />
-      <CollegeEditionSection />
-      <PartitionHeader leftText="XVIII" rightText="ABOUT US" />
-      <DoubleLine />
-      <AboutUs />
-      <PartitionHeader leftText="XIX" rightText="UPCOMING" />
-      <DoubleLine />
-      <Upcoming />
-      <Footer />
+      <LandingProvider>
+        <Navbar />
+        <DoubleLine />
+        <FashionSplit />
+        <PartitionHeader leftText="XVI" rightText="NEW ARRIVAL" />
+        <DoubleLine />
+        <ProductDisplay />
+        <HeroGallery />
+        <PartitionHeader leftText="XVII" rightText="CHECK MORE" />
+        <DoubleLine />
+        <CollegeEditionSection />
+        <PartitionHeader leftText="XVIII" rightText="ABOUT US" />
+        <DoubleLine />
+        <AboutUs />
+        <PartitionHeader leftText="XIX" rightText="UPCOMING" />
+        <DoubleLine />
+        <Upcoming />
+        <Footer />
+      </LandingProvider>
     </>
   )
 }

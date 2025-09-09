@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import styles from "./Signup.module.css";
 import logo from "../../assets/logo-removebg-preview.png"; // Adjust the path if needed
 import { login,emailloginverify } from "../../API/authApi";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate() ;
   const [formData, setFormData] = useState({
     email: "",
     otp: ""
@@ -21,7 +23,7 @@ const Login = () => {
   const handleSendOtp = async () => {
     try {
       const response = await emailloginverify(formData.email) ;
-      if (response?.status === 200) {
+      if (response.status == 200) {
         console.log("OTP sent");
         setOtpSent(true);
       } else {
@@ -38,8 +40,9 @@ const Login = () => {
     e.preventDefault();
     try {
       const data = await login(formData); // ✅ fixed formData typo
-      if (data.success) {
-        alert("Login successful!");
+      if (data.status === 200) {
+        navigate("/")
+        
         setError("");
       } else if ( data.status == 400){
         setError(data.message || "Invalid OTP or Email not registered"); // 🔹 show error

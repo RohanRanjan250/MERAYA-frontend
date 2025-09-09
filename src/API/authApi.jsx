@@ -28,10 +28,10 @@ export const emailVerify = async (email) => {
 export const emailloginverify = async (email) => {
   try{
     const response  = await API.post("/loginotp",{'email':email});
-    console.log(response) ;
+    console.log(response);
     return response ;
   }catch (err){
-    throw err.response?.data || err.message ;
+    throw err.message ;
   }
 }
 

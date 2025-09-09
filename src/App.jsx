@@ -1,37 +1,48 @@
-import './App.css'
-import {React,useEffect} from "react";
-import { lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route, BrowserRouter } from 'react-router-dom';
-import Landing from './pages/Landing';
-import Signup from './pages/SignupPage';
-import Login from './pages/LoginPage';
-import Profile from './pages/ProfilePage';
-import Wishlist from './pages/WishlistPage';
-import CartPage from './pages/CartPage';
-import ProductPage from './pages/ProductPage';
-import Checkout from './pages/CheckoutPage';
-import setupInterceptors from './API/interceptor';
+import "./App.css";
+import { React, useEffect } from "react";
+import { lazy, Suspense } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  BrowserRouter,
+} from "react-router-dom";
+import Landing from "./pages/Landing";
+import Signup from "./pages/SignupPage";
+import Login from "./pages/LoginPage";
+import Profile from "./pages/ProfilePage";
+import Wishlist from "./pages/WishlistPage";
+import CartPage from "./pages/CartPage";
+import ProductPage from "./pages/ProductPage";
+import Checkout from "./pages/CheckoutPage";
+import setupInterceptors from "./API/interceptor";
+import { LandingProvider } from "./Context/LandingpageContext";
 
 function App() {
-  useEffect(()=>{
-    setupInterceptors() ;
-  })
+  useEffect(() => {
+    setupInterceptors();
+  });
   return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/wishlist" element={<Wishlist />} /> 
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/product" element={<ProductPage />} />
-          <Route path="/checkout" element={<Checkout />} />
-        </Routes>
-      </BrowserRouter>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <LandingProvider>
+              <Landing />
+            </LandingProvider>
+          }
+        />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/product" element={<ProductPage />} />
+        <Route path="/checkout" element={<Checkout />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
-export default App
-
-
+export default App;
