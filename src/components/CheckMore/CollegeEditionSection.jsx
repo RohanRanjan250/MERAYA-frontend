@@ -2,8 +2,10 @@ import React, { useContext } from "react";
 import styles from './CollegeEditionSection.module.css';
 import { LandingContext } from "../../Context/LandingpageContext.jsx";
 import { buyProduct, selectProduct } from "../../API/productmainpageAPI.jsx"; 
+import { useNavigate } from "react-router-dom";
 
 const CollegeEditionSection = () => {
+  const navigate = useNavigate();
   const { data } = useContext(LandingContext);
   console.log(data) ;
   if (!data || data.length === 0) {
@@ -27,6 +29,12 @@ const CollegeEditionSection = () => {
     try {
       const res = await selectProduct(id);
       console.log("Thumbnail Click Response:", res);
+      if (res) {
+          console.log("hat benchor");
+          navigate("/product");
+        } else {
+          console.log("some error ocured");
+        }
     } catch (err) {
       console.error("Thumbnail Click Error:", err);
     }
