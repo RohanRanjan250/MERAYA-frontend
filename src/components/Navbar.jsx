@@ -1,20 +1,23 @@
-import React, { useState, useRef } from 'react';
-import styles from './Navbar.module.css';
-import logo from '../assets/image.png';
-import { FaSearch, FaUser, FaHeart, FaShoppingBag } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
-import { logout } from '../API/authApi';  
+import React, { useState, useRef } from "react";
+import styles from "./Navbar.module.css";
+import logo from "../assets/image.png";
+import { FaSearch, FaUser, FaHeart, FaShoppingBag } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../API/authApi";
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [query, setQuery] = useState("");
+  const navigate = useNavigate();
   const timeoutRef = useRef(null);
 
   const handleMouseEnter = () => {
     clearTimeout(timeoutRef.current);
     setShowDropdown(true);
   };
+
+  let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
 
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
@@ -23,19 +26,22 @@ const Navbar = () => {
   };
 
   const handleLogout = async () => {
-    try{
-      const response  =  await logout() ;
-      if(response.status == 200){
-        console.log("hat benchor") ;
-        window.location.href = "/";
-      }else{
-        console.log("some error ocured") ;
+    try {
+      if (!isAuth) {
+        navigate("/login");
+        return ;
+      } else {
+        const response = await logout();
+        if (response.status == 200) {
+          console.log("hat benchor");
+          window.location.href = "/";
+        } else {
+          console.log("some error ocured");
+        }
       }
+    } catch (err) {
+      console.log(err);
     }
-    catch(err){
-      console.log(err) ;
-    }
-    
   };
 
   // Dummy search results (replace with API later)
@@ -44,7 +50,7 @@ const Navbar = () => {
     "Blue Jeans",
     "Leather Jacket",
     "Sneakers",
-    "Handbag"
+    "Handbag",
   ];
 
   const filteredResults = sampleResults.filter((item) =>
@@ -67,7 +73,11 @@ const Navbar = () => {
 
         <div className={styles.iconGroup}>
           {/* Search Input + Icon */}
-          <div className={`${styles.searchWrapper} ${showSearch ? styles.active : ""}`}>
+          <div
+            className={`${styles.searchWrapper} ${
+              showSearch ? styles.active : ""
+            }`}
+          >
             <input
               type="text"
               value={query}

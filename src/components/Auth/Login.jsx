@@ -61,7 +61,7 @@ const Login = () => {
 
       {/* Right Side */}
       <div className={styles.right}>
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form className={styles.form}>
           <h2>Login</h2>
 
           {/* Email input */}

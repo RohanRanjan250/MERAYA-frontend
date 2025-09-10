@@ -70,9 +70,11 @@
   font-size: 1.2vw;
   text-decoration: none;
   color: #e38012;
+  border: none;
   border-bottom: 1px solid #e38012;
   font-family: 'Abel', sans-serif;
   margin-bottom: 3vw;
+  background: none;
 }
 
 .collegeThumbnails {

@@ -3,13 +3,7 @@ import API, { refreshAPI } from "./instance";
 const setupInterceptors = () => {
   API.interceptors.request.use(
     (config) => {
-      console.log(config) ;
-      const isAuth = JSON.parse(localStorage.getItem("isAuth"));
-      if (!(config.url=="/login" || config.url=="signupotp_verify" || config.url=="/signupotp" || config.url=="/loginotp" ) && !isAuth) {
-        window.location.href = "/login";
-      } else {
-        return config;
-      }
+        return config; 
     },
     (error) => Promise.reject(error)
   );
