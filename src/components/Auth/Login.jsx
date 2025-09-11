@@ -88,7 +88,7 @@ const Login = () => {
                 onChange={handleChange}
                 required
               />
-              <button type="submit">Login</button>
+              <button onClick={handleSubmit}>Login</button>
             </>
           )}
 

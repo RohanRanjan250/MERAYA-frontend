@@ -17,3 +17,12 @@ export const updateReviewReaction = async (reviewId, action) => {
     throw error.response?.data || error.message;
   }
 };
+
+export const toggleWishlist = async (productId) => {
+  try {
+    const response = await API.post(`/wishlist/${productId}/toggle/`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};

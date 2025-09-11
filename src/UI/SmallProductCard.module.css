@@ -84,4 +84,9 @@
   color: #F4F3F1;
   margin-top: 2vh;
   line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* limit to 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

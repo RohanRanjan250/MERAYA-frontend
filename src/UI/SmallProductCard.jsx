@@ -8,15 +8,15 @@ const ProductCard = ({ product }) => {
   return (
     <div className={styles.card}>
       <div className={styles.imageWrapper}>
-        <img src={product.image} alt={product.title} />
+        <img src={product.images[0]} alt={product.title} />
         <button className={styles.wishlistBtn}>
           <FontAwesomeIcon icon={faHeart} />
         </button>
       </div>
       <div className={styles.details}>
-        <p className={styles.brand}>{product.brand}</p>
+        <p className={styles.brand}>MERAYA's</p>
         <div className={styles.titlePriceRow}>
-          <p className={styles.title}>{product.title}</p>
+          <p className={styles.title}>{product.name}</p>
           <span className={styles.whiteLine}></span>
           <span className={styles.price}>
             ₹{product.price}

@@ -9,36 +9,16 @@ import { faShareFromSquare } from "@fortawesome/free-regular-svg-icons";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faIndianRupeeSign } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
-import {buyProduct, updateReviewReaction} from "../../API/productmainpageAPI.jsx" ;
+import {buyProduct, updateReviewReaction, toggleWishlist} from "../../API/productmainpageAPI.jsx" ;
+import { useNavigate } from "react-router-dom";
 
-export default function ProductPage() {
-  const { slug } = useParams();
-  const [product, setProduct] = useState(null);
-  const [selectedImage, setSelectedImage] = useState("");
-//   const [selectedColor, setSelectedColor] = useState("");
-  const [selectedSize, setSelectedSize] = useState("");
-
-  useEffect(() => {
-    async function fetchProduct() {
-      try {
-        console.log(slug);
-        const mockProduct = await buyProduct(slug);
-
-        console.log(mockProduct) ;
-
-        setProduct(mockProduct);
-        setSelectedImage(mockProduct.images[0]);
-        // setSelectedColor(mockProduct.colors[0]);
-        setSelectedSize(mockProduct.variants[0]);
-      } catch (error) {
-        console.error("Error fetching product:", error);
-      }
-    }
-
-    fetchProduct();
-  }, [slug]);
-
-  if (!product) return <p className={styles.loading}>Loading...</p>;
+export default function Product({ product, setProduct }) {
+  const [selectedImage, setSelectedImage] = useState(product.images[0]);
+  const [selectedSize, setSelectedSize] = useState(product.variants[0]);
+  const navigate = useNavigate();
+  const [toastVisible, setToastVisible] = useState(false);
+  const [wishlistToast, setWishlistToast] = useState(false);
+  let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
 
   const reviews = product.reviews || [];
   const totalReviews = reviews.length;
@@ -48,21 +28,84 @@ export default function ProductPage() {
       : 0;
 
   const handleReaction = async (reviewId, action) => {
-    try {
-      const updatedReview = await updateReviewReaction(reviewId, action);
-      setProduct((prev) => ({
-        ...prev,
-        reviews: prev.reviews.map((r) =>
-          r.id === updatedReview.id ? { ...r, ...updatedReview } : r
-        ),
-      }));
+  try {
+    if (!isAuth) {
+      navigate("/login"); // redirect to login if not authenticated
+      return; // stop execution
+    }
+
+    // ✅ only update frontend if logged in
+    setProduct(prev => ({
+      ...prev,
+      reviews: prev.reviews.map(r => {
+        if (r.id !== reviewId) return r;
+
+        let updated = { ...r };
+
+        if (action === "like") {
+          if (r.userReaction === "like") { // already liked, remove like
+            updated.likes -= 1;
+            updated.userReaction = null;
+          } else { // add like
+            updated.likes += 1;
+            if (r.userReaction === "dislike") updated.dislikes -= 1; // remove dislike if any
+            updated.userReaction = "like";
+          }
+        } else if (action === "dislike") {
+          if (r.userReaction === "dislike") { // already disliked, remove dislike
+            updated.dislikes -= 1;
+            updated.userReaction = null;
+          } else { // add dislike
+            updated.dislikes += 1;
+            if (r.userReaction === "like") updated.likes -= 1; // remove like if any
+            updated.userReaction = "dislike";
+          }
+        }
+
+        return updated;
+      })
+    }));
+
+    // ✅ update backend only if authenticated
+    await updateReviewReaction(reviewId, action);
     } catch (error) {
       console.error("Failed to update reaction:", error);
     }
-  };  
+  };
 
 
-  
+  const [inWishlist, setInWishlist] = useState(product.in_wishlist || false);
+
+  const handleWishlist = async () => {
+    try {
+      if (!isAuth) {
+        console.log("not logged in")
+        navigate("/login");
+        return ;
+      } else {
+        await toggleWishlist(product.id);
+        setInWishlist((prev) => !prev);
+        setWishlistToast(true);
+        setTimeout(() => setWishlistToast(false), 2000); // hide after 2 seconds
+      }
+    } catch (error) {
+      console.error("Failed to update wishlist:", error);
+    }
+  };
+
+  const handleShare = () => {
+    const url = window.location.href;
+    console.log(url);
+    navigator.clipboard.writeText(url)
+      .then(() => {
+        setToastVisible(true);
+        setTimeout(() => setToastVisible(false), 2000); // hide after 2 seconds
+      })
+      .catch((err) => {
+        console.error("Failed to copy URL: ", err);
+      });
+  };
+
   return (
     <div className={styles.product}>
       <div className={styles.container}>
@@ -89,10 +132,10 @@ export default function ProductPage() {
         </div>
 
         <div className={styles.center}>
-          <button className={styles.iconButton}>
+          <button className={styles.iconButton} onClick={handleShare}>
             <FontAwesomeIcon icon={faShareFromSquare} size="lg" />
           </button>
-          <button className={styles.iconButton}>
+          <button className={styles.iconButton} onClick={handleWishlist}>
             <FontAwesomeIcon icon={farHeart} size="lg" />
           </button>
         </div>
@@ -169,6 +212,18 @@ export default function ProductPage() {
         </div>
       </div>
       <div className={styles.backgroundText}>MERAYA</div>
+      
+      {toastVisible && (
+        <div className={styles.toast}>
+          Product URL copied to clipboard!
+        </div>
+      )}
+
+      {wishlistToast && (
+        <div className={styles.toast}>
+          {inWishlist ? "Removed from wishlist" : "Added to wishlist"}!
+        </div>
+      )}
 
       <div className={styles.reviewsSection}>
         <p className={styles.title}>REVIEWS</p>
@@ -222,10 +277,17 @@ export default function ProductPage() {
                   </div>
 
                   <div className={styles.actions}>
-                    <button className={styles.actionBtn} onClick={() => handleReaction(review.id, "like")}>
+                    <button 
+                      className={`${styles.actionBtn} ${review.userReaction === "like" ? styles.activeReaction : ""}`} 
+                      onClick={() => handleReaction(review.id, "like")}
+                    >
                       <FontAwesomeIcon icon={faThumbsUp} /> {review.likes}
                     </button>
-                    <button className={styles.actionBtn} onClick={() => handleReaction(review.id, "dislike")}>
+
+                    <button 
+                      className={`${styles.actionBtn} ${review.userReaction === "dislike" ? styles.activeReaction : ""}`} 
+                      onClick={() => handleReaction(review.id, "dislike")}
+                    >
                       <FontAwesomeIcon icon={faThumbsDown} /> 
                       {/* {review.dislikes} */}
                     </button>
