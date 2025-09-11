@@ -9,7 +9,7 @@ import { faShareFromSquare } from "@fortawesome/free-regular-svg-icons";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faIndianRupeeSign } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
-import {buyProduct} from "../../API/productmainpageAPI.jsx" ;
+import {buyProduct, updateReviewReaction} from "../../API/productmainpageAPI.jsx" ;
 
 export default function ProductPage() {
   const { slug } = useParams();
@@ -47,6 +47,22 @@ export default function ProductPage() {
       ? reviews.reduce((sum, r) => sum + r.rating, 0) / totalReviews
       : 0;
 
+  const handleReaction = async (reviewId, action) => {
+    try {
+      const updatedReview = await updateReviewReaction(reviewId, action);
+      setProduct((prev) => ({
+        ...prev,
+        reviews: prev.reviews.map((r) =>
+          r.id === updatedReview.id ? { ...r, ...updatedReview } : r
+        ),
+      }));
+    } catch (error) {
+      console.error("Failed to update reaction:", error);
+    }
+  };  
+
+
+  
   return (
     <div className={styles.product}>
       <div className={styles.container}>
@@ -206,10 +222,10 @@ export default function ProductPage() {
                   </div>
 
                   <div className={styles.actions}>
-                    <button className={styles.actionBtn}>
+                    <button className={styles.actionBtn} onClick={() => handleReaction(review.id, "like")}>
                       <FontAwesomeIcon icon={faThumbsUp} /> {review.likes}
                     </button>
-                    <button className={styles.actionBtn}>
+                    <button className={styles.actionBtn} onClick={() => handleReaction(review.id, "dislike")}>
                       <FontAwesomeIcon icon={faThumbsDown} /> 
                       {/* {review.dislikes} */}
                     </button>

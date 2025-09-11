@@ -8,3 +8,12 @@ export const buyProduct = async (slug) => {
     throw error.response?.data || error.message;
   }
 };
+
+export const updateReviewReaction = async (reviewId, action) => {
+  try{
+    const response = await API.post(`/reviews/${reviewId}/reaction/`, {action})
+    return response.data
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};
