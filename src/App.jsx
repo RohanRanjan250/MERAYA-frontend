@@ -38,7 +38,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/cart" element={<CartPage />} />
-        <Route path="/product" element={<ProductPage />} />
+        <Route path="/product/:slug" element={<ProductPage />} />
         <Route path="/checkout" element={<Checkout />} />
       </Routes>
     </BrowserRouter>

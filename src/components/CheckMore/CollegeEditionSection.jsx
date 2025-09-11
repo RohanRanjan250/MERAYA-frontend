@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import styles from './CollegeEditionSection.module.css';
 import { LandingContext } from "../../Context/LandingpageContext.jsx";
-import { buyProduct, selectProduct } from "../../API/productmainpageAPI.jsx"; 
 import { useNavigate } from "react-router-dom";
 
 const CollegeEditionSection = () => {
   const navigate = useNavigate();
   const { data } = useContext(LandingContext);
-  console.log(data) ;
+  
+
   if (!data || data.length === 0) {
     return <div>Loading...</div>;
   }
@@ -16,27 +16,13 @@ const CollegeEditionSection = () => {
   const thumbnails = data;
   // console.log(thumbnails) ;
 
-  const handleBuyNow = async (id) => {
+  const handleBuyNow = async (slug) => {
     try {
-      const res = await buyProduct(id);
-      console.log("Buy Now Response:", res);
+      // const res = await buyProduct(id);
+      navigate(`/product/${slug}`);
+      // console.log("Buy Now Response:", res);
     } catch (err) {
       console.error("Buy Now Error:", err);
-    }
-  };
-
-  const handleThumbnailClick = async (id) => {
-    try {
-      const res = await selectProduct(id);
-      console.log("Thumbnail Click Response:", res);
-      if (res) {
-          console.log("hat benchor");
-          navigate("/product");
-        } else {
-          console.log("some error ocured");
-        }
-    } catch (err) {
-      console.error("Thumbnail Click Error:", err);
     }
   };
 
@@ -63,7 +49,7 @@ const CollegeEditionSection = () => {
             </p>
             <button
               className={styles.buyNow}
-              onClick={() => handleBuyNow(thumbnails[0].id)} // ✅ send product id
+              onClick={() => handleBuyNow(thumbnails[0].slug)} // ✅ send product id
             >
               BUY NOW
             </button>
@@ -75,7 +61,7 @@ const CollegeEditionSection = () => {
                 <div
                   key={index}
                   className={styles.collegeThumbCard}
-                  onClick={() => handleThumbnailClick(item.id)} // ✅ send product id
+                  onClick={() => handleBuyNow(item.slug)} // ✅ send product id
                   style={{ cursor: "pointer" }}
                 >
                   <img

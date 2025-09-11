@@ -1,30 +1,31 @@
 import { createContext, useState, useEffect } from "react";
-import { openAPI } from '../API/instance.jsx'
+import { openAPI } from "../API/instance.jsx";
 
 export const LandingContext = createContext();
 
 export function LandingProvider({ children }) {
-  const [data, setData] = useState(null);
-  
+  const [data, setData] = useState([]);
+  const [selectedProduct, setselectedProduct] = useState(null);
+  useEffect(() => {
     async function fetchLandingData() {
-        try{
-            const response = await openAPI.get("/get_all_products")  ;
+      try {
+        const response = await openAPI.get("/get_all_products");
 
-            if(response.status === 200){
-              console.log(response) ;
-                const isAuth = response.data.auth.isAuthenticated ;
-                localStorage.setItem("isAuthenticated", JSON.stringify(isAuth));
-                setData(response.data.products) ;
-            }
+        if (response.status === 200) {
+          console.log(response);
+          const isAuth = response.data.auth.isAuthenticated;
+          localStorage.setItem("isAuthenticated", JSON.stringify(isAuth));
+          setData(response.data.products);
         }
-        catch(err){
-            console.log(err);
-        }
+      } catch (err) {
+        console.log(err);
+      }
     }
-    
+    fetchLandingData()
+  }, []);
 
   return (
-    <LandingContext.Provider value={{ data, setData, fetchLandingData }}>ch
+    <LandingContext.Provider value={{ data, selectedProduct, setselectedProduct }}>
       {children}
     </LandingContext.Provider>
   );

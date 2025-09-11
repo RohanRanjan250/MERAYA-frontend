@@ -277,3 +277,150 @@
   overflow: hidden;
   margin-top: 37.5vw;
 }
+
+.reviewsSection {
+  background: #040404;
+  color: #fff;
+  padding: 2rem;
+  font-family: 'Abel', sans-serif;
+  margin-top: 7vh;
+}
+
+.title {
+  font-size: 3.5vh;
+  margin-bottom: 1rem;
+  font-family: 'Abel', sans-serif;
+}
+
+.containerr {
+  display: flex;
+  padding: 2rem;
+  background: #040404;
+  max-width: 120vh;
+  margin: 20px auto;
+  padding: 20px;
+  min-height: 50vh;
+  margin-top: 2vh;
+  font-family: 'Abel', sans-serif;
+  gap: 7vh;
+}
+
+.summary {
+  display: flex;
+  flex-direction: row;
+}
+
+.ratingCircle {
+  width: 70px;
+  height: 70px;
+  border: 2px solid #00C9B7;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.ratingNumber {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #00C9B7;
+}
+
+.s{
+  margin-left: 2vh;
+  margin-top: 1.3vh;
+}
+
+.stars {
+  display: flex;
+  gap: 0.2rem;
+}
+
+.starFilled {
+  color: #00C9B7;
+}
+
+.starEmpty {
+  color: #333;
+}
+
+.reviewCount {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #BABABA;
+}
+
+.reviewList {
+  flex: 1;
+}
+
+.listTitle {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  color: #FFFFFF;
+}
+
+.reviewCard {
+  border-bottom: 1px solid #333;
+  padding: 1rem 0;
+}
+
+.reviewStars {
+  display: flex;
+  gap: 0.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.reviewTitle {
+  font-weight: bold;
+  margin: 0;
+}
+
+.reviewDesc {
+  margin: 0.3rem 0;
+  color: #ccc;
+}
+
+.reviewDate {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.reviewFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2.5vh;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.username {
+  font-size: 1.7vh;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.actionBtn {
+  padding: 0.7rem 1rem;
+  border: 1px solid #E6E6E6;
+  background: transparent;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: 'Abel', sans-serif;
+}
