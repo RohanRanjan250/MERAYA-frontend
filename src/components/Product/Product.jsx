@@ -9,7 +9,7 @@ import { faShareFromSquare } from "@fortawesome/free-regular-svg-icons";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faIndianRupeeSign } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
-import {buyProduct, updateReviewReaction, toggleWishlist} from "../../API/productmainpageAPI.jsx" ;
+import {updateReviewReaction, toggleWishlist, addToCart} from "../../API/productmainpageAPI.jsx" ;
 import { useNavigate } from "react-router-dom";
 
 export default function Product({ product, setProduct }) {
@@ -30,8 +30,8 @@ export default function Product({ product, setProduct }) {
   const handleReaction = async (reviewId, action) => {
   try {
     if (!isAuth) {
-      navigate("/login"); // redirect to login if not authenticated
-      return; // stop execution
+      navigate("/login"); 
+      return; 
     }
 
     // ✅ only update frontend if logged in
@@ -104,6 +104,21 @@ export default function Product({ product, setProduct }) {
       .catch((err) => {
         console.error("Failed to copy URL: ", err);
       });
+  };
+
+  const handleAddToCart = async () => {
+    try {
+      if (!isAuth) {
+        navigate("/login");
+        return;
+      }
+
+      const res = await addToCart(product.id, 1);
+      console.log(res);
+      alert("Product added to cart! ✅"); // later replace with toast
+    } catch (err) {
+      console.error("Failed to add to cart:", err);
+    }
   };
 
   return (
@@ -203,7 +218,7 @@ export default function Product({ product, setProduct }) {
 
           {/* Action Buttons */}
           <div className={styles.actions}>
-            <button className={styles.cartBtn}>ADD TO CART<ArrowDownLeft className={styles.arrow}  /></button>
+            <button className={styles.cartBtn} onClick={handleAddToCart}>ADD TO CART<ArrowDownLeft className={styles.arrow}  /></button>
             {/* <button className={styles.checkoutBtn}>Checkout Now</button> */}
           </div>
           <a href="#" className={styles.delivery}>
