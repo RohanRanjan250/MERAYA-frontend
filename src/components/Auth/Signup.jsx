@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./Signup.module.css";
-import logo from "../../assets/logo-removebg-preview.png"; 
+import logo from "../../assets/login.png"; 
 import {emailVerify, signup } from "../../API/authApi.jsx"
 
 const Login = () => {

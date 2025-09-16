@@ -19,6 +19,7 @@ export default function Product({ product, setProduct }) {
   const [toastVisible, setToastVisible] = useState(false);
   const [wishlistToast, setWishlistToast] = useState(false);
   let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
+  console.log(product);
 
   const reviews = product.reviews || [];
   const totalReviews = reviews.length;
@@ -113,7 +114,7 @@ export default function Product({ product, setProduct }) {
         return;
       }
 
-      const res = await addToCart(product.id, 1);
+      const res = await addToCart(product.id, selectedSize);
       console.log(res);
       alert("Product added to cart! ✅"); // later replace with toast
     } catch (err) {

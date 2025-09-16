@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./Signup.module.css";
-import logo from "../../assets/logo-removebg-preview.png"; // Adjust the path if needed
+import logo from "../../assets/login.png";
 import { login,emailloginverify } from "../../API/authApi";
 import { useNavigate } from "react-router-dom";
 

@@ -27,9 +27,11 @@ export const toggleWishlist = async (productId) => {
   }
 };
 
-export const addToCart = async (productId) => {
+export const addToCart = async (productId, variantId) => {
   try {
-    const response = await API.post(`/cart/add/${productId}`);
+    const response = await API.post(`/cart/add/${productId}`, {
+      variant: variantId,
+    });
     return response.data;
   } catch (error) {
     throw error.response?.data || error.message;

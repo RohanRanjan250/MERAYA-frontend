@@ -6,9 +6,9 @@
 
 /* Left side with blurred logo */
 .left {
-  flex: 1; /* takes half width */
+  flex: 1.1; /* takes half width */
   position: relative;
-  margin-left: 20px; /* extra margin on the left if you want */
+  /* margin-left: 20px; extra margin on the left if you want */
 }
 
 .logo {
@@ -16,7 +16,7 @@
   height: 100%;
   object-fit: cover;
   /* filter: blur(8px); */
-  opacity: 0.3;
+  /* opacity: 0.3; */
 }
 
 /* Right side form */
