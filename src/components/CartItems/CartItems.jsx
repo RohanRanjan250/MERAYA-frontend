@@ -1,18 +1,23 @@
 import React from "react";
 import styles from "./CartItems.module.css";
 
-const CartItems = ({ items, onQuantityChange, onRemove }) => {
+const CartItems = ({ items, onQuantityChange, onRemove, onBuyNow }) => {
   return (
     <div className={styles.cartItems}>
       {items.map((item) => (
         <div key={item.id} className={styles.item}>
-          <img src={item.image} alt={item.name} className={styles.image} />
+          <img
+            src={item.image[0] || "https://via.placeholder.com/150"}
+            alt={item.name}
+            className={styles.image}
+            onClick={() => onBuyNow(item.slug)} // ✅ pass slug
+          />
           <div className={styles.details}>
             <h3>{item.name}</h3>
             <div className={styles.sizeLabel}>
               <p className={styles.Size}>SIZE </p>
               <span className={styles.whiteLine}></span>
-              <p className={styles.selectedSize}>{item.size}</p>
+              <p className={styles.selectedSize}>{item.variant}</p>
             </div>
 
             <div className={styles.actions}>
@@ -31,9 +36,7 @@ const CartItems = ({ items, onQuantityChange, onRemove }) => {
             </div>
           </div>
 
-          <div className={styles.price}>
-            ₹{item.price.toFixed(2)}
-          </div>
+          <div className={styles.price}>₹{item.price.toFixed(2)}</div>
         </div>
       ))}
     </div>

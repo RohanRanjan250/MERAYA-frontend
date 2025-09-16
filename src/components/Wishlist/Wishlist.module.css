@@ -18,7 +18,7 @@
   display: flex;
   justify-content: center; /* center horizontally */
   align-items: center;     /* center vertically */
-  min-height: 100vh;       /* full screen height */
+  min-height: 20vh;       /* full screen height */
   position: relative;
   z-index: 2; /* keep it above background text */
 }

@@ -18,9 +18,9 @@ export const updateReviewReaction = async (reviewId, action) => {
   }
 };
 
-export const toggleWishlist = async (productId) => {
+export const toggleWishlist = async (productId, variantId) => {
   try {
-    const response = await API.post(`/wishlist/${productId}/toggle/`);
+    const response = await API.post(`/wishlist/${productId}/toggle/`, {variant: variantId});
     return response.data;
   } catch (error) {
     throw error.response?.data || error.message;

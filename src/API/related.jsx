@@ -9,3 +9,12 @@ export const fetchRelatedProducts = async (collectionId) => {
     throw error;
   }
 };
+
+export const fetchRelatedProductsCart = async () => {
+  try {
+    const response = await API.get("/products/related/random");
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};

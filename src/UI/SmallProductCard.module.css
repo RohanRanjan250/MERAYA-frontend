@@ -30,6 +30,7 @@
   border: none;
   padding: 8px;
   cursor: pointer;
+  z-index: 1000;
 }
 
 .details {

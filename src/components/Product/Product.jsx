@@ -84,7 +84,7 @@ export default function Product({ product, setProduct }) {
         navigate("/login");
         return ;
       } else {
-        await toggleWishlist(product.id);
+        await toggleWishlist(product.id, selectedSize);
         setInWishlist((prev) => !prev);
         setWishlistToast(true);
         setTimeout(() => setWishlistToast(false), 2000); // hide after 2 seconds

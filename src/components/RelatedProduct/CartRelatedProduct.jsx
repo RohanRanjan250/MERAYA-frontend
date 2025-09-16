@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from "react";
 import ProductCard from "../../UI/SmallProductCard";
 import styles from "./RelatedProduct.module.css";
-import { fetchRelatedProducts } from "../../API/related";
+import { fetchRelatedProductsCart } from "../../API/related";
 import { useNavigate } from "react-router-dom";
 
-const RelatedProducts = ({ heading, collectionId }) => {
+const CartRelatedProduct = ({ heading }) => {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
+  let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
 
   useEffect(() => {
     async function getProducts() {
-      if (!collectionId) return;
       try {
-        const data = await fetchRelatedProducts(collectionId);
-        setProducts(data || []); // Adjust based on your API response
+        const data = await fetchRelatedProductsCart();
+        setProducts(data || []);
       } catch (err) {
         console.error("Error fetching related products:", err);
       }
     }
     getProducts();
-  }, [collectionId]);
+  }, []);
 
   if (!products.length) return null;
 
@@ -48,4 +48,4 @@ const RelatedProducts = ({ heading, collectionId }) => {
   );
 };
 
-export default RelatedProducts;
+export default CartRelatedProduct;
