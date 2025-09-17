@@ -116,7 +116,7 @@ const Navbar = () => {
             <FaUser className={styles.icon} />
             {showDropdown && (
               <div className={styles.dropdownMenu}>
-                <a href="/profile">Account</a>
+                <a href="/myaccount/contact">Account</a>
                 <a href="/orders">Orders</a>
                 <a href="/wallet">Wallet</a>
                 <button onClick={handleLogout}>Logout</button>

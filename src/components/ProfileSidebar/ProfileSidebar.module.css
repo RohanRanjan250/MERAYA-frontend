@@ -1,0 +1,85 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+  width: 40%;          /* Take left half of screen */
+}
+
+/* Left Sidebar Section */
+.sidebar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+    /* Vertical control */
+  align-items: flex-end;      /* Push content to the right inside the left half */
+  padding: 0 0 20px 0;     /* space from right/bottom */
+  overflow: hidden;
+  width: 100%;
+}
+
+
+.bottomimage {
+  width: 45vh;
+  height: auto;
+  object-fit: cover;
+}
+
+/* overlay floats above the image */
+.overlay {
+  position: absolute;
+  top: 30%;
+  right: 0;       /* align overlay with the right edge of sidebar */
+  width: 45vh;         /* same width as .bottomimage */
+  z-index: 2;
+  text-align: left;   /* keep text aligned inside */
+}
+
+.username {
+  font-size: 6vh;
+  font-weight: bold;
+  color: #F4F3F1;
+  font-family: 'Aboreto', sans-serif;
+}
+
+.text{
+    color: #F4F3F1;
+    font-family: 'Abel', sans-serif;
+    font-size: 2vh;
+}
+
+/* Nav List */
+.navList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navList a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.navList li {
+  padding: 12px 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  color: rgba(244, 243, 241, 0.5);
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+  font-family: 'Abel', sans-serif;
+  font-size: 2vh;
+  text-decoration: underline;
+}
+
+.navList li:hover {
+  color: rgba(244, 243, 241, 1);
+}
+
+.active li {
+  color: rgba(244, 243, 241, 1);
+  font-weight: bold;
+}
+

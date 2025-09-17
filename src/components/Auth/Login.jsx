@@ -67,6 +67,9 @@ const Login = () => {
         console.log(tokenResponse.access_token)
         const response = await loginWithGoogle(tokenResponse.access_token);
         console.log("Logged in user:", response.data);
+        if (response.status === 200) {
+          navigate("/");
+        }
       } catch (err) {
         console.error("Google Login failed:", err);
       }

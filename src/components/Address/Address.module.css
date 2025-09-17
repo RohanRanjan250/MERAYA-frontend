@@ -1,0 +1,120 @@
+.container {
+  background: black;
+  color: white;
+  font-family: 'Abel', sans-serif;
+  width: 80%;
+  max-height: 20vh;
+}
+
+.heading {
+  font-weight: bold;
+}
+
+.card {
+  display: flex;
+  align-items: flex-start;
+  border-bottom: 1px solid #D1D1D8;
+  padding: 4vh 0 5vh;
+}
+
+.card:first-of-type {
+  border-top: none;
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #e38012;
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.checked {
+  width: 10px;
+  height: 10px;
+  background: #e38012;
+}
+
+.info {
+  flex: 1;
+  padding-left: 1.5vh;
+  font-size: 1.7vh;
+}
+
+.name {
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  font-family: 'Aboreto', sans-serif;
+}
+
+.editBtn {
+  margin-top: 10px;
+  background: none;
+  border: none;
+  color: #e38012;
+  font-size: 2vh;
+  cursor: pointer;
+  padding: 0;
+  font-family: 'Abel', sans-serif;
+  text-decoration: underline;
+}
+
+.addBtn {
+  margin-top: 20px;
+  width: 40%;
+  padding: 12px;
+  background: #e38012;
+  color: #FFFFFF;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  font-family: 'Abel', sans-serif;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 3vh;
+  width: 100%;
+}
+
+.part {
+  display: flex;
+  width: 100%;       /* make sure parent takes full width */
+  gap: 20px;         /* spacing */
+}
+
+.leftpart,
+.rightpart {
+  flex: 1;           /* equal flexible space */
+  max-width: 50%;    /* cap them at 50% */
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.form input {
+  padding: 8px 0;
+  background: transparent;
+  color: white;
+  font-family: 'Abel', sans-serif;
+  width: 100%;
+  margin-top: 2vh;
+}
+
+.saveBtn {
+  padding: 10px;
+  background: #e38012;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 5px;
+  width: 50%;
+  font-family: 'Abel', sans-serif;
+}

@@ -1,0 +1,57 @@
+.profileContainer {
+  font-family: 'Abel', sans-serif;
+  width: 80%;
+}
+
+h2 {
+  color: #f4f3f1;
+  font-weight: bolder;
+}
+
+.container{
+  display: flex;
+  justify-content: flex-start;
+}
+
+.section {
+  width: 100%;
+  margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  color: #f4f3f1;
+}
+
+.both{
+  margin-top: 3vh;
+}
+
+label {
+  font-weight: bold;
+  color: rgba(244, 243, 241, 0.8);
+}
+
+input {
+  padding: 10px 0;
+  font-size: 14px;
+  border: none;
+  background-color: transparent;
+  border-bottom: 1px solid rgba(244, 243, 241, 1);
+  width: 100%;
+  outline: none;
+}
+
+.updateBtn {
+  color: #e38012;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  align-self: flex-end;
+  right: 0;
+  font-family: 'Abel', sans-serif;
+  text-decoration: underline;
+  margin-top: 5vh;
+  font-size: 2vh;
+}
+
+

@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  min-height: 45vh;
+  background: #040404;
+  margin-top: 3vh;
+}
+
+/* Right content section */
+.rightContent {
+  flex: 1; /* take remaining width */
+  background: #040404;
+  padding-left: 2vh;
+  font-family: 'Abel', sans-serif;
+  overflow-y: auto;
+}
