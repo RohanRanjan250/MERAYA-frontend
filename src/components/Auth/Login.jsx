@@ -1,29 +1,38 @@
 import React, { useState } from "react";
 import styles from "./Signup.module.css";
-import logo from "../../assets/login.png";
-import { login,emailloginverify } from "../../API/authApi";
+import leftPhoto from "../../assets/login.png";
+import { login, emailloginverify, loginWithGoogle } from "../../API/authApi";
 import { useNavigate } from "react-router-dom";
+import logo from "../../assets/image.png";
+import { FcGoogle } from "react-icons/fc";
+import OtpInput from "./OtpInput";
+import { useGoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
-  const navigate = useNavigate() ;
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     otp: ""
   });
 
   const [otpSent, setOtpSent] = useState(false);
-  const [error, setError] = useState(""); // 🔹 state for error message
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setError(""); // clear error while typing
+    setError("");
   };
 
-  // 🔹 Request OTP via email
+  // ✅ OTP box change handler
+  const handleOtpChange = (val) => {
+    setFormData({ ...formData, otp: val });
+    setError("");
+  };
+
   const handleSendOtp = async () => {
     try {
-      const response = await emailloginverify(formData.email) ;
-      if (response.status == 200) {
+      const response = await emailloginverify(formData.email);
+      if (response.status === 200) {
         console.log("OTP sent");
         setOtpSent(true);
       } else {
@@ -31,44 +40,69 @@ const Login = () => {
       }
     } catch (err) {
       console.error("OTP send failed", err);
-      setError(err.message || "Failed to send OTP. Try again!"); // 🔹 show error
+      setError(err.message || "Failed to send OTP. Try again!");
     }
   };
 
-  // 🔹 Verify OTP and login
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = await login(formData); // ✅ fixed formData typo
+      const data = await login(formData);
       if (data.status === 200) {
-        navigate("/")
-        
+        navigate("/");
         setError("");
-      } else if ( data.status == 400){
-        setError(data.message || "Invalid OTP or Email not registered"); // 🔹 show error
+      } else if (data.status === 400) {
+        setError(data.message || "Invalid OTP or Email not registered");
       }
     } catch (err) {
-      setError(err.message || "Something went wrong. Try again!"); // ✅ fixed catch
+      setError(err.message || "Something went wrong. Try again!");
     }
   };
+
+  const googleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        // Send only the id_token to your backend
+        console.log(tokenResponse)
+        console.log(tokenResponse.access_token)
+        const response = await loginWithGoogle(tokenResponse.access_token);
+        console.log("Logged in user:", response.data);
+      } catch (err) {
+        console.error("Google Login failed:", err);
+      }
+    },
+    onError: () => {
+      console.error("Google Login Failed");
+    },
+  });
 
   return (
     <div className={styles.container}>
       {/* Left Side */}
       <div className={styles.left}>
-        <img src={logo} alt="Meerya Logo" className={styles.logo} />
+        <img src={leftPhoto} alt="Meerya Logo" className={styles.leftPhoto} />
       </div>
 
       {/* Right Side */}
       <div className={styles.right}>
-        <form className={styles.form}>
-          <h2>Login</h2>
+        <img src={logo} alt="Meerya Logo" className={styles.logo} />
+        <h2 className={styles.heading}>LOGIN</h2>
+        <button className={styles.googleBtn} onClick={() => googleLogin()}>
+          <FcGoogle className={styles.icon} />
+          <span>Sign up with Google</span>
+        </button>
 
+        <div className={styles.divider}>
+          <span className={styles.or}>Or</span>
+        </div>
+
+        <form className={styles.form}>
           {/* Email input */}
+          <label>Email</label>
           <input
             type="email"
             name="email"
-            placeholder="Email"
+            placeholder="Ex: name@gmail.com"
             value={formData.email}
             onChange={handleChange}
             required
@@ -76,26 +110,19 @@ const Login = () => {
 
           {!otpSent ? (
             <button type="button" onClick={handleSendOtp}>
-              Send OTP
+              SEND VERIFICATION CODE
             </button>
           ) : (
             <>
-              <input
-                type="text"
-                name="otp"
-                placeholder="Enter OTP"
-                value={formData.otp}
-                onChange={handleChange}
-                required
-              />
-              <button onClick={handleSubmit}>Login</button>
+              {/* ✅ OTP Styled Boxes */}
+              <OtpInput value={formData.otp} onChange={handleOtpChange} />
+              <button onClick={handleSubmit}>LOGIN</button>
             </>
           )}
 
-          {/* 🔹 Error message placeholder */}
           <p className={styles.error}>{error}</p>
 
-          <p>
+          <p className={styles.haveaccount}>
             Don’t have an account? <a href="/signup">Sign up</a>
           </p>
         </form>
@@ -105,5 +132,4 @@ const Login = () => {
 };
 
 export default Login;
-
 

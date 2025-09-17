@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import styles from "./Signup.module.css";
-import logo from "../../assets/login.png"; 
-import {emailVerify, signup } from "../../API/authApi.jsx"
+import leftPhoto from "../../assets/login.png"; 
+import {emailVerify, signup, signupWithGoogle } from "../../API/authApi.jsx"
+import logo from "../../assets/image.png";
+import { FcGoogle } from "react-icons/fc";
+import OtpInput from "./OtpInput";
+import { useGoogleLogin } from "@react-oauth/google";
 
-const Login = () => {
+const Signup = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -40,18 +44,46 @@ const Login = () => {
     console.log(data) ;
   };
 
+  const googleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        // Send only the id_token to your backend
+        console.log(tokenResponse)
+        console.log(tokenResponse.access_token)
+        const response = await signupWithGoogle(tokenResponse.access_token);
+        console.log("Logged in user:", response.data);
+      } catch (err) {
+        console.error("Google Login failed:", err);
+      }
+    },
+    onError: () => {
+      console.error("Google Login Failed");
+    },
+  });
+
+
+
   return (
     <div className={styles.container}>
       {/* Left Side */}
       <div className={styles.left}>
-        <img src={logo} alt='Meerya Logo' className={styles.logo} />
+        <img src={leftPhoto} alt='Meerya Logo' className={styles.leftPhoto} />
       </div>
 
       {/* Right Side */}
       <div className={styles.right}>
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <h2>Signup</h2>
+        <img src={logo} alt="Meerya Logo" className={styles.logo} />
+        <h2 className={styles.heading}>REGISTER</h2>
+        <button className={styles.googleBtn} onClick={() => googleLogin()}>
+          <FcGoogle className={styles.icon} />
+          <span>Sign up with Google</span>
+        </button>
 
+        <div className={styles.divider}>
+          <span className={styles.or}>Or</span>
+        </div>
+
+        <form className={styles.form} onSubmit={handleSubmit}>
           <input
             type="text"
             name="name"
@@ -87,26 +119,24 @@ const Login = () => {
 
           {!otpSent ? (
             <button type="button" onClick={handleVerify}>
-              Verify
+              SEND VERIFICATION CODE
             </button>
           ) : (
             <>
-              <input
-                type="text"
-                name="otp"
-                placeholder="Enter OTP"
+              <OtpInput
                 value={formData.otp}
-                onChange={handleChange}
-                required
+                onChange={(otp) => setFormData({ ...formData, otp })}
               />
-              <button type="submit">Submit</button>
+              <button type="submit">SUBMIT</button>
             </>
           )}
-        <p>Already have an account?      <a href="/login">Click here</a></p>
+
+
+          <p className={styles.haveaccount}>Already have an account?      <a href="/login">Click here</a></p>
         </form>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Signup;

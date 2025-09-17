@@ -1,7 +1,14 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* ✅ prevent horizontal scroll */
+}
+
 .container {
   display: flex;
   height: 100vh;
   font-family: 'Abel', sans-serif;
+  overflow: hidden;
 }
 
 /* Left side with blurred logo */
@@ -11,7 +18,7 @@
   /* margin-left: 20px; extra margin on the left if you want */
 }
 
-.logo {
+.leftPhoto {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -25,48 +32,105 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* background: rgba(0,0,0,0.4); optional: add background overlay */
+  flex-direction: column;
   background: #040404;
+}
+
+.heading {
+  text-align: center;
+  margin-bottom: 4vh;
+  margin-top: 1.5vh;
+  color: #f4f3f1;
+  font-family: 'Aboreto', sans-serif;
+}
+
+.logo{
+  width: 5.5vh;
+  height: 5.5vh;
+
+}
+
+.googleBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  width: 45.7vh;
+  max-width: 400px;
+  padding: 12px;
+  background-color: #262626;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: 'Abel', sans-serif;
+}
+
+.googleBtn:hover {
+  background-color: #3a3a3a;
+}
+
+.icon {
+  font-size: 18px;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px 0;
+  width: 100%;
+  max-width: 400px;
+  color: #D1D1D1;
+  font-size: 14px;
+}
+
+.or{
+  color: #5D5D5D;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #444;
+  margin: 0 10px;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  width: 400px;
-  gap: 25px;
+  width: 51.5vh;
   padding: 25px;
-  background: rgba(255, 255, 255, 0.05); /* optional glass look */
-  border-radius: 12px;
-}
-
-.form h2 {
-  text-align: center;
-  margin-bottom: 10px;
-  color: #f4f3f1;
+  font-family: 'Abel', sans-serif;
 }
 
 .form input {
-  background-color: transparent;
+  background-color: #F6F6F6;
   border: none;
-  border-bottom: 1px solid rgba(244, 243, 241, 1);
-  padding: 0.5rem 0;
-  margin-bottom: 1rem;
-  color: rgba(244, 243, 241, 1);
+  padding: 0.5rem 0.5rem;
+  margin: 0.2rem 0rem 1rem;
   font-size: 0.9vw;
   outline: none;
   width: 100%;
+  height: 4.5vh;
+  border-radius: 0px;
+  color: #666666;
+  font-family: 'Abel', sans-serif;
 }
 
 .form button {
   padding: 0.8rem 2rem;
-  font-size: 1rem;
+  font-size: 1.6vh;
   background-color: #e38012;
   color: #f4f3f1;
   border: none;
-  border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s ease-in-out;
   margin-top: 1vw;
+  font-family: 'Abel', sans-serif;
 }
 
 .form button:hover {
@@ -86,3 +150,12 @@ form a {
   text-align: center;
 }
 
+.error{
+  margin-top: 1vh;
+}
+
+.haveaccount{
+  color: #B3B3B3;
+  margin-top: 1vh;
+  font-size: 1.3vh;
+}

@@ -55,3 +55,25 @@ export const logout = async () => {
     throw error.response?.data || error.message;
   }
 };
+
+export const signupWithGoogle = async (id_token) => {
+  try {
+    const response = await API.post("/api/auth/google/signup", {
+      id_token,
+    });
+    return response;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};
+
+export const loginWithGoogle = async (id_token) => {
+  try {
+    const response = await API.post("/api/auth/google/login", {
+      id_token,
+    });
+    return response;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};
