@@ -17,3 +17,30 @@ export const updateUserContact = async (userData) => {
     throw error.response?.data || error.message;
   }
 };
+
+export const getUserAddress = async () => {
+  try {
+    const response = await API.get("/user/addresses");
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};
+
+export const updateUserAddress = async (address_id, data) => {
+  try {
+    const response = await API.post(`/user/addresses/${address_id}/update`, data);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};
+
+export const addUserAddress = async (data) => {
+  try {
+    const response = await API.post("/user/addresses/add", data);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};
