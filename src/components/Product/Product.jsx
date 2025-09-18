@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Product({ product, setProduct }) {
   const [selectedImage, setSelectedImage] = useState(product.images[0]);
-  const [selectedSize, setSelectedSize] = useState(product.variants[0]);
+  const [selectedSize, setSelectedSize] = useState(product.variants[0][1]);
   const navigate = useNavigate();
   const [toastVisible, setToastVisible] = useState(false);
   const [wishlistToast, setWishlistToast] = useState(false);
@@ -84,7 +84,17 @@ export default function Product({ product, setProduct }) {
         navigate("/login");
         return ;
       } else {
-        await toggleWishlist(product.id, selectedSize);
+        const selectedVariant = product.variants.find(variant => variant[1] === selectedSize);
+
+        if (!selectedVariant) {
+          console.error("Could not find the selected variant ID.");
+          alert("Please select a size.");
+          return;
+        }
+
+        const variantId = selectedVariant[0];
+        console.log(variantId);
+        await toggleWishlist(product.id, variantId);
         setInWishlist((prev) => !prev);
         setWishlistToast(true);
         setTimeout(() => setWishlistToast(false), 2000); // hide after 2 seconds
@@ -113,8 +123,18 @@ export default function Product({ product, setProduct }) {
         navigate("/login");
         return;
       }
+      
+      const selectedVariant = product.variants.find(variant => variant[1] === selectedSize);
 
-      const res = await addToCart(product.id, selectedSize);
+      if (!selectedVariant) {
+        console.error("Could not find the selected variant ID.");
+        alert("Please select a size.");
+        return;
+      }
+
+      const variantId = selectedVariant[0];
+        
+      const res = await addToCart(product.id, variantId);
       console.log(res);
       alert("Product added to cart! ✅"); // later replace with toast
     } catch (err) {
@@ -203,15 +223,15 @@ export default function Product({ product, setProduct }) {
               </a>
             </div>
             <div className={styles.sizeOptions}>
-              {product.variants.map((size, index) => (
+              {product.variants.map((variant) => (
                 <button
-                  key={index}
+                  key={variant[0]} // Use the unique ID (variant[0]) as the key
                   className={`${styles.sizeBtn} ${
-                    selectedSize === size ? styles.activeSize : ""
+                    selectedSize === variant[1] ? styles.activeSize : ""
                   }`}
-                  onClick={() => setSelectedSize(size)}
+                  onClick={() => setSelectedSize(variant[1])} // Set the selected size to the string
                 >
-                  {size}
+                  {variant[1]} {/* Display the size string (variant[1]) */}
                 </button>
               ))}
             </div>

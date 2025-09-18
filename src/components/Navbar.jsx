@@ -127,7 +127,7 @@ const Navbar = () => {
           <Link to="/wishlist">
             <FaHeart className={styles.icon} />
           </Link>
-          <Link to="/cart">
+          <Link to="/unified">
             <FaShoppingBag className={styles.icon} />
           </Link>
         </div>

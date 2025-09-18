@@ -8,14 +8,37 @@ import BreadCrumb from "../UI/BreadCrumb";
 import Footer from "../components/FooterSection/Footer";
 import Address from "../components/Address/Address"
 import OrderHistory from "../components/OrderHistory/OrderHistory";
+import { useLocation } from "react-router-dom";
 
 
 export default function ProfilePage() {
+  const location = useLocation();
+
+  const getCurrentLabel = () => {
+    const path = location.pathname.split('/').pop(); // Gets 'contact', 'address', or 'order'
+    switch (path) {
+        case 'contact':
+            return 'Contact Information';
+        case 'address':
+            return 'My Addresses';
+        case 'order':
+            return 'Order History';
+        default:
+            return 'My Account'; // Fallback
+    }
+  };
+
+  const breadcrumbItems = [
+      { label: "Homepage", link: "/" },
+      { label: "My Account", link: "/myaccount/contact" }, // Link to a default tab
+      { label: getCurrentLabel() } // The dynamic part
+  ];
+
   return (
     <>
       <Navbar />
       <DoubleLine />
-      <BreadCrumb items={[{ label: "Homepage", link: "/" }, { label: "My Account" }]} />
+      <BreadCrumb items={breadcrumbItems}/>
       <div className={styles.container}>
         <ProfileSidebar />
         <div className={styles.rightContent}>

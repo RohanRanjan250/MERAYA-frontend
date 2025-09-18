@@ -1,7 +1,8 @@
 import React from "react";
 import styles from "./OrderSummary.module.css";
 
-const OrderSummary = ({ price, discount, shipping, total }) => {
+const OrderSummary = ({ price, discount, shipping, total,label, onClick }) => {
+ 
   return (
     <div className={styles.orderSummary}>
       <p>Order Summary</p>
@@ -38,7 +39,7 @@ const OrderSummary = ({ price, discount, shipping, total }) => {
         <button>Apply</button>
       </div>
 
-      <button className={styles.checkoutBtn}>PROCEED TO CHECKOUT</button>
+      <button className={styles.checkoutBtn} onClick={onClick}>{label}</button>
     </div>
   );
 };

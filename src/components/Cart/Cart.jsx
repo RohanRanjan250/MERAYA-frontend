@@ -65,6 +65,10 @@ const Cart = () => {
     navigate(`/product/${slug}`); 
   };
 
+  const nav = () => {
+    navigate("/checkout");
+  }
+
   return (
     <>
       <div className={styles.heading}>
@@ -86,6 +90,8 @@ const Cart = () => {
             discount={discount}
             shipping={shipping}
             total={total}
+            label="PROCEED TO CHECKOUT"
+            onClick={nav}
           />
         </div>
       </div>

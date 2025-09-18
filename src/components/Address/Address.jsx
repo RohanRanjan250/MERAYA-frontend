@@ -15,6 +15,7 @@ const Address = () => {
     state: "",
     pincode: "",
     phone: "",
+    tag: "",
   });
 
   // 🔹 Fetch addresses from backend
@@ -57,6 +58,7 @@ const Address = () => {
         state: "",
         pincode: "",
         phone: "",
+        tag: "",
       });
       await fetchAddresses(); // ✅ reload fresh list
     } catch (err) {
@@ -76,7 +78,7 @@ const Address = () => {
           <div className={styles.checkbox} onClick={() => setSelected(index)}>
             {selected === index && <div className={styles.checked} />}
           </div>
-
+          
           {editingIndex === index ? (
             <div className={styles.form}>
               <input type="text" name="full_name" value={formData.full_name} onChange={handleInputChange} placeholder="Name" />
@@ -86,6 +88,7 @@ const Address = () => {
               <input type="text" name="pincode" value={formData.pincode} onChange={handleInputChange} placeholder="Pincode" />
               <input type="text" name="state" value={formData.state} onChange={handleInputChange} placeholder="State" />
               <input type="text" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="Mobile" />
+              <input type="text" name="tag" value={formData.tag} onChange={handleInputChange} placeholder="Tag" />
 
               <button className={styles.saveBtn} onClick={() => saveEdit(index)}>
                 SAVE
@@ -93,7 +96,10 @@ const Address = () => {
             </div>
           ) : (
             <div className={styles.info}>
-              <h3 className={styles.name}>{addr.full_name}</h3>
+              <div className={styles.upper}>
+                <h3 className={styles.name}>{addr.full_name}</h3>
+                <p className={styles.tag}>{addr.tag}</p>
+              </div>
               <p>{addr.address_line1} {addr.address_line2}</p>
               <p>{addr.city} - {addr.pincode}</p>
               <p>{addr.state}</p>
@@ -126,6 +132,7 @@ const Address = () => {
               <input type="text" name="state" value={formData.state} onChange={handleInputChange} placeholder="State" />
               <input type="text" name="pincode" value={formData.pincode} onChange={handleInputChange} placeholder="Pincode" />
               <input type="text" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="Mobile" />
+              <input type="text" name="tag" value={formData.tag} onChange={handleInputChange} placeholder="Tag" />
             </div>
           </div>
           <button className={styles.saveBtn} onClick={saveNew}>

@@ -18,9 +18,9 @@ export const removeFromWishlist = async (productId) => {
   }
 };
 
-export const addToCartWishlist = async (productId) => {
+export const addToCartWishlist = async (productId, variant) => {
   try {
-    const response = await API.post(`/cart/add/wishlist/${productId}`);
+    const response = await API.post(`/cart/add/wishlist/${productId}`, {"variant":variant});
     return response.data;
   } catch (error) {
     throw error.response?.data || error.message;

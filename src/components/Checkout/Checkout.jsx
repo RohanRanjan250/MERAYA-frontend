@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AddressSelection from "../AddressSelection/AddressSelection";
 import OrderSummary from "../OrderSummary/OrderSummary";
 import styles from "./Checkout.module.css";
+import { useNavigate } from "react-router-dom";
 
 const addresses = [
   {
@@ -24,6 +25,7 @@ const addresses = [
 
 export default function Checkout() {
   const [selected, setSelected] = useState(0);
+  const navigate = useNavigate(); 
 
   const [cart, setCart] = useState([
     {
@@ -66,6 +68,10 @@ export default function Checkout() {
     setCart((prev) => prev.filter((item) => item.id !== id));
   };
 
+  const nav = () => {
+    navigate('/cartsummary');
+  }
+
   const price = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const discount = price * 0.1; // example: 10% discount
   const shipping = 0;
@@ -100,6 +106,8 @@ export default function Checkout() {
                 discount={discount}
                 shipping={shipping}
                 total={total}
+                label="PROCEED TO CHECKOUT"
+                onClick={nav}
             />
             </div>
         </div>

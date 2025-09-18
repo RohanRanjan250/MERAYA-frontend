@@ -41,6 +41,7 @@ const Wishlist = () => {
       setProducts((prev) => prev.filter((p) => p.product_id !== productId));
 
       // 2. Add to cart
+      console.log(variant)
       await addToCartWishlist(productId, variant);
       alert("Moved to cart!");
     } catch (err) {
@@ -68,6 +69,7 @@ const Wishlist = () => {
               id={p.product_id}
               image={p.image[0] || "https://via.placeholder.com/371x400"}
               title={p.name}
+              variant={p.variant}
               desc=""
               price={p.price}
               onRemove={handleRemove}
