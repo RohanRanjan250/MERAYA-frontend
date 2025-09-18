@@ -17,6 +17,8 @@ import ProductPage from "./pages/ProductPage";
 import Checkout from "./pages/CheckoutPage";
 import setupInterceptors from "./API/interceptor";
 import { LandingProvider } from "./Context/LandingpageContext";
+import CartSummary from "./pages/CartSummaryPage";
+import OrderConfirmed from "./pages/OrderConfirmedPage";
 
 function App() {
   useEffect(() => {
@@ -40,6 +42,8 @@ function App() {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/product/:slug" element={<ProductPage />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/cartsummary" element={<CartSummary/>}/>
+        <Route path="/confirmed" element={<OrderConfirmed/>}/>
       </Routes>
     </BrowserRouter>
   );

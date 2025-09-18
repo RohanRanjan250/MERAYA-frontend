@@ -7,6 +7,7 @@ import styles from "./ProfilePage.module.css";
 import BreadCrumb from "../UI/BreadCrumb";
 import Footer from "../components/FooterSection/Footer";
 import Address from "../components/Address/Address"
+import OrderHistory from "../components/OrderHistory/OrderHistory";
 
 
 export default function ProfilePage() {
@@ -21,7 +22,7 @@ export default function ProfilePage() {
           <Routes>
             <Route path="contact" element={<Contact />} />
             <Route path="address" element={<Address/>} />
-            {/* <Route path="order" element={}/> */}
+            <Route path="order" element={<OrderHistory/>}/>
           </Routes>
         </div>
       </div>
