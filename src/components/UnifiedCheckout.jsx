@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; 
-// --- REAL API Imports ---
-// These now point to your actual API files.
 import {fetchCart, changeCartQuantity, removeFromCart} from "../API/cart"
 import {getUserAddress} from "../API/myaccountAPI"
 import {OrderCreate} from "../API/orderAPI"
-
+import styles from "./OrderConfirmed/OrderConfirmed.module.css"
+import success from "../assets/sad.png"
 
 // --- Embedded Reusable Components ---
 // In a real project, these would be in their own files and imported.
@@ -87,7 +86,7 @@ const OrderSummary = ({ items, label, onClick, isProcessing }) => {
   );
 };
 
-const AddressSelection = ({ addresses, selectedAddress, onSelect, onEdit, onRemove, onAddNew }) => {
+const AddressSelection = ({ addresses, selectedAddress, onSelect, onClick, onRemove }) => {
   return (
     <div className="addressSelection">
       {addresses.map((address) => (
@@ -108,13 +107,13 @@ const AddressSelection = ({ addresses, selectedAddress, onSelect, onEdit, onRemo
             </div>
           </div>
           <div className="actions">
-            <button className="editBtn" onClick={(e) => { e.stopPropagation(); onEdit(address); }}>Edit</button>
+            <button className="editBtn" onClick={onClick}>Edit</button>
             <span className="separator">|</span>
             <button className="removeBtn" onClick={(e) => { e.stopPropagation(); onRemove(address); }}>Remove</button>
           </div>
         </div>
       ))}
-      <div className="addNew" onClick={onAddNew}>
+      <div className="addNew" onClick={onClick}>
         + Add New Address
       </div>
     </div>
@@ -256,6 +255,8 @@ export default function CheckoutFlow() {
     });
   };
 
+
+
   useEffect(() => {
     loadScript("https://checkout.razorpay.com/v1/checkout.js");
     
@@ -340,8 +341,6 @@ export default function CheckoutFlow() {
       console.log(orderPayload)
 
       try {
-        // --- CORRECTED API CALL ---
-        // Using your imported OrderCreate function
         const data = await OrderCreate(orderPayload);
         
         const options = {
@@ -354,7 +353,6 @@ export default function CheckoutFlow() {
           handler: function (response) {
             console.log("Payment successful:", response);
             alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
-            // Navigate to a success page
             navigate('/confirmed');
           },
           prefill: {
@@ -378,12 +376,18 @@ export default function CheckoutFlow() {
     }
   };
 
+  const nav = () =>{
+    navigate("/myaccount/address")
+  }
+
   const renderCurrentStepComponent = () => {
     switch (step) {
       case "cart":
         return <CartItems items={cartItems} onQuantityChange={handleQuantityChange} onRemove={handleRemoveItem} onBuyNow={handleBuyNow} />;
       case "address":
-        return <AddressSelection addresses={addresses} selectedAddress={selectedAddress} onSelect={handleSelectAddress} onEdit={(a) => console.log("Edit", a)} onRemove={(a) => console.log("Remove", a)} onAddNew={() => console.log("Add new")} />;
+        return <AddressSelection addresses={addresses} selectedAddress={selectedAddress} onSelect={handleSelectAddress} onClick={nav} onRemove={(a) => console.log("Remove", a)} 
+        // onAddNew={() => console.log("Add new")} 
+        />;
       case "summary":
         return <CartSummary items={cartItems} address={selectedAddress} />;
       default: return null;
@@ -414,6 +418,34 @@ export default function CheckoutFlow() {
 
   const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
+  
+  if (!isLoading && totalItems === 0) {
+    return(
+      <div className={styles.container}>
+        <h2 className={styles.title}>EMPTY!</h2>
+  
+        <div className={styles.icon}>
+          <img src={success} alt="success" className={styles.success}></img>
+        </div>
+  
+        <p className={styles.thankyou}>
+          Your cart looks empty :(
+        </p>
+  
+        <div className={styles.buttons}>
+          <button onClick={() => navigate("/wishlist")} className={styles.btn}>
+            ADD FROM WISHLIST
+          </button>
+          <button onClick={() => navigate("/")} className={styles.btnn}>
+            HOME
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+
+
   return (
     <>
       <Styles />
@@ -425,7 +457,7 @@ export default function CheckoutFlow() {
         <div className="checkoutLayout">
           <div className="mainContentArea">{renderCurrentStepComponent()}</div>
           <div className="sidebarArea">
-            <OrderSummary items={cartItems} label={step === "summary" ? "PAY NOW" : "PROCEED"} onClick={handleNextStep} isProcessing={isProcessing} />
+            <OrderSummary items={cartItems} label={step === "summary" ? "PAY NOW" : "PROCEED TO CHECKOUT"} onClick={handleNextStep} isProcessing={isProcessing} />
           </div>
         </div>
       </div>

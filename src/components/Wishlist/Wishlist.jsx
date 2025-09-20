@@ -3,6 +3,7 @@ import styles from "./Wishlist.module.css";
 import ProductCard from "../../UI/ProductCard";
 import { fetchWishlist, removeFromWishlist, addToCartWishlist } from "../../API/wishlist";
 import { useNavigate } from "react-router-dom";
+import success from "../../assets/sad.png"
 
 const Wishlist = () => {
   const [products, setProducts] = useState([]);
@@ -54,6 +55,31 @@ const Wishlist = () => {
   const handleBuyNow = (slug) => {
     navigate(`/product/${slug}`);
   };
+
+  if (!loading && products.length === 0) {
+    return (
+      <div className={styles.container}>
+        <h2 className={styles.title}>EMPTY!</h2>
+  
+        <div className={styles.icon}>
+          <img src={success} alt="success" className={styles.success}></img>
+        </div>
+  
+        <p className={styles.thankyou}>
+          Your wishlist looks empty :(
+        </p>
+  
+        <div className={styles.buttons}>
+          <button onClick={() => navigate("/unified")} className={styles.btn}>
+            GO TO CART
+          </button>
+          <button onClick={() => navigate("/")} className={styles.btnn}>
+            HOME
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>

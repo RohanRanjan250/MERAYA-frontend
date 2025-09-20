@@ -5,7 +5,7 @@ import Footer from '../components/FooterSection/Footer'
 import RelatedProducts from "../components/RelatedProduct/CartRelatedProduct";
 import BreadCrumb from "../UI/BreadCrumb";
 
-export default function CartPage() {
+export default function UnifiedCheckoutPage() {
   return (
     <>
       <Navbar />

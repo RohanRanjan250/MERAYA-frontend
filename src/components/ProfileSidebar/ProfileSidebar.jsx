@@ -1,14 +1,31 @@
 import styles from "./ProfileSidebar.module.css";
 import { NavLink } from "react-router-dom";
 import ProfileSide from "../../assets/ProfileSide.png";
+import {fetchUsername} from "../../API/myaccountAPI"
+import { useState, useEffect } from "react";
 
 const ProfileSidebar = () => {
+  const [username, setUsername] = useState("User");
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const data = await fetchUsername();
+        setUsername(data.username || "User");
+      } catch (err) {
+        console.error("Error fetching user profile:", err);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
   return (
     <div className={styles.container}>
       <div className={styles.sidebar}>
         <img src={ProfileSide} alt="Profile Side" className={styles.bottomimage} />
         <div className={styles.overlay}>
-          <h3 className={styles.username}>Hi, Sarah </h3>
+          <h3 className={styles.username}>Hi, {username}</h3>
           <p className={styles.text}>You can manage your account here. Please, choose what you’d like to do.</p>
           <ul className={styles.navList}>
             <NavLink

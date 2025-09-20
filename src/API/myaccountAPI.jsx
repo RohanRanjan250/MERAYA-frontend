@@ -44,3 +44,12 @@ export const addUserAddress = async (data) => {
     throw error.response?.data || error.message;
   }
 };
+
+export const fetchUsername = async () => {
+  try {
+    const response = await API.get("/user/contact/username");
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};

@@ -4,7 +4,7 @@ import DoubleLine from "../UI/DoubleLine";
 import Footer from '../components/FooterSection/Footer'
 import BreadCrumb from "../UI/BreadCrumb";
 
-export default function CartPage() {
+export default function OrderConfirmedPage() {
   return (
     <>
       <Navbar />

@@ -40,10 +40,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/myaccount/*" element={<Profile />} />
         <Route path="/wishlist" element={<Wishlist />} />
-        <Route path="/cart" element={<CartPage />} />
+        {/* <Route path="/cart" element={<CartPage />} /> */}
         <Route path="/product/:slug" element={<ProductPage />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/cartsummary" element={<CartSummary/>}/>
+        {/* <Route path="/checkout" element={<Checkout />} /> */}
+        {/* <Route path="/cartsummary" element={<CartSummary/>}/> */}
         <Route path="/confirmed" element={<OrderConfirmed/>}/>
         <Route path="/unified" element={<Unified/>}/>
       </Routes>
