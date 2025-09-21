@@ -257,7 +257,7 @@ export default function Product({ product, setProduct }) {
 
       {wishlistToast && (
         <div className={styles.toast}>
-          {inWishlist ? "Removed from wishlist" : "Added to wishlist"}!
+          {inWishlist="Added to wishlist"}
         </div>
       )}
 
