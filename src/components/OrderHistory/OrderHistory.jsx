@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import styles from "./OrderHistory.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
-import { fetchOrders } from "../../API/orderAPI";
+import { fetchOrders, initiateReturn } from "../../API/orderAPI";
 import returnn from "../../assets/return.png";
+import success from "../../assets/Success.png"
 
 const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
@@ -12,9 +13,8 @@ const OrderHistory = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [reason, setReason] = useState("");
   const [refundMethod, setRefundMethod] = useState("wallet");
-  
-  // --- FIX 1: Removed the redundant 'confirmChecked' state ---
   const [isChecked, setIsChecked] = useState(false);
+  const [showReturnConfirmation, setShowReturnConfirmation] = useState(false);
 
   const steps = ["Order placed", "Processing", "Packaging", "Out for delivery", "Delivered"];
 
@@ -22,17 +22,15 @@ const OrderHistory = () => {
     const loadOrders = async () => {
       try {
         const data = await fetchOrders();
-        console.log(data);
+        console.log(data)
         const allowedStatuses = ["Order placed", "Processing", "Packaging", "Out for delivery", "Delivered"];
         const filteredOrders = (data.orders || []).filter(order =>
           allowedStatuses.includes(order.deliveryStatus)
         );
-
         const withRatings = filteredOrders.map(order => ({
           ...order,
           points: order.rating || 0,
         }));
-
         setOrders(withRatings);
       } catch (err) {
         console.error("Error fetching orders:", err);
@@ -68,14 +66,31 @@ const OrderHistory = () => {
     }
     return stars;
   };
-
-  // Function to reset modal state to avoid stale data
+  
   const handleCloseModal = () => {
       setShowReturnModal(false);
       setReason("");
       setIsChecked(false);
       setRefundMethod("wallet");
   };
+  
+  // --- 2. UPDATE onClick handler for the RETURN button ---
+  const handleReturnSubmit = async () => {
+    try {
+      await initiateReturn(
+        selectedOrder.orderId,
+        selectedOrder.orderitem_id, // make sure your order object has this
+        reason,
+        refundMethod
+      );
+      handleCloseModal(); 
+      setShowReturnConfirmation(true);
+    } catch (err) {
+      console.error("Error submitting return:", err);
+      alert("Something went wrong while placing the return.");
+    }
+  };
+
 
   return (
     <div className={styles.container}>
@@ -90,7 +105,7 @@ const OrderHistory = () => {
             className={`${styles.orderCard} ${expandedOrder === order.orderId ? styles.expanded : ""}`}
             onClick={() => toggleExpand(order.orderId)}
           >
-            {/* Top Row */}
+            {/* ... (rest of your order card JSX remains unchanged) ... */}
             <div>
               <div className={styles.topRow}>
                 <img src={order.image} alt={order.title} className={styles.image} />
@@ -122,19 +137,29 @@ const OrderHistory = () => {
               </div>
 
               {order.deliveryStatus === "Delivered" && (
-                <button
-                  className={styles.returnBtn}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedOrder(order);
-                    setShowReturnModal(true);
-                  }}
-                >
-                  Return
-                </button>
+                <>
+                  {order.return_status ? (
+                    <button className={`${styles.returnBtn} ${styles.alreadyReturned}`} disabled>
+                      Already Returned
+                    </button>
+                  ) : (
+                    <button
+                      className={styles.returnBtn}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedOrder(order);
+                        setShowReturnModal(true);
+                      }}
+                    >
+                      Return
+                    </button>
+                  )}
+                </>
               )}
+
             </div>
 
+            {/* RETURN FORM MODAL */}
             {showReturnModal && selectedOrder && selectedOrder.orderId === order.orderId && (
               <div className={styles.modalOverlay}>
                 <div className={styles.modalContent}>
@@ -159,7 +184,7 @@ const OrderHistory = () => {
                     <label className={styles.radioLabel}>
                       <input
                         type="radio"
-                        name={`refundMethod-${selectedOrder.orderId}`} // Unique name for radio group
+                        name={`refundMethod-${selectedOrder.orderId}`}
                         value="original"
                         checked={refundMethod === "original"}
                         onChange={() => setRefundMethod("original")}
@@ -171,7 +196,7 @@ const OrderHistory = () => {
                     <label className={styles.radioLabel}>
                       <input
                         type="radio"
-                        name={`refundMethod-${selectedOrder.orderId}`} // Unique name for radio group
+                        name={`refundMethod-${selectedOrder.orderId}`}
                         value="wallet"
                         checked={refundMethod === "wallet"}
                         onChange={() => setRefundMethod("wallet")}
@@ -196,22 +221,14 @@ const OrderHistory = () => {
                   <div className={styles.modalButtons}>
                     <button
                       className={styles.returnConfirmBtn}
-                      // --- FIX 2: Changed `confirmChecked` to `isChecked` ---
                       disabled={!isChecked || !reason.trim()}
-                      onClick={() => {
-                        console.log("Return submitted:", {
-                          orderId: selectedOrder.orderId,
-                          reason,
-                          refundMethod,
-                        });
-                        handleCloseModal(); // Use reset function
-                      }}
+                      onClick={handleReturnSubmit} // Use the new handler
                     >
                       RETURN
                     </button>
                     <button
                       className={styles.cancelBtn}
-                      onClick={handleCloseModal} // Use reset function
+                      onClick={handleCloseModal}
                     >
                       CANCEL
                     </button>
@@ -219,8 +236,8 @@ const OrderHistory = () => {
                 </div>
               </div>
             )}
-
-            {/* Expanded Section */}
+            
+            {/* ... (rest of your expanded section JSX remains unchanged) ... */}
             <div className={styles.expandedSection}>
               {expandedOrder === order.orderId && (
                 <>
@@ -250,6 +267,27 @@ const OrderHistory = () => {
           </div>
         );
       })}
+
+      {/* --- 3. NEW JSX for the confirmation message --- */}
+      {/* This is placed outside the .map() loop */}
+      {showReturnConfirmation && selectedOrder && (
+        <div className={styles.modalOverlay}>
+          <div className={`${styles.modalContent} ${styles.confirmationContent}`}>
+            <h3>RETURN PLACED</h3>
+            <div className={styles.confirmationIcon}><img src={success} alt="success" className={styles.success}></img></div>
+            <p>
+              You Order no. is <span className={styles.orderId}>#ORD{selectedOrder.orderId}</span>
+            </p>
+            <p>You will receive the confirmation email/SMS shortly</p>
+            <button
+              className={styles.cancelBtnn}
+              onClick={() => setShowReturnConfirmation(false)}
+            >
+              CLOSE
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
