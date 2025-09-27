@@ -1,54 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./OrderHistory.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
+import {fetchOrders} from "../../API/orderAPI"
 
 const OrderHistory = () => {
+  const [orders, setOrders] = useState([]);
   const [expandedOrder, setExpandedOrder] = useState(null);
 
   const steps = ["Order placed", "Processing", "Packaging", "Out for delivery", "Delivered"];
 
-  const orders = [
-    {
-      id: 1,
-      title: "SLEEVELESS KURTI",
-      size: "S",
-      quantity: 1,
-      price: "₹149.99",
-      date: "Expected to reach by 7th Sept.",
-      image: "https://via.placeholder.com/100x150.png?text=Product",
-      deliveryStatus: "Processing",
-      orderId: "ORD12345",
-      address: "XYZ, F7, Bangalore",
-      deliveryDate: "20th September, 25",
-    },
-    {
-      id: 2,
-      title: "SLEEVELESS KURTI",
-      size: "S",
-      quantity: 1,
-      price: "₹149.99",
-      date: "Expected to reach by 7th Sept.",
-      image: "https://via.placeholder.com/100x150.png?text=Product",
-      deliveryStatus: "Delivered",
-      orderId: "ORD67890",
-      address: "XYZ, F7, Bangalore",
-      deliveryDate: "18th September, 25",
-    },
-    {
-      id: 3,
-      title: "SLEEVELESS KURTI",
-      size: "S",
-      quantity: 1,
-      price: "₹149.99",
-      date: "Expected to reach by 7th Sept.",
-      image: "https://via.placeholder.com/100x150.png?text=Product",
-      deliveryStatus: "Order placed",
-      orderId: "ORD67890",
-      address: "XYZ, F7, Bangalore",
-      deliveryDate: "18th September, 25",
-    },
-  ];
+  useEffect(() => {
+    const loadOrders = async () => {
+      try {
+        const data = await fetchOrders();
+        console.log(data)
+        const allowedStatuses = ["Order placed", "Processing", "Packaging", "Out for delivery", "Delivered"];
+        const filteredOrders = (data.orders || []).filter(order =>
+          allowedStatuses.includes(order.deliveryStatus)
+        );
+        setOrders(filteredOrders);
+      } catch (err) {
+        console.error("Error fetching orders:", err);
+      }
+    };
+    loadOrders();
+  }, []);
+
 
   const toggleExpand = (id) => {
     setExpandedOrder((prev) => (prev === id ? null : id));
@@ -83,33 +61,39 @@ const OrderHistory = () => {
             onClick={() => toggleExpand(order.id)}
           >
             {/* Top Row */}
-            <div className={styles.topRow}>
-              <img src={order.image} alt={order.title} className={styles.image} />
+            <div>
+              <div className={styles.topRow}>
+                <img src={order.image} alt={order.title} className={styles.image} />
 
-              <div className={styles.details}>
-                <h3>{order.title}</h3>
-                <p>SIZE: <span>{order.size}</span></p>
-                <p>Qty: {order.quantity}</p>
+                <div className={styles.details}>
+                  <h3>{order.title}</h3>
+                  <p>SIZE: <span>{order.size}</span></p>
+                  <p>Qty: {order.quantity}</p>
 
-                <button
-                  className={`${styles.statusBtn} ${
-                    order.deliveryStatus === "Delivered"
-                      ? styles.delivered
-                      : styles.transit
-                  }`}
-                >
-                  {order.deliveryStatus === "Order placed"
-                    ? "Order Placed"
-                    : order.deliveryStatus === "Delivered"
-                    ? "Delivered"
-                    : "In Transit"}
-                </button>
+                  <button
+                    className={`${styles.statusBtn} ${
+                      order.deliveryStatus === "Delivered"
+                        ? styles.delivered
+                        : styles.transit
+                    }`}
+                  >
+                    {order.deliveryStatus === "Order placed"
+                      ? "Order Placed"
+                      : order.deliveryStatus === "Delivered"
+                      ? "Delivered"
+                      : "In Transit"}
+                  </button>
+                </div>
+
+                <div className={styles.priceSection}>
+                  <p className={styles.price}>{order.price}</p>
+                  <p className={styles.date}>{order.date}</p>
+                </div>
               </div>
 
-              <div className={styles.priceSection}>
-                <p className={styles.price}>{order.price}</p>
-                <p className={styles.date}>{order.date}</p>
-              </div>
+              {order.deliveryStatus === "Delivered" && (
+                <button className={styles.returnBtn}>Return</button>
+              )}
             </div>
 
             {/* Expanded Section */}
@@ -136,10 +120,6 @@ const OrderHistory = () => {
                     <p>Delivered to: {order.address}</p>
                     <p>Delivery Date: {order.deliveryDate}</p>
                   </div>
-
-                  {order.status === "Delivered" && (
-                    <button className={styles.returnBtn}>Return</button>
-                  )}
                 </>
               )}
             </div>

@@ -1,11 +1,10 @@
 .container {
-  padding: 20px;
   color: #fff;
   width: 80%;
 }
 
 .heading {
-  font-size: 3vh; 
+  font-size: 3.5vh; 
   font-weight: bold;
 }
 
@@ -23,10 +22,10 @@
 }
 
 .image {
-  width: 80px;
-  height: 100px;
+  width: 100px;
+  height: auto;
   object-fit: cover;
-  margin-right: 15px;
+  margin-right: 20px;
 }
 
 .details {
@@ -34,7 +33,7 @@
 }
 
 .details h3 {
-  font-size: 16px; 
+  font-size: 2vh; 
   margin-bottom: 6px; 
   text-transform: uppercase; 
   font-family: 'Aboreto', sans-serif;
@@ -42,7 +41,7 @@
 
 .details p {
   margin: 3px 0; 
-  font-size: 13px; 
+  font-size: 1.5vh; 
   color: #ccc;
 }
 
@@ -82,7 +81,7 @@
 }
 
 .date {
-  font-size: 12px; 
+  font-size: 1.5vh; 
   color: #A2A3B1; 
   margin-top: 10px;
 }
@@ -106,7 +105,7 @@
 
 .rating {
   margin-top: 10px;
-  font-size: 14px;
+  font-size: 1.5vh; 
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -115,13 +114,14 @@
 
 .returnBtn {
   margin-top: 15px;
-  padding: 8px 12px;
+  padding: 8px 27px;
   background: #e38012;
   border: none;
-  color: #fff;
+  color: #ffffff;
   cursor: pointer;
   font-size: 14px;
-  transition: background 0.3s ease;
+  font-family: 'Abel', sans-serif;
+  margin-left: 120px;
 }
 
 .timeline {
@@ -135,7 +135,7 @@
   position: relative;
   margin: 25px 0;
   padding-left: 40px;
-  font-size: 16px;
+  font-size: 1.5vh; 
   color: #8F8F8F;
 }
 
@@ -210,4 +210,5 @@ h4{
 .moredetail{
   color: #A2A3B1;
   margin-top: 3vh;
+  font-size: 1.5vh; 
 }
