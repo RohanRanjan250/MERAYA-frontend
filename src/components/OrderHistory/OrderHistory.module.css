@@ -197,6 +197,8 @@
   font-size: 3vh;
   margin-right: .5vh;
   color: #D9D9D9;
+  transition: color 0.2s ease;
+  cursor: pointer;
 }
 
 .activeStar {
@@ -211,4 +213,194 @@ h4{
   color: #A2A3B1;
   margin-top: 3vh;
   font-size: 1.5vh; 
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.2); /* semi-transparent black */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modalContent {
+  background: rgba(4, 4, 4, 0.6); /* transparent dark bg */
+  backdrop-filter: blur(2px);     /* ✅ adds blur effect */
+  -webkit-backdrop-filter: blur(10px); /* ✅ Safari support */
+  color: #fff;
+  padding: 20px;
+  width: 50%;
+  text-align: center;
+   box-shadow: 0 0 0 0.1px rgba(255, 255, 255, 0.9);
+}
+
+.orderId {
+  color: #ff9800;
+  font-weight: bold;
+}
+
+.reasonBox {
+  width: 100%;
+  min-height: 80px;
+  margin: 10px 0;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #444;
+  background: #222;
+  color: #fff;
+}
+
+.refundOptions {
+  text-align: left;
+}
+
+.checkboxLabel {
+  display: block;
+}
+
+.modalButtons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5vh;
+  
+}
+
+.returnConfirmBtn {
+  background: #97550C;
+  border: none;
+  padding: 10px 20px;
+  color: #fff;
+  cursor: pointer;
+  font-family: 'Abel', sans-serif;
+  width: 20vh;
+}
+
+.returnConfirmBtn:disabled {
+  background: #666;
+  cursor: not-allowed;
+}
+
+.cancelBtn {
+  background: #E38012;
+  border: none;
+  padding: 10px 20px;
+  color: #fff;
+  cursor: pointer;
+  font-family: 'Abel', sans-serif;
+  width: 15vh;
+}
+
+.returnn{
+  width: 20vh;
+  height: auto;
+  margin: 2vh 0;;
+}
+
+label{
+  display: flex;
+}
+
+/* Hide default radio */
+input[type="radio"] {
+  display: none;
+}
+
+/* Custom radio wrapper */
+.radioLabel {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin: 8px 0;
+  font-size: 14px;
+  color: #fff;
+}
+
+/* Circle */
+.customRadio {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #E38012;
+  /* border-radius: 50%; */
+  margin-right: 10px;
+  position: relative;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+/* Inner dot (hidden by default) */
+.customRadio::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 8px;
+  height: 8px;
+  background: #E38012;
+  /* border-radius: 50%; */
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* Checked state */
+input[type="radio"]:checked + .customRadio::after {
+  opacity: 1;
+}
+
+/* Hide default checkbox */
+input[type="checkbox"] {
+  display: none;
+}
+
+.checkboxGroup{
+  display: flex;
+  justify-content: center;
+}
+
+/* Custom checkbox wrapper */
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin: 8px 0;
+  font-size: 14px;
+  color: #fff;
+}
+
+/* Outer box */
+.customCheckbox {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #E38012;
+  border-radius: 4px; /* 👈 square with slight round */
+  margin-right: 10px;
+  position: relative;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+/* Tick mark (hidden by default) */
+.customCheckbox::after {
+  content: "";
+  position: absolute;
+
+  left: 4px;
+  width: 4px;
+  height: 9px;
+  border: solid #E38012;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* Checked state */
+input[type="checkbox"]:checked + .customCheckbox::after {
+  opacity: 1;
+}
+
+.textarea{
+  font-family: 'Abel', sans-serif;
 }
