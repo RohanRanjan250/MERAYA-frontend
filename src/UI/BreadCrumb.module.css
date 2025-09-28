@@ -1,7 +1,7 @@
 .breadcrumb {
   display: flex;
   align-items: center;
-  font-size: 14px;
+  font-size: 0.9rem;
   color: #8F8F8F;
   font-family: 'Abel', sans-serif;
   padding: 3.5vh 3.5vh 2vh ;
@@ -30,4 +30,14 @@
 .separator {
   margin: 0 6px;
   color: #8F8F8F;
+}
+
+
+@media (max-width: 768px) {
+  .breadcrumb {
+    /* Reduce padding on smaller screens */
+    padding: 1.5rem 1rem 0; 
+    /* Allow breadcrumbs to wrap if they get too long */
+    flex-wrap: wrap; 
+  }
 }

@@ -161,7 +161,7 @@ const Styles = () => (
     .checkoutLayout { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }
     .mainContentArea { flex: 1.7; }
     .sidebarArea { flex: 1; }
-    .heading { display: flex; justify-content: space-between; align-items: center; padding: 3.5vh 2vw 5vh 2vw; font-family: 'Abel', sans-serif; font-size: 3vh; color: #FBFBFB; max-width: 1000px; margin: 0 auto; }
+    .heading { display: flex; justify-content: space-between; align-items: center; padding: 3.5vh 2vw 5vh 2vw; font-family: 'Abel', sans-serif; font-size: 3vh; color: #FBFBFB; margin: 0 auto; }
     .steps { display: flex; align-items: center; gap: 1.5rem; }
     .steps .whiteLine { width: 15vh; height: 2px; background-color: #ffffff; }
     .steps .current { font-weight: 700; -webkit-text-stroke: 0.5px #FBFBFB; color: #FBFBFB; }
@@ -187,11 +187,11 @@ const Styles = () => (
 
     /* OrderSummary Styles */
     .orderSummary { background: transparent; color: #ffffff; padding: 0px 2vh 2vh; font-family: 'Abel', sans-serif; }
-    .orderSummary p:first-child { font-size: 2.2vh; margin-bottom: 15px; }
-    .row { display: flex; justify-content: space-between; margin-bottom: 2.5vh; font-size: 14px; }
-    .orderSummary .heading-summary { color: #A2A3B1; padding: 0; font-size: 14px; }
-    .total { font-weight: bold; font-size: 1.7vh; margin-top: 2.5vh; }
-    .totalPrice { color: #4caf50; font-size: 1.7vh; }
+    .orderSummary p:first-child { font-size: 2rem; margin-bottom: 15px; }
+    .row { display: flex; justify-content: space-between; margin-bottom: 2.5vh; font-size: 0.8rem; }
+    .orderSummary .heading-summary { color: #A2A3B1; padding: 0; font-size: 1rem; }
+    .total { font-weight: bold; font-size: 1.2rem; margin-top: 2.5vh; }
+    .totalPrice { color: #4caf50; font-size: 1.2rem; }
     .couponBox { display: flex; gap: 10px; margin: 12px 0; }
     .couponBox input { flex: 1; padding: 8px; border: 1px solid #D1D1D8; background: transparent; color: #fff; font-family: 'Abel', sans-serif; border-radius: 0; }
     .couponBox button { background: transparent; border: none; padding: 8px 14px; color: #fff; cursor: pointer; font-family: 'Abel', sans-serif; }
@@ -201,11 +201,11 @@ const Styles = () => (
     
     /* AddressSelection Styles */
     .addressSelection { display: flex; flex-direction: column; gap: 1.5rem; color: #fff; font-family: 'Abel', sans-serif; }
-    .addressCard { display: flex; justify-content: space-between; align-items: flex-start; padding: 20px 10px; border-bottom: 1px solid #D1D1D8; cursor: pointer; transition: background 0.2s ease; border-radius: 8px; }
+    .addressCard { display: flex; justify-content: space-between; align-items: flex-start; padding: 20px 10px; border-bottom: 1px solid #D1D1D8; cursor: pointer; transition: background 0.2s ease; }
     .addressCard.active { background: rgba(227, 128, 18, 0.1); border-left: 3px solid #e38012; }
     .addressCard:hover { background: rgba(255, 255, 255, 0.05); }
     .left { display: flex; gap: 1.5rem; align-items: center; }
-    .radio { width: 18px; height: 18px; border: 2px solid #E38012; border-radius: 50%; transition: background-color 0.2s; }
+    .radio { width: 18px; height: 18px; border: 2px solid #E38012; transition: background-color 0.2s; }
     .addressCard.active .radio { background-color: #E38012; }
     .nameRow { display: flex; align-items: center; gap: 0.5rem; }
     .name { font-size: 2.7vh; font-weight: 600; color: #FFFFFF; }
@@ -215,7 +215,7 @@ const Styles = () => (
     .addressCard .actions { display: flex; gap: 0.75rem; font-size: 0.9rem; align-items: center; }
     .editBtn, .removeBtn { background: none; border: none; cursor: pointer; color: #bbb; font-family: 'Abel', sans-serif; }
     .separator { color: #555; }
-    .addNew { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: #bbb; font-size: 1.2rem; padding: 20px; border: 1px dashed #555; justify-content: center; border-radius: 8px; }
+    .addNew { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: #bbb; font-size: 1.2rem; padding: 20px; border: 1px dashed #555; justify-content: center;  }
     .removeBtn {color: #E14B4B;}
     
     /* CartSummary Styles */
@@ -229,6 +229,188 @@ const Styles = () => (
     .itemCard .whiteLine { display: inline-block; width: 3vw; height: 0.08vw; background-color: rgba(244, 243, 241, 1); margin: 0 1.5vw; vertical-align: middle; }
     .addressSection { margin-top: 30px; font-size: 14px; border: 1px solid #444; padding: 20px; border-radius: 8px; }
     .addressSection h3 { text-transform: uppercase; font-size: 16px; margin-bottom: 10px; }
+
+    @media (max-width:1343px){
+      .steps .whiteLine {
+        width: 40px; /* Shorter line between steps */
+      }
+    }
+
+    @media (max-width:1105px){
+      .heading {
+        align-items: flex-start;
+        gap: 1rem;
+        font-size: 2.5rem;
+      }
+      
+      .steps {
+        font-size: 2.5rem;
+        gap: 0.5rem;
+      }
+
+      .steps .whiteLine {
+        width: 40px; /* Shorter line between steps */
+      }
+    }
+
+    @media (max-width:1005px){
+      .checkoutLayout {
+        flex-direction: column; /* Stack main content and sidebar */
+        }
+
+      .mainContentArea{
+        width: 100%;
+      }
+
+      .sidebarArea {
+        width: 100%;
+        margin-top: 2rem;
+        border-top: 1px solid #444;
+        padding-top: 2rem;
+      }
+
+      .item {
+        position: relative;
+        padding-bottom: 2rem; /* Add space for the price at the bottom */
+      }
+
+      .item .image {
+        width: 250px;
+        height: auto;
+      }
+      
+      .item .details h3 {
+        font-size: 2rem;
+      }
+      
+      .item .price {
+        
+        bottom: 1rem;
+        right: 0;
+        margin-left: 0;
+      }
+      
+      .addressCard {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .addressCard .actions {
+        width: 100%;
+        justify-content: flex-end;
+      }
+
+      .itemCard .image {
+        margin-bottom: 1rem;
+      }
+    }
+
+    
+
+    @media (max-width: 821px) {
+      .checkoutLayout {
+        flex-direction: column; /* Stack main content and sidebar */
+        }
+        
+
+      .mainContentArea{
+        width: 100%;
+      }
+      
+      .sidebarArea {
+        width: 100%;
+        margin-top: 2rem;
+        border-top: 1px solid #444;
+        padding-top: 2rem;
+      }
+      
+      .heading {
+        align-items: flex-start;
+        gap: 1rem;
+        font-size: 2rem;
+      }
+      
+      .steps {
+        font-size: 2rem;
+        gap: 0.5rem;
+      }
+
+      .steps .whiteLine {
+        width: 40px; /* Shorter line between steps */
+      }
+
+      .item {
+        position: relative;
+        padding-bottom: 2rem; /* Add space for the price at the bottom */
+      }
+
+      .item .image {
+        width: 100px;
+        height: 133px;
+      }
+      
+      .item .details h3 {
+        font-size: 1rem;
+      }
+      
+      .item .price {
+        
+        bottom: 1rem;
+        right: 0;
+        margin-left: 0;
+      }
+      
+      .addressCard {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .addressCard .actions {
+        width: 100%;
+        justify-content: flex-end;
+      }
+
+      .itemCard .image {
+        margin-bottom: 1rem;
+      }
+
+      
+      .${styles.buttons} {
+        flex-direction: column;
+        align-items: center;
+      }
+      .${styles.btn}, .${styles.btnn} {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 688px){
+      .heading {
+        align-items: flex-start;
+        gap: 1rem;
+        font-size: 1.5rem;
+      }
+      
+      .steps {
+        font-size: 1.5rem;
+        gap: 0.5rem;
+      }
+    }
+
+    @media (max-width: 540px){
+      .heading {
+        align-items: flex-start;
+        gap: 1rem;
+        font-size: 1rem;
+      }
+      
+      .steps {
+        font-size: 1rem;
+        gap: 0.5rem;
+      }
+    }
   `}</style>
 );
 
@@ -451,7 +633,7 @@ export default function CheckoutFlow() {
       <Styles />
       <div className="heading">
         {renderStepIndicator()}
-        <p>{totalItems} ITEMS</p>
+        <p className={styles.itemmm}>{totalItems} ITEMS</p>
       </div>
       <div className="checkoutFlowPage">
         <div className="checkoutLayout">
