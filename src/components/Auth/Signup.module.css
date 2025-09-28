@@ -1,7 +1,7 @@
 html, body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* ✅ prevent horizontal scroll */
+  overflow-x: hidden;
 }
 
 .container {
@@ -9,45 +9,42 @@ html, body {
   height: 100vh;
   font-family: 'Abel', sans-serif;
   overflow: hidden;
+  background: #040404; /* Add background for mobile view */
 }
 
-/* Left side with blurred logo */
+/* Left side with image */
 .left {
-  flex: 1.1; /* takes half width */
+  flex: 1.1;
   position: relative;
-  /* margin-left: 20px; extra margin on the left if you want */
 }
 
 .leftPhoto {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* filter: blur(8px); */
-  /* opacity: 0.3; */
 }
 
 /* Right side form */
 .right {
-  flex: 1; /* takes the other half */
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   background: #040404;
+  padding: 2rem;
 }
 
 .heading {
   text-align: center;
-  margin-bottom: 4vh;
-  margin-top: 1.5vh;
+  margin-bottom: 2rem; /* Converted to rem */
   color: #f4f3f1;
   font-family: 'Aboreto', sans-serif;
 }
 
 .logo{
-  width: 5.5vh;
-  height: 5.5vh;
-
+  width: 50px; /* Converted to px */
+  height: 50px;
 }
 
 .googleBtn {
@@ -55,8 +52,7 @@ html, body {
   align-items: center;
   justify-content: center;
   gap: 8px;
-
-  width: 45.7vh;
+  width: 100%; /* Make full width relative to its container */
   max-width: 400px;
   padding: 12px;
   background-color: #262626;
@@ -80,7 +76,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 16px 0;
+  margin: 1rem 0;
   width: 100%;
   max-width: 400px;
   color: #D1D1D1;
@@ -102,34 +98,34 @@ html, body {
 .form {
   display: flex;
   flex-direction: column;
-  width: 51.5vh;
-  padding: 25px;
+  width: 100%;
+  max-width: 400px; /* Set max-width for form elements */
   font-family: 'Abel', sans-serif;
 }
 
 .form input {
   background-color: #F6F6F6;
   border: none;
-  padding: 0.5rem 0.5rem;
-  margin: 0.2rem 0rem 1rem;
-  font-size: 0.9vw;
+  padding: 0.8rem; /* Use rem for better scaling */
+  margin: 0.2rem 0 1rem;
+  font-size: 1rem; /* Converted to rem */
   outline: none;
   width: 100%;
-  height: 4.5vh;
-  border-radius: 0px;
+  border-radius: 0;
   color: #666666;
   font-family: 'Abel', sans-serif;
+  box-sizing: border-box; /* Ensures padding is included in width */
 }
 
 .form button {
   padding: 0.8rem 2rem;
-  font-size: 1.6vh;
+  font-size: 1rem;
   background-color: #e38012;
   color: #f4f3f1;
   border: none;
   cursor: pointer;
   transition: background 0.2s ease-in-out;
-  margin-top: 1vw;
+  margin-top: 1rem;
   font-family: 'Abel', sans-serif;
 }
 
@@ -137,25 +133,53 @@ html, body {
   background-color: #cf7208;
 }
 
-form p {
+.form p {
   text-align: center;
-  color: rgba(244, 243, 241, 1);
-  font-size: 0.9vw;
+  color: #f4f3f1;
+  font-size: 0.9rem;
 }
 
-form a {
+.form a {
   color: #e38012;
   text-decoration: underline;
-  font-size: 0.9vw;
+  font-size: 0.9rem;
   text-align: center;
 }
 
 .error{
-  margin-top: 1vh;
+  margin-top: 0.5rem;
+  color: #e53935;
+  font-size: 0.9rem;
 }
 
 .haveaccount{
   color: #B3B3B3;
-  margin-top: 1vh;
-  font-size: 1.3vh;
+  margin-top: 1rem;
+  font-size: 0.9rem;
 }
+
+/* ================================================= */
+/* RESPONSIVE STYLES (for screens 990px and smaller) */
+/* ================================================= */
+@media (max-width: 990px) {
+  .container {
+    flex-direction: column;
+    justify-content: center; /* Vertically center */
+    align-items: center;   /* Horizontally center */
+    min-height: 100vh;     /* Ensure full height for vertical centering */
+    overflow: auto;
+  }
+
+  /* Hide the image on the left for mobile */
+  .left {
+    display: none; 
+  }
+
+  .right {
+    flex: none; /* Remove flex grow */
+    width: 80%; /* Allow width to be determined by content */
+    padding: 2rem 1.5rem;
+    box-sizing: border-box;
+  }
+}
+
