@@ -131,6 +131,7 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 4vw;
+    justify-content: center;
   }
 
   .left {
@@ -158,7 +159,7 @@
 
   .input {
     font-size: 1.5vw;
-    width: 50vw;
+    width: 90vw;
   }
 
   .button {
@@ -188,6 +189,7 @@
     flex-direction: column;
     gap: 6vw;
     align-items: flex-start;
+    justify-content: center;
   }
 
   .left {
@@ -232,3 +234,41 @@
     font-size: 4vw;
   }
 }
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 3rem 1.5rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .content {
+    flex-direction: column; /* Stack left and right sections */
+    gap: 3rem;
+    justify-content: center;
+  }
+
+  .left, .right {
+    max-width: 100%;
+    width: 100%;
+    align-items: flex-start; /* Left-align content on mobile */
+  }
+
+  .brand, .title {
+    font-size: 1.8rem; /* Use rem for responsive fonts */
+  }
+
+  .description, .label, .links a, .bottom {
+    font-size: 1rem;
+  }
+
+  .links {
+    align-items: flex-start; /* Left-align links on mobile */
+  }
+}
+
+
+
+
+
+

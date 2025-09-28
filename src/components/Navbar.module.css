@@ -1,17 +1,14 @@
+/* --- Base Navbar Styles --- */
 .navbar {
   background-color: #040404;
-  color: rgba(244, 243, 241, 1);
-  padding: 16px 32px;
+  color: #f4f3f1;
+  padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-family: 'Abel', sans-serif;
-  height: 113px;
-  /* position: fixed;
-  z-index: 1000;
-  top: 0;
-  left: 0;
-  right: 0; */
+  min-height: 113px;
+  position: relative; /* Needed for absolute positioning of the logo */
 }
 
 .leftMenu {
@@ -30,6 +27,14 @@
   margin-left: 4px;
 }
 
+.logoLink {
+  /* This is a key part for mobile layout: absolute center */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  line-height: 0;
+}
+
 .logoImage {
   width: 46.62px;
   height: 48px;
@@ -39,6 +44,7 @@
   display: flex;
   gap: 20px;
   font-size: 20px;
+  align-items: center;
 }
 
 .icon {
@@ -51,6 +57,7 @@
   color: #e38012;
 }
 
+/* --- User Dropdown Menu --- */
 .userMenu {
   position: relative;
   display: inline-block;
@@ -58,7 +65,7 @@
 
 .dropdownMenu {
   position: absolute;
-  top: 35px; /* Adjust spacing below icon */
+  top: 35px;
   right: 0;
   background: #040404;
   border-radius: 8px;
@@ -73,7 +80,7 @@
 .dropdownMenu button {
   padding: 10px 15px;
   text-align: left;
-  background: #040404;
+  background: none;
   border: none;
   cursor: pointer;
   font-size: 14px;
@@ -87,86 +94,19 @@
   background-color: #756d51;
 }
 
-.searchWrapper {
-  position: relative;  /* keeps input aligned with icon  */
-  display: flex;
-  align-items: center;
-} 
-
-
-.searchInput {
-  position: absolute;
-  transform: translateY(-50%);
-  right: 35px; /* push left of search icon */
-  top: 50%;
-  padding: 6px 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background: white;
-  width: 0;
-  opacity: 0;
-  pointer-events: none;
-  transition: width 0.3s ease, opacity 0.3s ease;
-  color: black;
-}
-
-/* When active */
-.searchWrapper.active .searchInput {
-  width: 40vh;   /* expands smoothly */
-  opacity: 1;
-  pointer-events: all;
-  height: 4vh;
-}
-
-.searchResults {
-  position: absolute;
-  top: calc(100% + 4px); /* just below input with a tiny gap */
-  left: 0;
-  width: 100%; /* match input width */
-  background: #fff;
-  border: 1px solid #ddd;
-  border-top: none;
-  border-radius: 0 0 4px 4px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  z-index: 999;
-}
-
-.resultItem {
-  padding: 8px 12px;
-  cursor: pointer;
-}
-
-.resultItem:hover {
-  background: #f5f5f5;
-}
-
-.noResult {
-  padding: 8px 12px;
-  color: #666;
-}
-/*
-.searchResults {
-  position: absolute;
-  top: 100%;   /* directly below input 
-  left: 0;
-  width: 100%; /* same width as input 
-  background: #fff;
-  border: 1px solid #ddd;
-  border-top: none;
-  border-radius: 0 0 4px 4px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  z-index: 999;
-}
-  */
-  
+/* --- Search Bar --- */
 .searchWrapper {
   position: relative;
   display: flex;
   align-items: center;
-}
+} 
 
 .searchInput {
-  padding: 6px 10px;
+  position: absolute;
+  transform: translateY(-50%);
+  right: 35px;
+  top: 50%;
+  padding: 8px 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
   background: white;
@@ -175,30 +115,26 @@
   pointer-events: none;
   transition: width 0.3s ease, opacity 0.3s ease;
   color: black;
-  position: absolute;
-  transform: translateY(-50%);
+  height: 40px;
 }
 
-/* When active */
 .searchWrapper.active .searchInput {
-  width: 40vh;   /* expands smoothly */
+  width: 300px;
   opacity: 1;
   pointer-events: all;
-  height: 4vh;
 }
 
 .searchResults {
   position: absolute;
-  top: calc(100% + 4px); /* just below input with a tiny gap */
-  left: 0;
-  width: 100%; /* match input width */
+  top: calc(100% + 4px);
+  right: 35px;
+  width: 300px;
   background: #fff;
+  color: #333;
   border: 1px solid #ddd;
-  border-top: none;
-  border-radius: 0 0 4px 4px;
+  border-radius: 4px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   z-index: 999;
-  
 }
 
 .resultItem {
@@ -214,3 +150,81 @@
   padding: 8px 12px;
   color: #666;
 }
+
+/* --- Mobile Menu Styles --- */
+
+/* This hides the mobile icons on desktop by default */
+.hamburger, .mobileCartIcon {
+  display: none; 
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 5; 
+}
+
+.mobileMenu {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100vh;
+  background: #040404;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  transition: left 0.3s ease-in-out;
+}
+
+.mobileMenu.active {
+  left: 0;
+}
+
+.mobileMenuHeader {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 24px;
+}
+
+.closeIcon {
+  cursor: pointer;
+}
+
+.mobileMenu a, .mobileMenu button {
+  color: #f4f3f1;
+  text-decoration: none;
+  font-size: 1.5rem;
+  padding: 1rem 0;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-family: 'Abel', sans-serif;
+}
+
+.mobileMenu hr {
+  border: 0;
+  border-top: 1px solid #333;
+  margin: 1rem 0;
+}
+
+/* ================================================= */
+/* RESPONSIVE STYLES (for screens 655px and smaller) */
+/* ================================================= */
+@media (max-width: 655px) {
+  .navbar {
+    padding: 1rem;
+  }
+  
+  /* Hide desktop-only elements */
+  .leftMenu,
+  .iconGroup {
+    display: none;
+  }
+
+  /* Show mobile-only elements */
+  .hamburger, .mobileCartIcon {
+    display: block;
+  }
+}
+
+

@@ -1,18 +1,18 @@
 .card {
   background: #111;
   color: white;
-  width: 280px;
+  width: 280px; /* Set a consistent base width */
+  flex-shrink: 0; /* Prevent card from shrinking in a flex container */
   display: flex;
   flex-direction: column;
-  margin: 10px;
   font-family: 'Abel', sans-serif;
+  overflow: hidden; /* Ensures content stays within the card's bounds */
 }
 
 .imageWrapper {
   position: relative;
   width: 100%;
-  width: 264px;
-  height: 200px;
+  aspect-ratio: 4 / 3; /* Use aspect ratio for a responsive image container */
   overflow: hidden;
 }
 
@@ -20,74 +20,100 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.3s ease; /* Smooth zoom effect on hover */
+}
+
+.card:hover .imageWrapper img {
+  transform: scale(1.05); /* Subtle zoom effect */
 }
 
 .wishlistBtn {
   position: absolute;
   top: 10px;
   right: 10px;
-  background: #BABABA;
+  background: rgba(186, 186, 186, 0.8); /* Slightly transparent background */
+  backdrop-filter: blur(2px);
   border: none;
   padding: 8px;
   cursor: pointer;
-  z-index: 1000;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .details {
-  padding: 12px;
+  padding: 1rem;
 }
 
 .brand {
-  font-size: 1.5vh;
+  font-size: 0.8rem; /* Converted to rem */
   color: #F4F3F1;
   margin: 0;
+  text-transform: uppercase;
 }
 
 .titlePriceRow {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 8px 0;
-  padding-bottom: 4px;
+  margin: 0.5rem 0;
+  padding-bottom: 0.5rem;
   font-family: 'Khand', sans-serif;
-  margin-top: 2vh;
 }
 
 .title {
-    font-size: 2.3vh;
+  font-size: 1.2rem; /* Converted to rem */
   margin: 0;
-  font-style: Light;
   font-weight: 300;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .whiteLine {
   display: inline-block;
-  width: 5vw;
-  height: 0.08vw;
-  background-color: rgba(244, 243, 241, 1);
-  margin-left: 0.3vw;
+  width: 2rem; /* Converted to rem */
+  height: 1px;
+  background-color: #f4f3f1;
+  margin: 0 0.5rem;
   vertical-align: middle;
 }
 
 .price {
-  font-size: 2.3vh;
+  font-size: 1.2rem; /* Converted to rem */
   color: #E38012;
-  font-style: Light;
   font-weight: 300;
 }
 
-/* .rupee {
-  margin-right: 2px;
-} */
-
 .description {
-  font-size: 2vh;
+  font-size: 0.9rem; /* Converted to rem */
   color: #F4F3F1;
-  margin-top: 2vh;
+  margin-top: 0.5rem; /* Converted to rem */
   line-height: 1.4;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* limit to 2 lines */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  min-height: 2.5rem; /* Reserve space for 2 lines of text */
+}
+
+
+/* ============================================= */
+/* RESPONSIVE STYLES (for tablets and mobile)    */
+/* ============================================= */
+@media (max-width: 768px) {
+  .card {
+    /* Make card slightly smaller on mobile to fit more in view */
+    width: 250px; 
+  }
+
+  .title, .price {
+    font-size: 1.1rem; /* Slightly smaller font for title/price */
+  }
+
+  .description {
+    font-size: 0.85rem;
+  }
 }

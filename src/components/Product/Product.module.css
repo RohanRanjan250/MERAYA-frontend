@@ -17,7 +17,6 @@
 
 .mainImage {
   width: 100%;
-  border-radius: 12px;
   min-height: 30rem;
 }
 
@@ -35,7 +34,6 @@
   object-fit: cover;
   border: 2px solid transparent;
   cursor: pointer;
-  border-radius: 8px;
 }
 
 .thumb.active {
@@ -194,7 +192,7 @@
 
 .sizeBtn {
     margin-bottom: 3vh;
-  padding: 0.7rem 2rem;
+  padding: 1.3vh 3vh;
   border: 1px solid #E6E6E6;
   background: transparent;
   cursor: pointer;
@@ -441,4 +439,114 @@
 
 .activeReaction {
   color: #e38012; /* or any highlight color */
+}
+
+
+/* ============================================= */
+/* Responsive Media Queries             */
+/* ============================================= */
+
+/* For tablets and smaller devices (768px and below) */
+@media (max-width: 950px) {
+  
+  /* --- Main Product Section --- */
+
+  .container {
+    flex-direction: column; /* Stack image, icons, and details vertically */
+    padding: 1rem;
+    margin-top: 2vh;
+    min-height: auto; /* Allow height to be determined by content */
+  }
+
+  .center {
+    flex-direction: row;  /* Arrange icons horizontally */
+    justify-content: flex-end; /* Push icons to the right */
+    margin: 1rem 0;     /* Add space above and below the icons */
+  }
+
+  .mainImage {
+    min-height: auto; /* Remove fixed min-height */
+  }
+
+  .title {
+    font-size: 1.5rem; /* Reduce title font size for smaller screens */
+  }
+
+  .newPrice {
+    font-size: 1.5rem; /* Adjust price font size */
+  }
+
+  .description {
+    margin: 1.5rem 0; /* Reduce vertical margins */
+  }
+
+  .actions {
+    flex-direction: column; /* Stack action buttons */
+  }
+
+  .cartBtn {
+    width: 100%; /* Make buttons full-width */
+    background-color: #E38012;
+  }
+  
+  /* --- Giant Background Text --- */
+
+  .backgroundText {
+     /* Drastically reduce font size */
+    margin-top: 50vw; /* Adjust vertical position */
+  }
+  
+  /* --- Reviews Section --- */
+
+  .reviewsSection {
+    padding: 1rem;
+    margin-top: 3vh;
+  }
+
+  .containerr {
+    flex-direction: column; /* Stack rating summary and review list */
+    align-items: center;  /* Center the items in the column */
+    padding: 1rem 0;
+    gap: 2rem;
+  }
+
+  .summary {
+    flex-direction: column; /* Stack the circle and stars vertically */
+    align-items: center;
+    text-align: center;
+  }
+
+  .s {
+    margin-left: 0; /* Reset margin */
+    margin-top: 1rem;
+  }
+
+  .reviewList {
+    width: 100%; /* Ensure review list takes full width */
+  }
+
+  .sizeChart, .delivery{
+    text-decoration: underline;
+    color: #E38012;
+  }
+}
+
+/* For smaller mobile phones (480px and below) */
+@media (max-width: 480px) {
+  .sizeChart, .delivery{
+    text-decoration: underline;
+    
+  }
+
+  .priceRow {
+    
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding-bottom: 1rem;
+  }
+  
+  .reviewFooter { /* Stack user info and like/dislike buttons */
+    align-items: flex-start;
+    gap: 1rem;
+  }
 }

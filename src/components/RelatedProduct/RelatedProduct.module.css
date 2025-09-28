@@ -2,26 +2,28 @@
   width: 100%;
   background: #040404;
   color: #f4f3f1;
-  padding: 20px 40px;
-  margin-top: 9vh;
+  padding: 3rem 2.5rem; /* Use rem for consistent scaling */
+  margin-top: 5rem; /* Converted from vh */
   font-family: 'Abel', sans-serif;
+  box-sizing: border-box;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 }
 
 .header h2 {
-  font-size: 4vh;
+  font-size: 2rem; /* Converted from vh */
 }
 
 .viewAll {
-  font-size: 3vh;
+  font-size: 2rem; /* Converted from vh */
   text-decoration: none;
   color: #f4f3f1;
+  white-space: nowrap; /* Prevents wrapping on small screens */
 }
 
 .viewAll:hover {
@@ -33,5 +35,47 @@
   display: flex;
   gap: 20px;
   overflow-x: auto;
-  padding-bottom: 10px;
+  padding-bottom: 20px; /* Add more padding for the scrollbar */
+}
+
+/* --- Custom Scrollbar (Optional but recommended) --- */
+.productsRow::-webkit-scrollbar {
+  height: 8px;
+}
+
+.productsRow::-webkit-scrollbar-track {
+  background: #1a1a1a;
+  border-radius: 10px;
+}
+
+.productsRow::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 10px;
+}
+
+.productsRow::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+/* ============================================= */
+/* RESPONSIVE STYLES (for tablets and mobile)    */
+/* ============================================= */
+@media (max-width: 768px) {
+  .relatedContainer {
+    padding: 2rem 1.5rem; /* Reduce padding on smaller screens */
+    margin-top: 3rem;
+  }
+
+  .header h2 {
+    font-size: 1.5rem; /* Adjust font size for mobile */
+  }
+
+  .viewAll {
+    font-size: 1rem; /* Adjust font size for mobile */
+  }
+
+  .productsRow {
+    gap: 15px; /* Slightly reduce the gap between products */
+  }
 }

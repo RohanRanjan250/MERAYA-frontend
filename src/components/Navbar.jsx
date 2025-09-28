@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import styles from "./Navbar.module.css";
 import logo from "../assets/image.png";
-import { FaSearch, FaUser, FaHeart, FaShoppingBag } from "react-icons/fa";
+import { FaSearch, FaUser, FaHeart, FaShoppingBag, FaBars, FaTimes } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../API/authApi";
 
@@ -11,6 +11,7 @@ const Navbar = () => {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
   const timeoutRef = useRef(null);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   const handleMouseEnter = () => {
     clearTimeout(timeoutRef.current);
@@ -24,27 +25,30 @@ const Navbar = () => {
       setShowDropdown(false);
     }, 100);
   };
+  
+  // --- 1. Create a function to close the menu ---
+  const closeMobileMenu = () => {
+    setShowMobileMenu(false);
+  };
 
   const handleLogout = async () => {
     try {
       if (!isAuth) {
         navigate("/login");
-        return ;
       } else {
         const response = await logout();
-        if (response.status == 200) {
-          console.log("hat benchor");
+        if (response.status === 200) {
           window.location.href = "/";
         } else {
-          console.log("some error ocured");
+          console.log("some error occured");
         }
       }
+      closeMobileMenu(); // Also close menu on logout
     } catch (err) {
       console.log(err);
     }
   };
 
-  // Dummy search results (replace with API later)
   const sampleResults = [
     "Red T-Shirt",
     "Blue Jeans",
@@ -60,6 +64,10 @@ const Navbar = () => {
   return (
     <>
       <nav className={styles.navbar}>
+        <div className={styles.hamburger} onClick={() => setShowMobileMenu(!showMobileMenu)}>
+          <FaBars />
+        </div>
+
         <div className={styles.leftMenu}>
           <div className={styles.menuItem}>
             SHOP <span className={styles.dropdown}>▼</span>
@@ -67,12 +75,11 @@ const Navbar = () => {
           <div className={styles.menuItem}>COLLECTIONS</div>
         </div>
 
-        <Link to="/">
+        <Link to="/" className={styles.logoLink}>
           <img src={logo} alt="Meerya Logo" className={styles.logoImage} />
         </Link>
-
+        
         <div className={styles.iconGroup}>
-          {/* Search Input + Icon */}
           <div
             className={`${styles.searchWrapper} ${
               showSearch ? styles.active : ""
@@ -90,8 +97,6 @@ const Navbar = () => {
               className={styles.icon}
               onClick={() => setShowSearch(!showSearch)}
             />
-
-            {/* Extended Search Results */}
             {showSearch && query && (
               <div className={styles.searchResults}>
                 {filteredResults.length > 0 ? (
@@ -106,8 +111,6 @@ const Navbar = () => {
               </div>
             )}
           </div>
-
-          {/* User Icon with Dropdown */}
           <div
             className={styles.userMenu}
             onMouseEnter={handleMouseEnter}
@@ -123,7 +126,6 @@ const Navbar = () => {
               </div>
             )}
           </div>
-
           <Link to="/wishlist">
             <FaHeart className={styles.icon} />
           </Link>
@@ -131,9 +133,34 @@ const Navbar = () => {
             <FaShoppingBag className={styles.icon} />
           </Link>
         </div>
+
+        <Link to="/unified" className={styles.mobileCartIcon}>
+          <FaShoppingBag className={styles.icon} />
+        </Link>
       </nav>
+
+      {/* Mobile Menu Overlay */}
+      <div className={`${styles.mobileMenu} ${showMobileMenu ? styles.active : ""}`}>
+        <div className={styles.mobileMenuHeader}>
+          {/* Use the close function for the 'X' icon as well */}
+          <FaTimes className={styles.closeIcon} onClick={closeMobileMenu} />
+        </div>
+
+        {/* --- 2. Add onClick to all mobile menu links and convert to <Link> --- */}
+        <Link to="/" onClick={closeMobileMenu}>HOME</Link>
+        <Link to="/shop" onClick={closeMobileMenu}>SHOP</Link>
+        <Link to="/collections" onClick={closeMobileMenu}>COLLECTIONS</Link>
+        <Link to="/myaccount/contact" onClick={closeMobileMenu}>ACCOUNT</Link>
+        <Link to="/myaccount/order" onClick={closeMobileMenu}>ORDERS</Link>
+        <Link to="/wallet" onClick={closeMobileMenu}>WALLET</Link>
+        <Link to="/wishlist" onClick={closeMobileMenu}>WISHLIST</Link>
+
+        <hr/>
+        <button onClick={handleLogout}>LOGOUT</button>
+      </div>
     </>
   );
 };
 
 export default Navbar;
+
