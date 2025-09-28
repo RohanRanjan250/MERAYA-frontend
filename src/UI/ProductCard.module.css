@@ -1,14 +1,18 @@
 .card {
-  width: 371px;
-  height: 553px;
+  width: 100%; /* Allow card to shrink */
+  max-width: 371px; /* Set a max-width for desktop */
+  height: auto; /* Let content determine the height */
   display: flex;
   flex-direction: column;
-  background: #000;
+  background: #040404;
   color: #fff;
+  font-family: 'Abel', sans-serif;
+  overflow: hidden; /* Important for keeping content inside */
 }
 
 .imageWrapper {
-  flex: 1;
+  width: 100%;
+  aspect-ratio: 3 / 4; /* Creates a responsive container with a 3:4 ratio */
   overflow: hidden;
   position: relative;
 }
@@ -17,67 +21,56 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.3s ease; /* Add smooth transition for hover */
+}
+
+.card:hover .image {
+  transform: scale(1.05); /* Subtle zoom effect on hover */
 }
 
 .meta {
   display: flex;
   flex-direction: column;
-  font-size: 0.9vw;
-  color: rgba(244, 243, 241, 1);
-  font-family: Abel, sans-serif;
+  padding: 1rem; /* Use consistent padding */
 }
 
 .metaBottom {
   display: flex;
-  font-size: 1.2vw;
+  align-items: center; /* Better alignment */
   justify-content: space-between;
-  margin-top: 0.3rem;
+  margin-top: 0.5rem;
 }
 
 .metaBottom p {
   margin: 0;
 }
 
-.metaBottom button {
-  background: none;
-  border: none;
-  color: rgba(244, 243, 241, 1);
-  cursor: pointer;
-  font-weight: bold;
-  font-family: Abel, sans-serif;
-  font-size: 1.2vw;
-}
-
 .divider {
   border: none;
-  height: 0.1vw;
+  height: 1px; /* Use a fixed pixel height */
   background-color: rgba(244, 243, 241, 1);
-  margin: 1.2vw 0;
+  margin: 1rem 0; /* Use rem for consistent margin */
   width: 100%;
-  opacity: 0.6;
+  opacity: 0.4; /* Slightly less opaque for subtlety */
 }
 
 .title {
+  font-size: 1.1rem; /* Use rem for scalable font size */
   font-weight: 500;
   text-transform: uppercase;
-  margin-bottom: 2px;
+  text-align: left;
 }
 
 .desc {
-  font-size: 0.8vw;
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
-  font-family: Abel, sans-serif;
-  color: rgba(244, 243, 241, 1);
-  text-align: right;
-  margin-left: auto;
-  display: flex;
-  justify-content: flex-end;
-  text-align: right;
+  font-size: 0.9rem; /* Converted from vw to rem */
+  margin: 1rem 0 0.5rem 0;
+  font-family: 'Abel', sans-serif;
+  color: #a1a1aa; /* Softer color for description */
+  text-align: left;
 }
 
 .price {
-  margin-top: 4px;
+  font-size: 1.2rem;
   font-weight: 600;
 }
 
@@ -93,6 +86,7 @@
   background: transparent;
   color: #fff;
   transition: all 0.2s ease;
+  font-family: 'Abel', sans-serif;
 }
 
 .button:hover {
@@ -104,8 +98,46 @@
   position: absolute;
   top: 10px;
   right: 10px;
-  background: #BABABA;
+  background: rgba(186, 186, 186, 0.7); /* Slightly transparent */
+  backdrop-filter: blur(2px);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
-  padding: 8px;
   cursor: pointer;
+  color: #040404;
 }
+
+/* ================================================= */
+/* RESPONSIVE STYLES (for screens 768px and smaller) */
+/* ================================================= */
+@media (max-width: 768px) {
+  .title {
+    font-size: 1rem;
+  }
+
+  .price {
+    font-size: 1.1rem;
+  }
+
+  .desc {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 773px) {
+  .card {
+    padding: 0 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .metaBottom {
+    
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+}
+

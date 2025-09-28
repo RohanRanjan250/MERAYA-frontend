@@ -21,6 +21,7 @@
   min-height: 20vh;       /* full screen height */
   position: relative;
   z-index: 2; /* keep it above background text */
+  background-color: transparent;
 }
 
 .grid {
@@ -38,7 +39,7 @@
   text-align: center;
   color: rgba(227, 128, 18, 0.08);
   transform: translateY(-50%);
-  z-index: 0;
+  z-index: 100;
   user-select: none;
   pointer-events: none;
   letter-spacing: 10%;
@@ -119,4 +120,22 @@
 
 .success{
     width: 40%;
+}
+
+@media (max-width:1200px){
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3vh;
+  }
+
+  .heading {
+    padding: 3.5vh 2vw 3vh 2vw;
+  }
+}
+
+@media (max-width:800px){
+  .container {    /* center vertically */
+    min-height: 20vh;
+  }
 }

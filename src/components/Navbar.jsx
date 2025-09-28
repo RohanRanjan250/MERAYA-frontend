@@ -120,7 +120,7 @@ const Navbar = () => {
             {showDropdown && (
               <div className={styles.dropdownMenu}>
                 <a href="/myaccount/contact">Account</a>
-                <a href="/orders">Orders</a>
+                <a href="/myaccount/order">Orders</a>
                 <a href="/wallet">Wallet</a>
                 <button onClick={handleLogout}>Logout</button>
               </div>
