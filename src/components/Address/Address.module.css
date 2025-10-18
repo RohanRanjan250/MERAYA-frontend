@@ -132,7 +132,7 @@
   font-family: 'Abel', sans-serif;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1097px) {
   .part, .upper {
     flex-direction: column;
     gap: 1rem;
@@ -146,5 +146,16 @@
   .addBtn, .saveBtn {
     width: 100%;
     max-width: 350px;
+  }
+
+  .container{
+    min-height: 50vh;
+    width: 100%;
+    padding-right: 2vh;
+  }
+
+  .leftpart,
+  .rightpart{
+    max-width: 100%;
   }
 }
