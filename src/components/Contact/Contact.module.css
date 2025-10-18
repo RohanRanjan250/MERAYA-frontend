@@ -54,4 +54,25 @@ input {
   font-size: 2vh;
 }
 
+@media (max-width: 768px) {
+  .profileContainer {
+    width: 90%; /* Use more of the screen width */
+  }
 
+  .profileContainer h2 {
+    font-size: 1.5rem;
+  }
+
+  .updateBtn {
+    align-self: center; /* Center the button on mobile */
+    width: 100%;
+    max-width: 350px; /* Give it a max-width */
+    margin-top: 3rem;
+    padding: 0.8rem;
+    text-decoration: none; /* Remove underline for button style */
+    background-color: #e38012; /* Give it a solid background */
+    color: #f4f3f1;
+    text-align: center;
+    font-size: 1rem;
+  }
+}

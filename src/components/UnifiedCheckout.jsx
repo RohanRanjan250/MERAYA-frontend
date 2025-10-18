@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; 
-import {fetchCart, changeCartQuantity, removeFromCart} from "../API/cart"
+import {fetchCart, changeCartQuantity, removeFromCart, checkDeliveryAvailability} from "../API/cart"
 import {getUserAddress} from "../API/myaccountAPI"
 import {OrderCreate} from "../API/orderAPI"
 import styles from "./OrderConfirmed/OrderConfirmed.module.css"
 import success from "../assets/sad.png"
+import { useToast } from "../Context/ToastContext";
 
 // --- Embedded Reusable Components ---
 // In a real project, these would be in their own files and imported.
@@ -45,9 +46,9 @@ const CartItems = ({ items, onQuantityChange, onRemove, onBuyNow }) => {
   );
 };
 
-const OrderSummary = ({ items, label, onClick, isProcessing }) => {
+const OrderSummary = ({ items, label, onClick, isProcessing, pincode, onPincodeChange, onPincodeCheck, isCheckingPincode }) => {
   const price = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  const discount = price * 0.1; // 10% discount
+  const discount = price * 0.1;
   const shipping = 0;
   const total = price - discount + shipping;
  
@@ -55,25 +56,37 @@ const OrderSummary = ({ items, label, onClick, isProcessing }) => {
     <div className="orderSummary">
       <p>Order Summary</p>
       <div className="row">
-        <span className="heading-summary">Price</span>
+        <span>Price</span>
         <span>₹{price.toFixed(2)}</span>
       </div>
       <div className="row">
-        <span className="heading-summary">Discount</span>
+        <span>Discount</span>
         <span>-₹{discount.toFixed(2)}</span>
       </div>
       <div className="row">
-        <span className="heading-summary">Shipping</span>
+        <span>Shipping</span>
         <span className="free">{shipping > 0 ? `₹${shipping.toFixed(2)}` : "Free"}</span>
       </div>
       <div className="row">
-        <span className="heading-summary">Coupon Applied</span>
+        <span>Coupon Applied</span>
         <span>₹0.00</span>
       </div>
       <hr />
       <div className="row total">
         <span>TOTAL</span>
         <span className="totalPrice">₹{total.toFixed(2)}</span>
+      </div>
+      {/* --- MODIFIED PINCODE INPUT --- */}
+      <div className="couponBox">
+        <input 
+          type="number" 
+          placeholder="Enter Pincode" 
+          value={pincode}
+          onChange={(e) => onPincodeChange(e.target.value)}
+        />
+        <button onClick={onPincodeCheck} disabled={isCheckingPincode}>
+          {isCheckingPincode ? '...' : 'Check'}
+        </button>
       </div>
       <div className="couponBox">
         <input type="text" placeholder="Coupon Code" />
@@ -120,7 +133,7 @@ const AddressSelection = ({ addresses, selectedAddress, onSelect, onClick, onRem
   );
 };
 
-const CartSummary = ({ items, address }) => {
+const CartSummary = ({ items, address, estimatedDeliveryDate }) => {
   return (
     <div className="cartSummaryContainer">
       {items.map((item) => (
@@ -133,7 +146,12 @@ const CartSummary = ({ items, address }) => {
               SIZE <span className="whiteLine"></span><span>{item.variant}</span> &nbsp;&nbsp; 
               QUANTITY <span className="whiteLine"></span><span>{String(item.quantity).padStart(2, "0")}</span>
             </p>
-            <p className="delivery">Estimated Delivery by 18th September, 2025</p>
+            {/* --- DYNAMIC DELIVERY DATE --- */}
+            <p className="delivery">
+              {estimatedDeliveryDate 
+                ? `Estimated Delivery by ${estimatedDeliveryDate}`
+                : "Enter pincode in summary to check delivery date"}
+            </p>
           </div>
         </div>
       ))}
@@ -425,6 +443,9 @@ export default function CheckoutFlow() {
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [pincode, setPincode] = useState('');
+  const [estimatedDeliveryDate, setEstimatedDeliveryDate] = useState(null);
+  const [isCheckingPincode, setIsCheckingPincode] = useState(false);
 
   // Function to dynamically load the Razorpay script
   const loadScript = (src) => {
@@ -462,6 +483,37 @@ export default function CheckoutFlow() {
     };
     loadInitialData();
   }, []);
+
+  const handlePincodeCheck = async () => {
+    if (!pincode || pincode.length !== 6) {
+      showToast("Please enter a valid 6-digit pincode.", "error");
+      return;
+    }
+    setIsCheckingPincode(true);
+    try {
+      const data = await checkDeliveryAvailability(pincode);
+      const shiprocketDateStr = data.estimated_delivery_date; // e.g., "2025-10-05"
+
+      // Parse the date and add 1 day
+      const shiprocketDate = new Date(shiprocketDateStr);
+      shiprocketDate.setDate(shiprocketDate.getDate() + 1);
+
+      // Format the date for display (e.g., "October 6th, 2025")
+      const formattedDate = shiprocketDate.toLocaleDateString('en-US', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+      
+      setEstimatedDeliveryDate(formattedDate);
+      showToast(`Delivery available! Estimated arrival by ${formattedDate}`, "success");
+    } catch (error) {
+      setEstimatedDeliveryDate(null);
+      showToast(error.message || "Pincode not serviceable.", "error");
+    } finally {
+      setIsCheckingPincode(false);
+    }
+  };
 
   const handleQuantityChange = async (itemId, change) => {
     const action = change === 1 ? "increment" : "decrement";
@@ -514,6 +566,7 @@ export default function CheckoutFlow() {
 
       const orderPayload = {
         address_id: selectedAddress.id,
+        pincode: pincode || selectedAddress.pincode,
         cart_items: cartItems.map(item => ({
           product_id: item.product_id, 
           variant_id: item.variant_id, 
@@ -567,11 +620,10 @@ export default function CheckoutFlow() {
       case "cart":
         return <CartItems items={cartItems} onQuantityChange={handleQuantityChange} onRemove={handleRemoveItem} onBuyNow={handleBuyNow} />;
       case "address":
-        return <AddressSelection addresses={addresses} selectedAddress={selectedAddress} onSelect={handleSelectAddress} onClick={nav} onRemove={(a) => console.log("Remove", a)} 
-        // onAddNew={() => console.log("Add new")} 
-        />;
+        return <AddressSelection addresses={addresses} selectedAddress={selectedAddress} onSelect={handleSelectAddress} onClick={nav} onRemove={(a) => console.log("Remove", a)} />;
       case "summary":
-        return <CartSummary items={cartItems} address={selectedAddress} />;
+        // --- PASS DATE TO SUMMARY ---
+        return <CartSummary items={cartItems} address={selectedAddress} estimatedDeliveryDate={estimatedDeliveryDate} />;
       default: return null;
     }
   };
@@ -633,13 +685,23 @@ export default function CheckoutFlow() {
       <Styles />
       <div className="heading">
         {renderStepIndicator()}
-        <p className={styles.itemmm}>{totalItems} ITEMS</p>
+        <p>{totalItems} ITEMS</p>
       </div>
       <div className="checkoutFlowPage">
         <div className="checkoutLayout">
           <div className="mainContentArea">{renderCurrentStepComponent()}</div>
           <div className="sidebarArea">
-            <OrderSummary items={cartItems} label={step === "summary" ? "PAY NOW" : "PROCEED TO CHECKOUT"} onClick={handleNextStep} isProcessing={isProcessing} />
+            {/* --- 5. PASS NEW PROPS TO ORDER SUMMARY --- */}
+            <OrderSummary 
+              items={cartItems} 
+              label={step === "summary" ? "PAY NOW" : "PROCEED TO CHECKOUT"} 
+              onClick={handleNextStep} 
+              isProcessing={isProcessing}
+              pincode={pincode}
+              onPincodeChange={setPincode}
+              onPincodeCheck={handlePincodeCheck}
+              isCheckingPincode={isCheckingPincode}
+            />
           </div>
         </div>
       </div>

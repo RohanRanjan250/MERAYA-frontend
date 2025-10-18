@@ -7,6 +7,7 @@ import {
   Route,
   BrowserRouter,
 } from "react-router-dom";
+import { ToastProvider } from "./Context/ToastContext";
 import Landing from "./pages/Landing";
 import Signup from "./pages/SignupPage";
 import Login from "./pages/LoginPage";
@@ -26,25 +27,27 @@ function App() {
     setupInterceptors();
   });
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <LandingProvider>
-              <Landing />
-            </LandingProvider>
-          }
-        />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/myaccount/*" element={<Profile />} />
-        <Route path="/wishlist" element={<Wishlist />} />
-        <Route path="/product/:slug" element={<ProductPage />} />
-        <Route path="/confirmed" element={<OrderConfirmed/>}/>
-        <Route path="/unified" element={<Unified/>}/>
-      </Routes>
-    </BrowserRouter>
+    <ToastProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <LandingProvider>
+                <Landing />
+              </LandingProvider>
+            }
+          />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/myaccount/*" element={<Profile />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/product/:slug" element={<ProductPage />} />
+          <Route path="/confirmed" element={<OrderConfirmed/>}/>
+          <Route path="/unified" element={<Unified/>}/>
+        </Routes>
+      </BrowserRouter>
+    </ToastProvider>
   );
 }
 

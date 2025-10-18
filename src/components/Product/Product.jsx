@@ -11,15 +11,14 @@ import { faIndianRupeeSign } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import {updateReviewReaction, toggleWishlist, addToCart} from "../../API/productmainpageAPI.jsx" ;
 import { useNavigate } from "react-router-dom";
+import { useToast } from "../../Context/ToastContext.jsx"; // 1. Import the useToast hook
 
 export default function Product({ product, setProduct }) {
   const [selectedImage, setSelectedImage] = useState(product.images[0]);
   const [selectedSize, setSelectedSize] = useState(product.variants[0][1]);
   const navigate = useNavigate();
-  const [toastVisible, setToastVisible] = useState(false);
-  const [wishlistToast, setWishlistToast] = useState(false);
+  const { showToast } = useToast();
   let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
-  console.log(product);
 
   const reviews = product.reviews || [];
   const totalReviews = reviews.length;
@@ -29,91 +28,89 @@ export default function Product({ product, setProduct }) {
       : 0;
 
   const handleReaction = async (reviewId, action) => {
-  try {
-    if (!isAuth) {
-      navigate("/login"); 
-      return; 
-    }
+    try {
+      if (!isAuth) {
+        navigate("/login");
+        return;
+      }
 
-    // ✅ only update frontend if logged in
-    setProduct(prev => ({
-      ...prev,
-      reviews: prev.reviews.map(r => {
-        if (r.id !== reviewId) return r;
-
-        let updated = { ...r };
-
-        if (action === "like") {
-          if (r.userReaction === "like") { // already liked, remove like
-            updated.likes -= 1;
-            updated.userReaction = null;
-          } else { // add like
-            updated.likes += 1;
-            if (r.userReaction === "dislike") updated.dislikes -= 1; // remove dislike if any
-            updated.userReaction = "like";
+      setProduct(prev => ({
+        ...prev,
+        reviews: prev.reviews.map(r => {
+          if (r.id !== reviewId) return r;
+          let updated = { ...r };
+          if (action === "like") {
+            if (r.userReaction === "like") {
+              updated.likes -= 1;
+              updated.userReaction = null;
+            } else {
+              updated.likes += 1;
+              if (r.userReaction === "dislike") updated.dislikes -= 1;
+              updated.userReaction = "like";
+            }
+          } else if (action === "dislike") {
+            if (r.userReaction === "dislike") {
+              updated.dislikes -= 1;
+              updated.userReaction = null;
+            } else {
+              updated.dislikes += 1;
+              if (r.userReaction === "like") updated.likes -= 1;
+              updated.userReaction = "dislike";
+            }
           }
-        } else if (action === "dislike") {
-          if (r.userReaction === "dislike") { // already disliked, remove dislike
-            updated.dislikes -= 1;
-            updated.userReaction = null;
-          } else { // add dislike
-            updated.dislikes += 1;
-            if (r.userReaction === "like") updated.likes -= 1; // remove like if any
-            updated.userReaction = "dislike";
-          }
-        }
+          return updated;
+        })
+      }));
 
-        return updated;
-      })
-    }));
-
-    // ✅ update backend only if authenticated
-    await updateReviewReaction(reviewId, action);
+      await updateReviewReaction(reviewId, action);
     } catch (error) {
       console.error("Failed to update reaction:", error);
+      showToast("Failed to update reaction.", "error");
     }
   };
-
 
   const [inWishlist, setInWishlist] = useState(product.in_wishlist || false);
 
   const handleWishlist = async () => {
     try {
       if (!isAuth) {
-        console.log("not logged in")
         navigate("/login");
-        return ;
-      } else {
-        const selectedVariant = product.variants.find(variant => variant[1] === selectedSize);
-
-        if (!selectedVariant) {
-          console.error("Could not find the selected variant ID.");
-          alert("Please select a size.");
-          return;
-        }
-
-        const variantId = selectedVariant[0];
-        console.log(variantId);
-        await toggleWishlist(product.id, variantId);
-        setInWishlist((prev) => !prev);
-        setWishlistToast(true);
-        setTimeout(() => setWishlistToast(false), 2000); // hide after 2 seconds
+        return;
       }
+      
+      const selectedVariant = product.variants.find(variant => variant[1] === selectedSize);
+
+      if (!selectedVariant) {
+        showToast("Please select a size.", "error");
+        return;
+      }
+
+      const variantId = selectedVariant[0];
+      // The API call returns the new status and a message
+      const response = await toggleWishlist(product.id, variantId);
+      
+      // Update state based on the successful response from the backend
+      setInWishlist(response.in_wishlist);
+      
+      // Show the success message from the backend
+      showToast(response.message, "success");
+      
     } catch (error) {
       console.error("Failed to update wishlist:", error);
+      // The catch block now only handles genuine errors
+      showToast(error.message || "An error occurred while updating your wishlist.", "error");
     }
   };
 
   const handleShare = () => {
     const url = window.location.href;
-    console.log(url);
     navigator.clipboard.writeText(url)
       .then(() => {
-        setToastVisible(true);
-        setTimeout(() => setToastVisible(false), 2000); // hide after 2 seconds
+        showToast("Product URL copied to clipboard!", "success");
       })
       .catch((err) => {
         console.error("Failed to copy URL: ", err);
+        showToast("Failed to copy URL.", "error");
       });
   };
 
@@ -127,18 +124,16 @@ export default function Product({ product, setProduct }) {
       const selectedVariant = product.variants.find(variant => variant[1] === selectedSize);
 
       if (!selectedVariant) {
-        console.error("Could not find the selected variant ID.");
-        alert("Please select a size.");
+        showToast("Please select a size.", "error");
         return;
       }
 
       const variantId = selectedVariant[0];
-        
-      const res = await addToCart(product.id, variantId);
-      console.log(res);
-      alert("Product added to cart! ✅"); // later replace with toast
+      await addToCart(product.id, variantId);
+      showToast("Product added to cart!", "success");
     } catch (err) {
       console.error("Failed to add to cart:", err);
+      showToast(err.message || "Failed to add to cart.", "error");
     }
   };
 
@@ -188,27 +183,8 @@ export default function Product({ product, setProduct }) {
                   <span className={styles.oldPrice}><FontAwesomeIcon icon={faIndianRupeeSign} size="xs" />{product.show_price}</span>
                   <span className={styles.newPrice}><FontAwesomeIcon icon={faIndianRupeeSign} size="xs"/>{product.selling_price}</span>
               </div>
-            {/* <span className={styles.sold}>{product.sold} Sold</span> */}
-            <span className={styles.rating}><FontAwesomeIcon icon={faStar} /> {averageRating}</span>
+            <span className={styles.rating}><FontAwesomeIcon icon={faStar} /> {averageRating.toFixed(1)}</span>
           </div>
-
-
-          {/* Color options */}
-          {/* <div className={styles.colorSection}>
-            <p>Color: {selectedColor}</p>
-            <div className={styles.colorOptions}>
-              {product.colors.map((color, index) => (
-                <button
-                  key={index}
-                  className={`${styles.colorBtn} ${
-                    selectedColor === color ? styles.activeColor : ""
-                  }`}
-                  style={{ backgroundColor: color }}
-                  onClick={() => setSelectedColor(color)}
-                />
-              ))}
-            </div>
-          </div> */}
 
           {/* Size options */}
           <div className={styles.sizeSection}>
@@ -225,13 +201,13 @@ export default function Product({ product, setProduct }) {
             <div className={styles.sizeOptions}>
               {product.variants.map((variant) => (
                 <button
-                  key={variant[0]} // Use the unique ID (variant[0]) as the key
+                  key={variant[0]}
                   className={`${styles.sizeBtn} ${
                     selectedSize === variant[1] ? styles.activeSize : ""
                   }`}
-                  onClick={() => setSelectedSize(variant[1])} // Set the selected size to the string
+                  onClick={() => setSelectedSize(variant[1])}
                 >
-                  {variant[1]} {/* Display the size string (variant[1]) */}
+                  {variant[1]}
                 </button>
               ))}
             </div>
@@ -240,7 +216,6 @@ export default function Product({ product, setProduct }) {
           {/* Action Buttons */}
           <div className={styles.actions}>
             <button className={styles.cartBtn} onClick={handleAddToCart}>ADD TO CART<ArrowDownLeft className={styles.arrow}  /></button>
-            {/* <button className={styles.checkoutBtn}>Checkout Now</button> */}
           </div>
           <a href="#" className={styles.delivery}>
               DELIVERY T&C
@@ -248,21 +223,9 @@ export default function Product({ product, setProduct }) {
         </div>
       </div>
       <div className={styles.backgroundText}>MERAYA</div>
-      
-      {toastVisible && (
-        <div className={styles.toast}>
-          Product URL copied to clipboard!
-        </div>
-      )}
-
-      {wishlistToast && (
-        <div className={styles.toast}>
-          {inWishlist ? "Added to wishlist" : "Removed from wishlist"}
-        </div>
-      )}
 
       <div className={styles.reviewsSection}>
-        <p className={styles.title}>REVIEWS</p>
+        <h2 className={styles.reviewsTitle}>REVIEWS</h2>
 
         <div className={styles.containerr}>
           {/* Left Side - Rating Summary */}
@@ -282,54 +245,34 @@ export default function Product({ product, setProduct }) {
 
           {/* Right Side - Review List */}
           <div className={styles.reviewList}>
-            <h3 className={styles.listTitle}>REVIEW LIST</h3>
+            <h3 className={styles.reviewTitle}>REVIEW LIST</h3>
 
-            {reviews.map((review, index) => (
-              <div key={index} className={styles.reviewCard}>
-                <div className={styles.reviewStars}>
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <FontAwesomeIcon
-                      key={i}
-                      icon={faStar}
-                      className={i < review.rating ? styles.starFilled : styles.starEmpty}
-                    />
-                  ))}
+            {reviews.map((review) => (
+                <div key={review.id} className={styles.reviewCard}>
+                    <div className={styles.reviewStars}>
+                        {Array.from({ length: 5 }).map((_, i) => (
+                            <FontAwesomeIcon
+                                key={i}
+                                icon={faStar}
+                                className={i < review.rating ? styles.starFilled : styles.starEmpty}
+                            />
+                        ))}
+                    </div>
+                    
+                    <p className={styles.reviewDesc}>{review.description}</p>
+                    <p className={styles.reviewDate}>
+                        {review.created_at ? new Date(review.created_at).toLocaleString() : "No date"}
+                    </p>
+
+                    <div className={styles.userInfo}>
+                        <img
+                            src={`https://i.pravatar.cc/40?u=${review.username}`}
+                            alt="user"
+                            className={styles.avatar}
+                        />
+                        <span className={styles.username}>{review.username}</span>
+                    </div>
                 </div>
-
-                {/* <h4 className={styles.reviewTitle}>{review.title}</h4> */}
-                <p className={styles.reviewDesc}>{review.description}</p>
-                <p className={styles.reviewDate}>
-                  {review.created_at ? new Date(review.created_at).toLocaleString() : "No date"}
-                </p>
-
-                <div className={styles.reviewFooter}>
-                  <div className={styles.userInfo}>
-                    <img
-                      src={`https://i.pravatar.cc/40?u=${review.username}`} // avatar placeholder based on username
-                      alt="user"
-                      className={styles.avatar}
-                    />
-                    <span className={styles.username}>{review.username}</span>
-                  </div>
-
-                  <div className={styles.actions}>
-                    <button 
-                      className={`${styles.actionBtn} ${review.userReaction === "like" ? styles.activeReaction : ""}`} 
-                      onClick={() => handleReaction(review.id, "like")}
-                    >
-                      <FontAwesomeIcon icon={faThumbsUp} /> {review.likes}
-                    </button>
-
-                    <button 
-                      className={`${styles.actionBtn} ${review.userReaction === "dislike" ? styles.activeReaction : ""}`} 
-                      onClick={() => handleReaction(review.id, "dislike")}
-                    >
-                      <FontAwesomeIcon icon={faThumbsDown} /> 
-                      {/* {review.dislikes} */}
-                    </button>
-                  </div>
-                </div>
-              </div>
             ))}
           </div>
         </div>
@@ -337,3 +280,4 @@ export default function Product({ product, setProduct }) {
     </div>
   );
 }
+
