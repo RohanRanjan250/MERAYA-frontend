@@ -83,3 +83,49 @@
   font-weight: bold;
 }
 
+@media (max-width: 1097px) {
+  .container {
+    width: 100%; /* The container now takes the full width */
+    min-height: auto;
+    margin-bottom: 3vh;
+  }
+
+  .sidebar {
+    height: auto; /* Allow height to be determined by content */
+    align-items: center; /* Center the content horizontally */
+      text-align: center; /*Center the text inside the overlay */
+    padding: 2rem 0; /* Add some vertical padding */
+    margin-left: 2vh;
+    margin-right: 2vh;
+  }
+
+  .bottomimage {
+    position: absolute;
+    top: 0;
+    
+    width: 100%; /* Image covers the entire background */
+    height: 30vh;
+  }
+
+  /* .container {
+    width: 100%;
+    min-height: 30vh;
+  } */
+
+  .overlay {
+    position: static; /* Let the overlay sit in the normal document flow */
+    width: 90%; /* Use most of the screen width */
+    text-align: center; /* Center the text */
+  }
+
+  .navList {
+    justify-content: center; /* Center the navigation links */
+    flex-wrap: wrap; /* Allow links to wrap on very small screens */
+  }
+}
+
+@media (max-width: 494px) {
+  .navList li {
+    font-size: 1.65vh;
+  }
+}

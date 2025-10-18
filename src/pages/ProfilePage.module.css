@@ -14,3 +14,8 @@
   overflow-y: auto;
 }
 
+@media (max-width: 1097px) {
+      .container {
+        flex-direction: column;
+      }
+    }
