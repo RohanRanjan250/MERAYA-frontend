@@ -433,31 +433,27 @@ input[type="checkbox"]:checked + .customCheckbox::after {
   line-height: 1.5;
 }
 
-@media (max-width: 768px) {
-  .topRow {
-    flex-direction: column;
-  }
-
-  .priceSection {
-    flex-direction: row;
-    align-items: center;
-    min-height: auto;
+@media (max-width: 1097px) {
+  .container{
     width: 100%;
-    margin-top: 1rem;
+    padding-right: 2vh;
   }
+}
 
-  .returnBtn {
-    width: 100%;
-    text-align: center;
-  }
-  
+@media (max-width: 768px) { 
   .details h3 { font-size: 1rem; }
   .details p { font-size: 0.85rem; }
-  .rating { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .rating { align-items: flex-start; gap: 0.5rem; }
+}
+
+@media (max-width: 890px) {
+  .modalContent{
+    width: 80%;
+  }
 }
 
 @media (max-width: 480px) {
-  .modalButtons {
+  /* .modalButtons {
     flex-direction: column;
-  }
+  } */
 }

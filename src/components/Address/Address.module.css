@@ -3,7 +3,7 @@
   color: white;
   font-family: 'Abel', sans-serif;
   width: 80%;
-  max-height: 20vh;
+  min-height: 20vh;
 }
 
 .heading {

@@ -51,6 +51,22 @@ const OrderSummary = ({ items, label, onClick, isProcessing, pincode, onPincodeC
   const discount = price * 0.1;
   const shipping = 0;
   const total = price - discount + shipping;
+  const [deliveryDate, setDeliveryDate] = useState('');
+
+  useEffect(() => {
+    // Get today's date
+    const today = new Date(); // e.g., Thu Oct 23 2025
+
+    // Calculate the date 5 days from now
+    const delivery = new Date(today);
+    delivery.setDate(today.getDate() + 5); // e.g., Tue Oct 28 2025
+
+    // Format the date (e.g., "October 28, 2025")
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = delivery.toLocaleDateString('en-US', options); // Adjust 'en-US' for locale if needed
+
+    setDeliveryDate(formattedDate);
+  }, []);
  
   return (
     <div className="orderSummary">
@@ -76,7 +92,7 @@ const OrderSummary = ({ items, label, onClick, isProcessing, pincode, onPincodeC
         <span>TOTAL</span>
         <span className="totalPrice">₹{total.toFixed(2)}</span>
       </div>
-      {/* --- MODIFIED PINCODE INPUT --- */}
+      {/* --- MODIFIED PINCODE INPUT ---
       <div className="couponBox">
         <input 
           type="number" 
@@ -87,6 +103,10 @@ const OrderSummary = ({ items, label, onClick, isProcessing, pincode, onPincodeC
         <button onClick={onPincodeCheck} disabled={isCheckingPincode}>
           {isCheckingPincode ? '...' : 'Check'}
         </button>
+      </div> */}
+      <div className="row">
+        <span>Estimated Delivery by</span>
+        <span>{deliveryDate}</span>
       </div>
       <div className="couponBox">
         <input type="text" placeholder="Coupon Code" />

@@ -187,6 +187,7 @@
 
 .closeIcon {
   cursor: pointer;
+  color: #f4f3f1;
 }
 
 .mobileMenu a, .mobileMenu button {
