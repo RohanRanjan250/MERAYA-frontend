@@ -1,8 +1,55 @@
 import styles from './ProductDisplay.module.css';
 import fallbackImg1 from '../../assets/kurti_3.png';
 import fallbackImg2 from '../../assets/kurti_4.png';
+import { LandingContext } from "../../Context/LandingpageContext.jsx";
+import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useContext } from 'react';
+
+const shuffleArray = (array) => {
+  let currentIndex = array.length, randomIndex;
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+  return array;
+};
 
 const ProductDisplay = () => {
+  const navigate = useNavigate();
+  const { data } = useContext(LandingContext);
+  const [displayedProducts, setDisplayedProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    if (data && data.length > 0) {
+      const shuffledData = shuffleArray([...data]); 
+      setDisplayedProducts(shuffledData.slice(0, 2));
+      setLoading(false);
+    } else if (data) {
+      setLoading(false);
+      setDisplayedProducts([]);
+    }
+  }, [data]);
+
+  if (loading) {
+    return <div>Loading...</div>; // Or a more sophisticated loading component
+  }
+
+  const handleBuyNow = async (slug) => {
+    try {
+      // const res = await buyProduct(id);
+      navigate(`/product/${slug}`);
+      // console.log("Buy Now Response:", res);
+    } catch (err) {
+      console.error("Buy Now Error:", err);
+    }
+  };
+
+  const product1 = displayedProducts[0];
+  const product2 = displayedProducts[1];
+
   return (
     <div className={styles.sectionWrapper}>
       <div className={styles.leftTextBlock}>
@@ -18,34 +65,61 @@ const ProductDisplay = () => {
       </div>
 
       <div className={styles.gridContainer}>
-        <div className={styles.card}>
-          <img src={fallbackImg1} alt="Fallback 1" className={styles.productImg} loading="lazy" />
-          <p className={styles.description}>
-            A placeholder text is a block of nonsensical.
-          </p>
-          <div className={styles.meta}>
-            <h3>PIECE TITLE</h3>
-            <div className={styles.metaBottom}>
-              <p>$875</p>
-              <button>ADD TO CART ↙</button>
+        {product1 ? (
+          <div className={styles.card}>
+            <img
+              src={product1.images[0] || "https://placehold.co/400x500/cccccc/ffffff?text=Image+Not+Available"}
+              alt={product1.name || "Product Image"}
+              className={styles.productImg} // Use productImg for both
+              loading="lazy"
+              onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/400x500/cccccc/ffffff?text=Load+Error"; }}
+            />
+            <p className={styles.description}>
+              {/* Use product description snippet or default */}
+              {product1.description?.substring(0, 50) + '...' || "Discover our latest arrival."}
+            </p>
+            <div className={styles.meta}>
+              <h3>{product1.name || "Product Title"}</h3>
+              <div className={styles.metaBottom}>
+                 {/* Format price, handle missing price */}
+                <p>₹{product1.selling_price ? product1.selling_price.toFixed(2) : "N/A"}</p>
+                 {/* Link button to handleBuyNow with the product's slug */}
+                <button onClick={() => handleBuyNow(product1.slug)}>VIEW ↙</button>
+              </div>
             </div>
-          </div>
-          <hr className={styles.divider} />
-        </div>
-        <div className={styles.card}>
-          <img src={fallbackImg2} alt="Fallback 2" className={styles.productIm} loading="lazy" />
-          <p className={styles.description}>
-            A placeholder text is a block of nonsensical.
-          </p>
-          <div className={styles.meta}>
-            <h3>PIECE TITLE</h3>
-            <div className={styles.metaBottom}>
-              <p>$875</p>
-              <button>ADD TO CART ↙</button>
-            </div>
-          </div>
             <hr className={styles.divider} />
-        </div>
+          </div>
+        ) : (
+          <div className={styles.card}> {/* Placeholder if no product1 */}
+             <p>No product to display.</p>
+          </div>
+        )}
+        {product2 ? (
+          <div className={styles.card}>
+            <img
+              src={product2.images[0] || "https://placehold.co/400x500/cccccc/ffffff?text=Image+Not+Available"}
+              alt={product2.name || "Product Image"}
+              className={styles.productIm} 
+              loading="lazy"
+               onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/400x500/cccccc/ffffff?text=Load+Error"; }}
+            />
+            <p className={styles.description}>
+              {product2.description?.substring(0, 50) + '...' || "Explore this unique piece."}
+            </p>
+            <div className={styles.meta}>
+              <h3>{product2.name || "Product Title"}</h3>
+              <div className={styles.metaBottom}>
+                <p>₹{product2.selling_price ? product2.selling_price.toFixed(2) : "N/A"}</p>
+                <button onClick={() => handleBuyNow(product2.slug)}>VIEW ↙</button>
+              </div>
+            </div>
+            <hr className={styles.divider} />
+          </div>
+         ) : (
+          <div className={styles.card}>
+             <p>More coming soon!</p>
+          </div>
+        )}
       </div>
 
       <div className={styles.backgroundText}>MERAYA</div>
@@ -54,3 +128,34 @@ const ProductDisplay = () => {
 };
 
 export default ProductDisplay;
+
+
+
+
+
+
+
+
+
+  
+
+  const handleBuyNow = async (slug) => {
+    // Check if slug is valid before navigating
+    if (!slug) {
+        console.error("Cannot navigate without a valid product slug.");
+        return;
+    }
+    try {
+      navigate(`/product/${slug}`);
+    } catch (err) {
+      console.error("Navigation Error:", err);
+    }
+  };
+
+      <div className={styles.gridContainer}>
+        {/* Card 1: Display data from the first random product */}
+        
+
+        {/* Card 2: Display data from the second random product */}
+        
+      </div>
