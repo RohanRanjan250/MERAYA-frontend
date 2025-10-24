@@ -1,5 +1,5 @@
 import "./App.css";
-import { React, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import { lazy, Suspense } from "react";
 import {
   BrowserRouter as Router,
@@ -13,19 +13,25 @@ import Signup from "./pages/SignupPage";
 import Login from "./pages/LoginPage";
 import Profile from "./pages/ProfilePage";
 import Wishlist from "./pages/WishlistPage";
-import CartPage from "./pages/CartPage";
+// import CartPage from "./pages/CartPage";
 import ProductPage from "./pages/ProductPage";
-import Checkout from "./pages/CheckoutPage";
-import setupInterceptors from "./API/interceptor";
+// import Checkout from "./pages/CheckoutPage";
+import { setupInterceptors } from "./API/interceptor";
+import { initializeAuth } from "./API/authUtils";
 import { LandingProvider } from "./Context/LandingpageContext";
-import CartSummary from "./pages/CartSummaryPage";
+// import CartSummary from "./pages/CartSummaryPage";
 import OrderConfirmed from "./pages/OrderConfirmedPage";
 import Unified from "./pages/UnifiedCheckoutPage"
 
 function App() {
+  const [authReady, setAuthReady] = useState(false);
+
   useEffect(() => {
-    setupInterceptors();
-  });
+    setupInterceptors(); // setup interceptor first
+    initializeAuth().finally(() => setAuthReady(true));
+  }, []);
+
+  if (!authReady) return <div>Loading...</div>;
   return (
     <ToastProvider>
       <BrowserRouter>

@@ -15,6 +15,7 @@ export default function ProductPage() {
     async function fetchProduct() {
       try {
         const data = await buyProduct(slug);
+        console.log("Fetched Product:", data);
         setProduct(data);
       } catch (error) {
         console.error("Failed to fetch product:", error);

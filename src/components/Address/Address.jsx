@@ -17,10 +17,16 @@ const Address = () => {
     phone: "",
     tag: "",
   });
+  const navigate = useNavigate();
+  let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
 
   // 🔹 Fetch addresses from backend
   const fetchAddresses = async () => {
     try {
+      if (!isAuth) {
+        navigate("/login");
+        return;
+      }
       const data = await getUserAddress();
       setAddresses(data); // assuming backend returns array of addresses
     } catch (err) {
@@ -38,6 +44,10 @@ const Address = () => {
 
   const saveEdit = async (index) => {
     try {
+      if (!isAuth) {
+        navigate("/login");
+        return;
+      }
       await updateUserAddress(addresses[index].id, formData);
       setEditingIndex(null);
       await fetchAddresses(); // ✅ reload fresh data from backend
@@ -48,6 +58,10 @@ const Address = () => {
 
   const saveNew = async () => {
     try {
+      if (!isAuth) {
+        navigate("/login");
+        return;
+      }
       await addUserAddress(formData);
       setNewAddressMode(false);
       setFormData({

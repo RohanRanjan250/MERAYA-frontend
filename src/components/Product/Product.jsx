@@ -16,8 +16,8 @@ import { useToast } from "../../Context/ToastContext.jsx"; // 1. Import the useT
 export default function Product({ product, setProduct }) {
   const [selectedImage, setSelectedImage] = useState(product.images[0]);
   const [selectedSize, setSelectedSize] = useState(product.variants[0][1]);
-  const navigate = useNavigate();
   const { showToast } = useToast();
+  const navigate = useNavigate();
   let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
 
   const reviews = product.reviews || [];

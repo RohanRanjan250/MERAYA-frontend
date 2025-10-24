@@ -2,7 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  min-height: 100vh;
+  max-height: 300vh;
   background-color: #040404;
   color: rgba(244, 243, 241, 1);
 }
@@ -102,7 +102,6 @@
 
 /* Responsive tweaks */
 @media (max-width: 768px) {
-  .left,
   .right {
     max-width: 100%;
     flex: 100%;
@@ -117,6 +116,14 @@
     position: static;
     margin: 1rem 0;
     text-align: center;
+  }
+
+  .left{
+    display: none;
+  }
+
+  .signature{
+    color: #f4f3f1;
   }
 }
 
