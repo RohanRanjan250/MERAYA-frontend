@@ -98,8 +98,10 @@ python manage.py runserver 0.0.0.0:8000
 
 
 Backend API: http://localhost:8000
+```
 
-⚛️ 3. Frontend Setup (React)
+### ⚛️ 3. Frontend Setup (React)
+```bash
 cd ../frontend  # Navigate to frontend folder
 
 # Install dependencies
@@ -114,8 +116,10 @@ npm run dev   # or yarn dev
 
 Frontend runs at http://localhost:3000
  or http://localhost:5173
+```
 
 ▶️ Running the Project
+```bash
 
 Start MySQL server
 
