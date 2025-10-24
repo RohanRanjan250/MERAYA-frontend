@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Contact.module.css";
 import { getUserContact, updateUserContact } from "../../API/myaccountAPI";
+import { useNavigate } from "react-router-dom";
 
 const Contact = () => {
   const [user, setUser] = useState(null);
   const [editedUser, setEditedUser] = useState({});
   const [isEdited, setIsEdited] = useState(false);
+  const navigate = useNavigate();
+  let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        if (!isAuth) {
+          navigate("/login");
+          return;
+        }
         const res = await getUserContact();
         console.log("API response:", res);
         const mappedUser = {
@@ -35,6 +42,10 @@ const Contact = () => {
 
   const handleUpdateProfile = async () => {
     try {
+      if (!isAuth) {
+        navigate("/login");
+        return;
+      }
       console.log(editedUser)
       await updateUserContact(editedUser);
       setUser(editedUser);

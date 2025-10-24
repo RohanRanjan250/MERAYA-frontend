@@ -9,6 +9,13 @@ const Wishlist = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
+
+  useEffect(() => {
+    if (!isAuth) {
+      navigate("/login");
+    }
+  }, [isAuth, navigate]);
 
   const loadWishlist = async () => {
     try {
@@ -28,6 +35,10 @@ const Wishlist = () => {
 
   const handleRemove = async (productId) => {
     try {
+      if (!isAuth) {
+        navigate("/login");
+        return;
+      }
       await removeFromWishlist(productId);
       setProducts((prev) => prev.filter((p) => p.product_id !== productId));
     } catch (err) {
@@ -37,6 +48,10 @@ const Wishlist = () => {
 
   const handleAddToCart = async (productId, variant) => {
     try {
+      if (!isAuth) {
+        navigate("/login");
+        return;
+      }
       // 1. Remove from wishlist
       await removeFromWishlist(productId);
       setProducts((prev) => prev.filter((p) => p.product_id !== productId));

@@ -4,7 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { fetchOrders, initiateReturn } from "../../API/orderAPI";
 import returnn from "../../assets/return.png";
-import success from "../../assets/Success.png"
+import success from "../../assets/Success.png";
+import { useNavigate } from "react-router-dom";
 
 const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
@@ -15,12 +16,18 @@ const OrderHistory = () => {
   const [refundMethod, setRefundMethod] = useState("wallet");
   const [isChecked, setIsChecked] = useState(false);
   const [showReturnConfirmation, setShowReturnConfirmation] = useState(false);
+  const navigate = useNavigate();
+  let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
 
   const steps = ["Order placed", "Processing", "Packaging", "Out for delivery", "Delivered"];
 
   useEffect(() => {
     const loadOrders = async () => {
       try {
+        if (!isAuth) {
+          navigate("/login");
+          return;
+        }
         const data = await fetchOrders();
         console.log(data)
         const allowedStatuses = ["Order placed", "Processing", "Packaging", "Out for delivery", "Delivered"];

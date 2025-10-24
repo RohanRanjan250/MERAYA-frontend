@@ -3,13 +3,20 @@ import { NavLink } from "react-router-dom";
 import ProfileSide from "../../assets/ProfileSide.png";
 import {fetchUsername} from "../../API/myaccountAPI"
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ProfileSidebar = () => {
   const [username, setUsername] = useState("User");
+  const navigate = useNavigate();
+  let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        if (!isAuth) {
+          navigate("/login");
+          return;
+        }
         const data = await fetchUsername();
         setUsername(data.username || "User");
       } catch (err) {

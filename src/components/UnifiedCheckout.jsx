@@ -466,6 +466,13 @@ export default function CheckoutFlow() {
   const [pincode, setPincode] = useState('');
   const [estimatedDeliveryDate, setEstimatedDeliveryDate] = useState(null);
   const [isCheckingPincode, setIsCheckingPincode] = useState(false);
+  let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
+
+  useEffect(() => {
+    if (!isAuth) {
+      navigate("/login");
+    }
+  }, [isAuth, navigate]);
 
   // Function to dynamically load the Razorpay script
   const loadScript = (src) => {
@@ -504,36 +511,6 @@ export default function CheckoutFlow() {
     loadInitialData();
   }, []);
 
-  const handlePincodeCheck = async () => {
-    if (!pincode || pincode.length !== 6) {
-      showToast("Please enter a valid 6-digit pincode.", "error");
-      return;
-    }
-    setIsCheckingPincode(true);
-    try {
-      const data = await checkDeliveryAvailability(pincode);
-      const shiprocketDateStr = data.estimated_delivery_date; // e.g., "2025-10-05"
-
-      // Parse the date and add 1 day
-      const shiprocketDate = new Date(shiprocketDateStr);
-      shiprocketDate.setDate(shiprocketDate.getDate() + 1);
-
-      // Format the date for display (e.g., "October 6th, 2025")
-      const formattedDate = shiprocketDate.toLocaleDateString('en-US', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-      });
-      
-      setEstimatedDeliveryDate(formattedDate);
-      showToast(`Delivery available! Estimated arrival by ${formattedDate}`, "success");
-    } catch (error) {
-      setEstimatedDeliveryDate(null);
-      showToast(error.message || "Pincode not serviceable.", "error");
-    } finally {
-      setIsCheckingPincode(false);
-    }
-  };
 
   const handleQuantityChange = async (itemId, change) => {
     const action = change === 1 ? "increment" : "decrement";
@@ -545,6 +522,10 @@ export default function CheckoutFlow() {
       ).filter(item => item.quantity > 0)
     );
     try {
+      if (!isAuth) {
+        navigate("/login");
+        return;
+      }
       await changeCartQuantity(itemId, action);
     } catch (err) {
       console.error("Failed to update quantity:", err);
@@ -554,6 +535,10 @@ export default function CheckoutFlow() {
   const handleRemoveItem = async (itemId) => {
     setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
     try {
+      if (!isAuth) {
+        navigate("/login");
+        return;
+      }
       await removeFromCart(itemId);
     } catch (err) {
       console.error("Error removing item:", err);
