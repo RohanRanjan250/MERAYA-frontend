@@ -35,3 +35,12 @@ export const initiateReturn = async (orderId, orderItemId, reason, refundMethod)
   }
 };
 
+export const verifyPayment = async (paymentData) => {
+  try {
+    const response = await API.post("/payment/verify/", paymentData);
+    return response.data;
+  } catch (error) {
+    console.error("Payment verification failed:", error);
+    throw error.response?.data || error.message;
+  }
+};

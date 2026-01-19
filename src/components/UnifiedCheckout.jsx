@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; 
-import {fetchCart, changeCartQuantity, removeFromCart, checkDeliveryAvailability} from "../API/cart"
-import {getUserAddress} from "../API/myaccountAPI"
-import {OrderCreate} from "../API/orderAPI"
+import { useNavigate } from "react-router-dom";
+import { fetchCart, changeCartQuantity, removeFromCart, checkDeliveryAvailability } from "../API/cart"
+import { getUserAddress } from "../API/myaccountAPI"
+import { OrderCreate, verifyPayment } from "../API/orderAPI"
 import styles from "./OrderConfirmed/OrderConfirmed.module.css"
 import success from "../assets/sad.png"
 import { useToast } from "../Context/ToastContext";
@@ -67,7 +67,7 @@ const OrderSummary = ({ items, label, onClick, isProcessing, pincode, onPincodeC
 
     setDeliveryDate(formattedDate);
   }, []);
- 
+
   return (
     <div className="orderSummary">
       <p>Order Summary</p>
@@ -163,12 +163,12 @@ const CartSummary = ({ items, address, estimatedDeliveryDate }) => {
             <h3>{item.name}</h3>
             <p className="price">₹{item.price.toFixed(2)}</p>
             <p>
-              SIZE <span className="whiteLine"></span><span>{item.variant}</span> &nbsp;&nbsp; 
+              SIZE <span className="whiteLine"></span><span>{item.variant}</span> &nbsp;&nbsp;
               QUANTITY <span className="whiteLine"></span><span>{String(item.quantity).padStart(2, "0")}</span>
             </p>
             {/* --- DYNAMIC DELIVERY DATE --- */}
             <p className="delivery">
-              {estimatedDeliveryDate 
+              {estimatedDeliveryDate
                 ? `Estimated Delivery by ${estimatedDeliveryDate}`
                 : "Enter pincode in summary to check delivery date"}
             </p>
@@ -489,7 +489,7 @@ export default function CheckoutFlow() {
 
   useEffect(() => {
     loadScript("https://checkout.razorpay.com/v1/checkout.js");
-    
+
     const loadInitialData = async () => {
       setIsLoading(true);
       try {
@@ -548,7 +548,7 @@ export default function CheckoutFlow() {
   const handleSelectAddress = (address) => {
     setSelectedAddress(address);
   };
-  
+
   const handleBuyNow = (slug) => {
     navigate(`/product/${slug}`);
   };
@@ -573,8 +573,8 @@ export default function CheckoutFlow() {
         address_id: selectedAddress.id,
         pincode: pincode || selectedAddress.pincode,
         cart_items: cartItems.map(item => ({
-          product_id: item.product_id, 
-          variant_id: item.variant_id, 
+          product_id: item.product_id,
+          variant_id: item.variant_id,
           quantity: item.quantity
         }))
       };
@@ -582,7 +582,7 @@ export default function CheckoutFlow() {
 
       try {
         const data = await OrderCreate(orderPayload);
-        
+
         const options = {
           key: data.key,
           amount: data.amount,
@@ -590,10 +590,37 @@ export default function CheckoutFlow() {
           name: "Meraya",
           description: "Order Payment",
           order_id: data.razorpay_order_id,
-          handler: function (response) {
-            console.log("Payment successful:", response);
-            alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
-            navigate('/confirmed');
+          handler: async function (response) {
+            console.log("Payment response received:", response);
+
+            try {
+              // Verify payment signature with backend before showing success
+              const verificationData = {
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                order_id: data.order_id
+              };
+
+              const verificationResult = await verifyPayment(verificationData);
+
+              if (verificationResult.success) {
+                console.log("Payment verified successfully");
+                navigate('/confirmed');
+              } else {
+                console.error("Payment verification failed");
+                alert('Payment verification failed. Please contact support.');
+              }
+            } catch (error) {
+              console.error("Payment verification error:", error);
+              alert('Payment verification failed. Please contact support with your payment ID: ' + response.razorpay_payment_id);
+            }
+          },
+          modal: {
+            ondismiss: function () {
+              console.log("Payment modal closed by user");
+              setIsProcessing(false);
+            }
           },
           prefill: {
             name: selectedAddress.full_name,
@@ -616,7 +643,7 @@ export default function CheckoutFlow() {
     }
   };
 
-  const nav = () =>{
+  const nav = () => {
     navigate("/myaccount/address")
   }
 
@@ -657,20 +684,20 @@ export default function CheckoutFlow() {
 
   const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
-  
+
   if (!isLoading && totalItems === 0) {
-    return(
+    return (
       <div className={styles.container}>
         <h2 className={styles.title}>EMPTY!</h2>
-  
+
         <div className={styles.icon}>
           <img src={success} alt="success" className={styles.success}></img>
         </div>
-  
+
         <p className={styles.thankyou}>
           Your cart looks empty :(
         </p>
-  
+
         <div className={styles.buttons}>
           <button onClick={() => navigate("/wishlist")} className={styles.btn}>
             ADD FROM WISHLIST
@@ -697,14 +724,14 @@ export default function CheckoutFlow() {
           <div className="mainContentArea">{renderCurrentStepComponent()}</div>
           <div className="sidebarArea">
             {/* --- 5. PASS NEW PROPS TO ORDER SUMMARY --- */}
-            <OrderSummary 
-              items={cartItems} 
-              label={step === "summary" ? "PAY NOW" : "PROCEED TO CHECKOUT"} 
-              onClick={handleNextStep} 
+            <OrderSummary
+              items={cartItems}
+              label={step === "summary" ? "PAY NOW" : "PROCEED TO CHECKOUT"}
+              onClick={handleNextStep}
               isProcessing={isProcessing}
               pincode={pincode}
               onPincodeChange={setPincode}
-              onPincodeCheck={handlePincodeCheck}
+              // onPincodeCheck={handlePincodeCheck}
               isCheckingPincode={isCheckingPincode}
             />
           </div>

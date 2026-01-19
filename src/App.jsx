@@ -21,7 +21,7 @@ import { initializeAuth } from "./API/authUtils";
 import { LandingProvider } from "./Context/LandingpageContext";
 // import CartSummary from "./pages/CartSummaryPage";
 import OrderConfirmed from "./pages/OrderConfirmedPage";
-import Unified from "./pages/UnifiedCheckoutPage"
+import Unified from "./pages/UnifiedCheckoutPage";
 
 function App() {
   const [authReady, setAuthReady] = useState(false);
