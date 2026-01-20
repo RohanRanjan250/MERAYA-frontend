@@ -14,7 +14,6 @@ const AllProducts = () => {
             const response = await fetch("http://127.0.0.1:8000/get_all_products");
             const data = await response.json();
             console.log(data);
-            // Backend returns { products: [...], total_pages: ..., current_page: ... }
             setProducts(data.products || []);
         } catch (err) {
             console.error("Error fetching products:", err);
@@ -69,8 +68,8 @@ const AllProducts = () => {
         <>
             <div className={styles.heading}>
                 <p className={styles.allProducts}>ALL PRODUCTS</p>
-                <p>{products.length} ITEMS</p>
             </div>
+
             <div className={styles.container}>
                 <div className={styles.grid}>
                     {products.map((product) => (
@@ -84,7 +83,7 @@ const AllProducts = () => {
                             price={product.selling_price}
                             stock={product.stock}
                             showRemove={false}
-                            onRemove={() => { }} // No remove functionality for all products
+                            onRemove={() => { }}
                             onAddToCart={handleAddToCart}
                             onBuyNow={() => handleBuyNow(product.slug)}
                         />

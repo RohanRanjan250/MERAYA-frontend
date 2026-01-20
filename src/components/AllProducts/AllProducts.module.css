@@ -122,8 +122,4 @@
   .container {
     min-height: 20vh;
   }
-  
-  .grid {
-    grid-template-columns: 1fr;
-  }
 }

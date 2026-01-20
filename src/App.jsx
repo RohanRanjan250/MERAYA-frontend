@@ -14,6 +14,7 @@ import Login from "./pages/LoginPage";
 import Profile from "./pages/ProfilePage";
 import Wishlist from "./pages/WishlistPage";
 import AllProductsPage from "./pages/AllProductsPage";
+import WalletPage from "./pages/WalletPage";
 // import CartPage from "./pages/CartPage";
 import ProductPage from "./pages/ProductPage";
 // import Checkout from "./pages/CheckoutPage";
@@ -50,6 +51,7 @@ function App() {
           <Route path="/myaccount/*" element={<Profile />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/products" element={<AllProductsPage />} />
+          <Route path="/wallet" element={<WalletPage />} />
           <Route path="/product/:slug" element={<ProductPage />} />
           <Route path="/confirmed" element={<OrderConfirmed />} />
           <Route path="/unified" element={<Unified />} />

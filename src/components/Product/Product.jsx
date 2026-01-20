@@ -9,16 +9,19 @@ import { faShareFromSquare } from "@fortawesome/free-regular-svg-icons";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faIndianRupeeSign } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
-import {updateReviewReaction, toggleWishlist, addToCart} from "../../API/productmainpageAPI.jsx" ;
+import { updateReviewReaction, toggleWishlist, addToCart } from "../../API/productmainpageAPI.jsx";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../../Context/ToastContext.jsx"; // 1. Import the useToast hook
 
 export default function Product({ product, setProduct }) {
   const [selectedImage, setSelectedImage] = useState(product.images[0]);
-  const [selectedSize, setSelectedSize] = useState(product.variants[0][1]);
+  const [selectedSize, setSelectedSize] = useState(product.variants?.[0]?.[1] || "");
   const { showToast } = useToast();
   const navigate = useNavigate();
   let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
+
+  // Check if product has any stock
+  const hasStock = product.variants && product.variants.length > 0;
 
   const reviews = product.reviews || [];
   const totalReviews = reviews.length;
@@ -77,7 +80,7 @@ export default function Product({ product, setProduct }) {
         navigate("/login");
         return;
       }
-      
+
       const selectedVariant = product.variants.find(variant => variant[1] === selectedSize);
 
       if (!selectedVariant) {
@@ -88,13 +91,13 @@ export default function Product({ product, setProduct }) {
       const variantId = selectedVariant[0];
       // The API call returns the new status and a message
       const response = await toggleWishlist(product.id, variantId);
-      
+
       // Update state based on the successful response from the backend
       setInWishlist(response.in_wishlist);
-      
+
       // Show the success message from the backend
       showToast(response.message, "success");
-      
+
     } catch (error) {
       console.error("Failed to update wishlist:", error);
       // The catch block now only handles genuine errors
@@ -120,7 +123,7 @@ export default function Product({ product, setProduct }) {
         navigate("/login");
         return;
       }
-      
+
       const selectedVariant = product.variants.find(variant => variant[1] === selectedSize);
 
       if (!selectedVariant) {
@@ -153,9 +156,8 @@ export default function Product({ product, setProduct }) {
                 key={index}
                 src={img}
                 alt={`thumb-${index}`}
-                className={`${styles.thumb} ${
-                  selectedImage === img ? styles.active : ""
-                }`}
+                className={`${styles.thumb} ${selectedImage === img ? styles.active : ""
+                  }`}
                 onClick={() => setSelectedImage(img)}
               />
             ))}
@@ -179,46 +181,62 @@ export default function Product({ product, setProduct }) {
           <p className={styles.description}>{product.description}</p>
 
           <div className={styles.priceRow}>
-              <div className={styles.price}>
-                  <span className={styles.oldPrice}><FontAwesomeIcon icon={faIndianRupeeSign} size="xs" />{product.show_price}</span>
-                  <span className={styles.newPrice}><FontAwesomeIcon icon={faIndianRupeeSign} size="xs"/>{product.selling_price}</span>
-              </div>
+            <div className={styles.price}>
+              <span className={styles.oldPrice}><FontAwesomeIcon icon={faIndianRupeeSign} size="xs" />{product.show_price}</span>
+              <span className={styles.newPrice}><FontAwesomeIcon icon={faIndianRupeeSign} size="xs" />{product.selling_price}</span>
+            </div>
             <span className={styles.rating}><FontAwesomeIcon icon={faStar} /> {averageRating.toFixed(1)}</span>
           </div>
 
-          {/* Size options */}
-          <div className={styles.sizeSection}>
-            <div className={styles.sizeHeader}>
-              <div className={styles.sizeLabel}>
+          {/* Size options - Only show if product has stock */}
+          {hasStock && (
+            <div className={styles.sizeSection}>
+              <div className={styles.sizeHeader}>
+                <div className={styles.sizeLabel}>
                   <p className={styles.Size}>Size: </p>
                   <span className={styles.whiteLine}></span>
                   <p className={styles.selectedSize}>{selectedSize}</p>
-              </div>
-              <a href="#" className={styles.sizeChart}>
+                </div>
+                <a href="#" className={styles.sizeChart}>
                   VIEW SIZE CHART
-              </a>
+                </a>
+              </div>
+              <div className={styles.sizeOptions}>
+                {product.variants.map((variant) => (
+                  <button
+                    key={variant[0]}
+                    className={`${styles.sizeBtn} ${selectedSize === variant[1] ? styles.activeSize : ""
+                      }`}
+                    onClick={() => setSelectedSize(variant[1])}
+                  >
+                    {variant[1]}
+                  </button>
+                ))}
+              </div>
             </div>
-            <div className={styles.sizeOptions}>
-              {product.variants.map((variant) => (
-                <button
-                  key={variant[0]}
-                  className={`${styles.sizeBtn} ${
-                    selectedSize === variant[1] ? styles.activeSize : ""
-                  }`}
-                  onClick={() => setSelectedSize(variant[1])}
-                >
-                  {variant[1]}
-                </button>
-              ))}
-            </div>
-          </div>
+          )}
 
           {/* Action Buttons */}
           <div className={styles.actions}>
-            <button className={styles.cartBtn} onClick={handleAddToCart}>ADD TO CART<ArrowDownLeft className={styles.arrow}  /></button>
+            <button
+              className={styles.cartBtn}
+              onClick={handleAddToCart}
+              disabled={!hasStock}
+              style={{
+                opacity: !hasStock ? 0.6 : 1,
+                cursor: !hasStock ? 'not-allowed' : 'pointer',
+                backgroundColor: !hasStock ? '#666' : ''
+              }}
+            >
+              {hasStock ? (
+                <>ADD TO CART<ArrowDownLeft className={styles.arrow} /></>
+              ) : (
+                'OUT OF STOCK'
+              )}
+            </button>
           </div>
           <a href="#" className={styles.delivery}>
-              DELIVERY T&C
+            DELIVERY T&C
           </a>
         </div>
       </div>
@@ -248,31 +266,31 @@ export default function Product({ product, setProduct }) {
             <h3 className={styles.reviewTitle}>REVIEW LIST</h3>
 
             {reviews.map((review) => (
-                <div key={review.id} className={styles.reviewCard}>
-                    <div className={styles.reviewStars}>
-                        {Array.from({ length: 5 }).map((_, i) => (
-                            <FontAwesomeIcon
-                                key={i}
-                                icon={faStar}
-                                className={i < review.rating ? styles.starFilled : styles.starEmpty}
-                            />
-                        ))}
-                    </div>
-                    
-                    <p className={styles.reviewDesc}>{review.description}</p>
-                    <p className={styles.reviewDate}>
-                        {review.created_at ? new Date(review.created_at).toLocaleString() : "No date"}
-                    </p>
-
-                    <div className={styles.userInfo}>
-                        <img
-                            src={`https://i.pravatar.cc/40?u=${review.username}`}
-                            alt="user"
-                            className={styles.avatar}
-                        />
-                        <span className={styles.username}>{review.username}</span>
-                    </div>
+              <div key={review.id} className={styles.reviewCard}>
+                <div className={styles.reviewStars}>
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <FontAwesomeIcon
+                      key={i}
+                      icon={faStar}
+                      className={i < review.rating ? styles.starFilled : styles.starEmpty}
+                    />
+                  ))}
                 </div>
+
+                <p className={styles.reviewDesc}>{review.description}</p>
+                <p className={styles.reviewDate}>
+                  {review.created_at ? new Date(review.created_at).toLocaleString() : "No date"}
+                </p>
+
+                <div className={styles.userInfo}>
+                  <img
+                    src={`https://i.pravatar.cc/40?u=${review.username}`}
+                    alt="user"
+                    className={styles.avatar}
+                  />
+                  <span className={styles.username}>{review.username}</span>
+                </div>
+              </div>
             ))}
           </div>
         </div>

@@ -69,34 +69,30 @@ const CartItems = ({ items, onQuantityChange, onRemove, onBuyNow }) => {
   );
 };
 
-const OrderSummary = ({ items, label, onClick, isProcessing, pincode, onPincodeChange, onPincodeCheck, isCheckingPincode }) => {
-  const price = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  const discount = price * 0.1;
-  const shipping = 0;
-  const total = price - discount + shipping;
-  const [deliveryDate, setDeliveryDate] = useState('');
-
-  useEffect(() => {
-    // Get today's date
-    const today = new Date(); // e.g., Thu Oct 23 2025
-
-    // Calculate the date 5 days from now
-    const delivery = new Date(today);
-    delivery.setDate(today.getDate() + 5); // e.g., Tue Oct 28 2025
-
-    // Format the date (e.g., "October 28, 2025")
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    const formattedDate = delivery.toLocaleDateString('en-US', options); // Adjust 'en-US' for locale if needed
-
-    setDeliveryDate(formattedDate);
-  }, []);
-
+const OrderSummary = ({
+  subtotal,
+  discount,
+  shipping,
+  total,
+  deliveryDate,
+  label,
+  onClick,
+  isProcessing,
+  couponCode,
+  onCouponChange,
+  onApplyCoupon,
+  onRemoveCoupon,
+  couponDiscount,
+  appliedCoupon,
+  couponError,
+  isApplyingCoupon
+}) => {
   return (
     <div className="orderSummary">
       <p>Order Summary</p>
       <div className="row">
-        <span>Price</span>
-        <span>₹{price.toFixed(2)}</span>
+        <span>Subtotal</span>
+        <span>₹{subtotal.toFixed(2)}</span>
       </div>
       <div className="row">
         <span>Discount</span>
@@ -106,35 +102,47 @@ const OrderSummary = ({ items, label, onClick, isProcessing, pincode, onPincodeC
         <span>Shipping</span>
         <span className="free">{shipping > 0 ? `₹${shipping.toFixed(2)}` : "Free"}</span>
       </div>
-      <div className="row">
-        <span>Coupon Applied</span>
-        <span>₹0.00</span>
-      </div>
+      {appliedCoupon && (
+        <div className="row" style={{ color: '#4caf50' }}>
+          <span>Coupon ({appliedCoupon.coupon_code})</span>
+          <span>-₹{couponDiscount.toFixed(2)}</span>
+        </div>
+      )}
       <hr />
       <div className="row total">
         <span>TOTAL</span>
-        <span className="totalPrice">₹{total.toFixed(2)}</span>
+        <span className="totalPrice">₹{(total - couponDiscount).toFixed(2)}</span>
       </div>
-      {/* --- MODIFIED PINCODE INPUT ---
-      <div className="couponBox">
-        <input 
-          type="number" 
-          placeholder="Enter Pincode" 
-          value={pincode}
-          onChange={(e) => onPincodeChange(e.target.value)}
-        />
-        <button onClick={onPincodeCheck} disabled={isCheckingPincode}>
-          {isCheckingPincode ? '...' : 'Check'}
-        </button>
-      </div> */}
       <div className="row">
         <span>Estimated Delivery by</span>
         <span>{deliveryDate}</span>
       </div>
       <div className="couponBox">
-        <input type="text" placeholder="Coupon Code" />
-        <button>Apply</button>
+        <input
+          type="text"
+          placeholder="Coupon Code"
+          value={couponCode}
+          onChange={(e) => onCouponChange(e.target.value.toUpperCase())}
+          disabled={appliedCoupon !== null}
+        />
+        {appliedCoupon ? (
+          <button onClick={onRemoveCoupon} style={{ background: '#e53935' }}>
+            Remove
+          </button>
+        ) : (
+          <button
+            onClick={onApplyCoupon}
+            disabled={isApplyingCoupon}
+          >
+            {isApplyingCoupon ? '...' : 'Apply'}
+          </button>
+        )}
       </div>
+      {couponError && (
+        <div style={{ color: '#ff6b6b', fontSize: '0.85rem', marginTop: '0.5rem' }}>
+          {couponError}
+        </div>
+      )}
       <button className="checkoutBtn" onClick={onClick} disabled={isProcessing}>
         {isProcessing ? 'PROCESSING...' : label}
       </button>
@@ -489,6 +497,15 @@ export default function CheckoutFlow() {
   const [pincode, setPincode] = useState('');
   const [estimatedDeliveryDate, setEstimatedDeliveryDate] = useState(null);
   const [isCheckingPincode, setIsCheckingPincode] = useState(false);
+
+  // Coupon state
+  const [couponCode, setCouponCode] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [couponDiscount, setCouponDiscount] = useState(0);
+  const [couponError, setCouponError] = useState('');
+  const [isApplyingCoupon, setIsApplyingCoupon] = useState(false);
+
+  const { showToast } = useToast();
   let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
 
   useEffect(() => {
@@ -496,6 +513,37 @@ export default function CheckoutFlow() {
       navigate("/login");
     }
   }, [isAuth, navigate]);
+
+  // Calculate prices
+  const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+  const discount = 0; // Can add discount logic here
+  const shipping = 0; // Free shipping
+  const total = subtotal - discount + shipping;
+
+  // Recalculate coupon when cart changes
+  useEffect(() => {
+    if (appliedCoupon && subtotal > 0) {
+      // Recalculate discount based on new subtotal
+      const newDiscount = (subtotal * appliedCoupon.discount_percent) / 100;
+
+      // Apply max discount limit if exists
+      const finalDiscount = appliedCoupon.max_discount && newDiscount > appliedCoupon.max_discount
+        ? appliedCoupon.max_discount
+        : newDiscount;
+
+      // Update discount only if it changed
+      if (Math.abs(finalDiscount - couponDiscount) > 0.01) {
+        setCouponDiscount(finalDiscount);
+      }
+    }
+
+    // Reset coupon if cart is empty
+    if (cartItems.length === 0 && appliedCoupon) {
+      setAppliedCoupon(null);
+      setCouponDiscount(0);
+      setCouponCode('');
+    }
+  }, [cartItems, subtotal, appliedCoupon]);
 
   // Function to dynamically load the Razorpay script
   const loadScript = (src) => {
@@ -570,17 +618,66 @@ export default function CheckoutFlow() {
   };
 
   const handleRemoveItem = async (itemId) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
     try {
       if (!isAuth) {
         navigate("/login");
         return;
       }
       await removeFromCart(itemId);
-    } catch (err) {
-      console.error("Error removing item:", err);
+      setCartItems((prev) => prev.filter((item) => item.id !== itemId));
+    } catch (error) {
+      console.error("Failed to remove item:", error);
     }
   };
+
+  // Coupon handler function
+  const handleApplyCoupon = async () => {
+    if (!couponCode.trim()) {
+      setCouponError('Please enter a coupon code');
+      showToast('Please enter a coupon code', 'error');
+      return;
+    }
+
+    setIsApplyingCoupon(true);
+    setCouponError('');
+
+    try {
+      const response = await fetch('http://127.0.0.1:8000/coupon/apply/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          code: couponCode,
+          cart_total: subtotal
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setAppliedCoupon(data);
+        setCouponDiscount(data.discount_amount);
+        showToast(data.message, 'success');
+      } else {
+        setCouponError(data.error);
+        showToast(data.error, 'error');
+      }
+    } catch (error) {
+      setCouponError('Failed to apply coupon');
+      showToast('Failed to apply coupon', 'error');
+    } finally {
+      setIsApplyingCoupon(false);
+    }
+  };
+
+  // Remove coupon handler
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponDiscount(0);
+    setCouponCode('');
+    setCouponError('');
+    showToast('Coupon removed', 'success');
+  };
+
 
   const handleSelectAddress = (address) => {
     setSelectedAddress(address);
@@ -613,7 +710,9 @@ export default function CheckoutFlow() {
           product_id: item.product_id,
           variant_id: item.variant_id,
           quantity: item.quantity
-        }))
+        })),
+        coupon_code: appliedCoupon ? appliedCoupon.coupon_code : null,
+        coupon_discount: couponDiscount || 0
       };
       console.log(orderPayload)
 
@@ -762,14 +861,22 @@ export default function CheckoutFlow() {
           <div className="sidebarArea">
             {/* --- 5. PASS NEW PROPS TO ORDER SUMMARY --- */}
             <OrderSummary
-              items={cartItems}
-              label={step === "summary" ? "PAY NOW" : "PROCEED TO CHECKOUT"}
+              subtotal={subtotal}
+              discount={discount}
+              shipping={shipping}
+              total={total}
+              deliveryDate={estimatedDeliveryDate || "3-5 business days"}
+              label="PROCEED TO PAYMENT"
               onClick={handleNextStep}
               isProcessing={isProcessing}
-              pincode={pincode}
-              onPincodeChange={setPincode}
-              // onPincodeCheck={handlePincodeCheck}
-              isCheckingPincode={isCheckingPincode}
+              couponCode={couponCode}
+              onCouponChange={setCouponCode}
+              onApplyCoupon={handleApplyCoupon}
+              onRemoveCoupon={handleRemoveCoupon}
+              couponDiscount={couponDiscount}
+              appliedCoupon={appliedCoupon}
+              couponError={couponError}
+              isApplyingCoupon={isApplyingCoupon}
             />
           </div>
         </div>
@@ -777,4 +884,3 @@ export default function CheckoutFlow() {
     </>
   );
 }
-

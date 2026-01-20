@@ -1,0 +1,187 @@
+.heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3.5vh 2vw 5vh 2vw;
+    font-family: 'Abel', sans-serif;
+    font-size: 3vh;
+    color: #FBFBFB;
+}
+
+.walletTitle {
+    font-weight: 700;
+    -webkit-text-stroke: 0.5px #fff;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2vh 2vw;
+    min-height: 60vh;
+    position: relative;
+    z-index: 2;
+}
+
+.loading {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #040404;
+    color: white;
+    text-align: center;
+    font-family: 'Abel', sans-serif;
+    font-size: 2rem;
+}
+
+/* Balance Card */
+.balanceCard {
+    background: linear-gradient(135deg, #e38012 0%, #d07010 100%);
+    border-radius: 12px;
+    padding: 3rem 2rem;
+    margin-bottom: 3rem;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(227, 128, 18, 0.3);
+}
+
+.balanceLabel {
+    font-family: 'Abel', sans-serif;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+}
+
+.balanceAmount {
+    font-family: 'Aboreto', serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Transactions Section */
+.transactionsSection {
+    margin-top: 2rem;
+}
+
+.sectionTitle {
+    font-family: 'Abel', sans-serif;
+    font-size: 1.8rem;
+    color: #FBFBFB;
+    margin-bottom: 2rem;
+    letter-spacing: 1px;
+    font-weight: 700;
+    -webkit-text-stroke: 0.5px #fff;
+}
+
+.noTransactions {
+    text-align: center;
+    padding: 3rem;
+    color: #A2A3B1;
+    font-family: 'Abel', sans-serif;
+    font-size: 1.2rem;
+}
+
+.transactionsList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.transactionItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.transactionItem:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(227, 128, 18, 0.3);
+}
+
+.transactionLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.transactionReason {
+    font-family: 'Abel', sans-serif;
+    font-size: 1.1rem;
+    color: #FBFBFB;
+    font-weight: 500;
+}
+
+.transactionDate {
+    font-family: 'Abel', sans-serif;
+    font-size: 0.9rem;
+    color: #A2A3B1;
+}
+
+.transactionRight {
+    display: flex;
+    align-items: center;
+}
+
+.transactionAmount {
+    font-family: 'Abel', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.transactionAmount.credit {
+    color: #4caf50;
+}
+
+.transactionAmount.debit {
+    color: #ff6b6b;
+}
+
+/* Background Text */
+.backgroundText {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    font-size: 26.5vw;
+    text-align: center;
+    color: rgba(227, 128, 18, 0.08);
+    transform: translateY(-50%);
+    z-index: 1;
+    user-select: none;
+    pointer-events: none;
+    letter-spacing: 10%;
+    font-family: 'Aboreto', serif;
+    white-space: nowrap;
+    max-width: 100vw;
+    overflow: hidden;
+    margin-top: 37.5vw;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .balanceAmount {
+        font-size: 2.5rem;
+    }
+
+    .transactionItem {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .transactionRight {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .heading {
+        padding: 3.5vh 2vw 3vh 2vw;
+    }
+}
