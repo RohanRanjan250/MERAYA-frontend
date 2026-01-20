@@ -21,6 +21,8 @@
 
 .menuItem {
   cursor: pointer;
+  color: #f4f3f1;
+  text-decoration: none;
 }
 
 .dropdown {

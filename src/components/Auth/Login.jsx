@@ -7,9 +7,11 @@ import logo from "../../assets/image.png";
 import { FcGoogle } from "react-icons/fc";
 import OtpInput from "./OtpInput";
 import { useGoogleLogin } from "@react-oauth/google";
+import { useToast } from "../../Context/ToastContext";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { showToast } = useToast();
   const [formData, setFormData] = useState({
     email: "",
     otp: ""
@@ -30,17 +32,24 @@ const Login = () => {
   };
 
   const handleSendOtp = async () => {
+    // Show OTP input immediately
+    setOtpSent(true);
+
     try {
       const response = await emailloginverify(formData.email);
       if (response.status === 200) {
         console.log("OTP sent");
-        setOtpSent(true);
+        showToast('OTP sent successfully! Check your email', 'success');
       } else {
         console.log("Unexpected response", response);
+        showToast('Failed to send OTP', 'error');
+        setOtpSent(false); // Hide OTP input on failure
       }
     } catch (err) {
       console.error("OTP send failed", err);
       setError(err.message || "Failed to send OTP. Try again!");
+      showToast(err.message || 'Failed to send OTP', 'error');
+      setOtpSent(false); // Hide OTP input on failure
     }
   };
 
@@ -49,13 +58,18 @@ const Login = () => {
     try {
       const data = await login(formData);
       if (data.status === 200) {
+        showToast('Login successful!', 'success');
         navigate("/");
         setError("");
       } else if (data.status === 400) {
-        setError(data.message || "Invalid OTP or Email not registered");
+        const errorMsg = data.message || "Invalid OTP or Email not registered";
+        setError(errorMsg);
+        showToast(errorMsg, 'error');
       }
     } catch (err) {
-      setError(err.message || "Something went wrong. Try again!");
+      const errorMsg = err.message || "Something went wrong. Try again!";
+      setError(errorMsg);
+      showToast(errorMsg, 'error');
     }
   };
 
@@ -68,10 +82,12 @@ const Login = () => {
         const response = await loginWithGoogle(tokenResponse.access_token);
         console.log("Logged in user:", response.data);
         if (response.status === 200) {
+          showToast('Login successful!', 'success');
           navigate("/");
         }
       } catch (err) {
         console.error("Google Login failed:", err);
+        showToast('Google login failed', 'error');
       }
     },
     onError: () => {

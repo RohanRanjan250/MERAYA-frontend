@@ -3,11 +3,13 @@ import styles from "./AllProducts.module.css";
 import ProductCard from "../../UI/ProductCard";
 import { useNavigate } from "react-router-dom";
 import { addToCart } from "../../API/productmainpageAPI";
+import { useToast } from "../../Context/ToastContext";
 
 const AllProducts = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const { showToast } = useToast();
 
     const loadAllProducts = async () => {
         try {
@@ -17,6 +19,7 @@ const AllProducts = () => {
             setProducts(data.products || []);
         } catch (err) {
             console.error("Error fetching products:", err);
+            showToast('Failed to load products', 'error');
         } finally {
             setLoading(false);
         }
@@ -29,10 +32,10 @@ const AllProducts = () => {
     const handleAddToCart = async (productId, variant) => {
         try {
             await addToCart(productId, variant);
-            alert("Added to cart!");
+            showToast('Added to cart successfully!', 'success');
         } catch (err) {
             console.error("Failed to add to cart:", err);
-            alert(err?.error || "Failed to add to cart");
+            showToast(err?.error || 'Failed to add to cart', 'error');
         }
     };
 

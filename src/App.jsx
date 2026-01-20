@@ -15,15 +15,16 @@ import Profile from "./pages/ProfilePage";
 import Wishlist from "./pages/WishlistPage";
 import AllProductsPage from "./pages/AllProductsPage";
 import WalletPage from "./pages/WalletPage";
-// import CartPage from "./pages/CartPage";
 import ProductPage from "./pages/ProductPage";
-// import Checkout from "./pages/CheckoutPage";
 import { setupInterceptors } from "./API/interceptor";
-import { initializeAuth } from "./API/authUtils";
+import { initializeAuth, startAutoRefresh } from "./API/authUtils";
 import { LandingProvider } from "./Context/LandingpageContext";
-// import CartSummary from "./pages/CartSummaryPage";
 import OrderConfirmed from "./pages/OrderConfirmedPage";
 import Unified from "./pages/UnifiedCheckoutPage";
+import ProtectedRoute from "./components/ProtectedRoute";
+import NotFound from "./pages/NotFound";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import ReturnPolicy from "./pages/ReturnPolicy";
 
 function App() {
   const [authReady, setAuthReady] = useState(false);
@@ -31,6 +32,9 @@ function App() {
   useEffect(() => {
     setupInterceptors(); // setup interceptor first
     initializeAuth().finally(() => setAuthReady(true));
+
+    // Start automatic token refresh every 4 minutes
+    startAutoRefresh();
   }, []);
 
   if (!authReady) return <div>Loading...</div>;
@@ -48,13 +52,23 @@ function App() {
           />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/myaccount/*" element={<Profile />} />
-          <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/products" element={<AllProductsPage />} />
-          <Route path="/wallet" element={<WalletPage />} />
           <Route path="/product/:slug" element={<ProductPage />} />
-          <Route path="/confirmed" element={<OrderConfirmed />} />
-          <Route path="/unified" element={<Unified />} />
+
+          {/* Protected Routes */}
+          <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
+          <Route path="/wallet" element={<ProtectedRoute><WalletPage /></ProtectedRoute>} />
+          <Route path="/checkout" element={<ProtectedRoute><Unified /></ProtectedRoute>} />
+          <Route path="/unified" element={<ProtectedRoute><Unified /></ProtectedRoute>} />
+          <Route path="/confirmed" element={<ProtectedRoute><OrderConfirmed /></ProtectedRoute>} />
+
+          {/* Policy Pages */}
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/return-policy" element={<ReturnPolicy />} />
+
+          {/* 404 Catch-all - Must be last */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </ToastProvider>

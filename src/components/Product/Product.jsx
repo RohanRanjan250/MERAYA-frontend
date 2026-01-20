@@ -133,10 +133,10 @@ export default function Product({ product, setProduct }) {
 
       const variantId = selectedVariant[0];
       await addToCart(product.id, variantId);
-      showToast("Product added to cart!", "success");
+      showToast('Added to cart successfully!', 'success');
     } catch (err) {
-      console.error("Failed to add to cart:", err);
-      showToast(err.message || "Failed to add to cart.", "error");
+      console.error("Error adding to cart:", err);
+      showToast(err?.error || 'Failed to add to cart', 'error');
     }
   };
 

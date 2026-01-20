@@ -24,6 +24,7 @@ const Wishlist = () => {
       setProducts(data.items || []);
     } catch (err) {
       console.error("Error fetching wishlist:", err);
+      showToast('Failed to load wishlist', 'error'); // Corrected message for fetching
     } finally {
       setLoading(false);
     }
@@ -41,8 +42,10 @@ const Wishlist = () => {
       }
       await removeFromWishlist(productId);
       setProducts((prev) => prev.filter((p) => p.product_id !== productId));
+      showToast('Item removed from wishlist!', 'success');
     } catch (err) {
       console.error("Failed to remove:", err);
+      showToast(err?.error || 'Failed to remove from wishlist', 'error');
     }
   };
 
@@ -58,10 +61,13 @@ const Wishlist = () => {
 
       // 2. Add to cart
       console.log(variant)
-      await addToCartWishlist(productId, variant);
-      alert("Moved to cart!");
+      // Assuming variant has an 'id' property for variantId
+      await addToCart(productId, variant.id); // Using addToCart from cart API
+      showToast('Added to cart successfully!', 'success');
+      // The original alert("Moved to cart!"); is replaced by showToast
     } catch (err) {
       console.error("Failed to move item:", err);
+      showToast(err?.error || 'Failed to add to cart', 'error');
     }
   };
 

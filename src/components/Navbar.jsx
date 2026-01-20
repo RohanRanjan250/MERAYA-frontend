@@ -108,7 +108,7 @@ const Navbar = () => {
           <div className={styles.menuItem}>
             SHOP <span className={styles.dropdown}>▼</span>
           </div>
-          <div className={styles.menuItem}>COLLECTIONS</div>
+          <Link to="/products" className={styles.menuItem}>COLLECTIONS</Link>
         </div>
 
         <Link to="/" className={styles.logoLink}>
@@ -217,7 +217,7 @@ const Navbar = () => {
         {/* --- 2. Add onClick to all mobile menu links and convert to <Link> --- */}
         <Link to="/" onClick={closeMobileMenu}>HOME</Link>
         <Link to="/shop" onClick={closeMobileMenu}>SHOP</Link>
-        <Link to="/collections" onClick={closeMobileMenu}>COLLECTIONS</Link>
+        <Link to="/products" onClick={closeMobileMenu}>COLLECTIONS</Link>
         <Link to="/myaccount/contact" onClick={closeMobileMenu}>ACCOUNT</Link>
         <Link to="/myaccount/order" onClick={closeMobileMenu}>ORDERS</Link>
         <Link to="/wallet" onClick={closeMobileMenu}>WALLET</Link>

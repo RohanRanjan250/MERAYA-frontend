@@ -514,17 +514,18 @@ export default function CheckoutFlow() {
     }
   }, [isAuth, navigate]);
 
-  // Calculate prices
-  const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-  const discount = 0; // Can add discount logic here
+  // Calculate prices based on show_price and selling_price
+  const subtotal = cartItems.reduce((acc, item) => acc + (item.show_price * item.quantity), 0);
+  const sellingPriceTotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+  const discount = subtotal - sellingPriceTotal; // Difference between show_price and selling_price
   const shipping = 0; // Free shipping
-  const total = subtotal - discount + shipping;
+  const total = sellingPriceTotal + shipping; // Total is based on selling price
 
   // Recalculate coupon when cart changes
   useEffect(() => {
-    if (appliedCoupon && subtotal > 0) {
-      // Recalculate discount based on new subtotal
-      const newDiscount = (subtotal * appliedCoupon.discount_percent) / 100;
+    if (appliedCoupon && sellingPriceTotal > 0) {
+      // Recalculate discount based on selling price total (not show price)
+      const newDiscount = (sellingPriceTotal * appliedCoupon.discount_percent) / 100;
 
       // Apply max discount limit if exists
       const finalDiscount = appliedCoupon.max_discount && newDiscount > appliedCoupon.max_discount
@@ -543,7 +544,7 @@ export default function CheckoutFlow() {
       setCouponDiscount(0);
       setCouponCode('');
     }
-  }, [cartItems, subtotal, appliedCoupon]);
+  }, [cartItems, sellingPriceTotal, appliedCoupon]);
 
   // Function to dynamically load the Razorpay script
   const loadScript = (src) => {
@@ -610,9 +611,11 @@ export default function CheckoutFlow() {
 
       // Show error message if it's a stock limit error
       if (err?.error && err.error.includes("Stock limit")) {
-        alert(err.error);
+        showToast(err.error, 'error');
       } else if (err?.message) {
-        alert(err.message);
+        showToast(err.message, 'error');
+      } else {
+        showToast('Failed to update quantity', 'error');
       }
     }
   };
@@ -625,8 +628,10 @@ export default function CheckoutFlow() {
       }
       await removeFromCart(itemId);
       setCartItems((prev) => prev.filter((item) => item.id !== itemId));
+      showToast('Item removed from cart', 'success');
     } catch (error) {
       console.error("Failed to remove item:", error);
+      showToast('Failed to remove item', 'error');
     }
   };
 
