@@ -1,18 +1,23 @@
 .card {
-  width: 100%; /* Allow card to shrink */
-  max-width: 371px; /* Set a max-width for desktop */
-  height: auto; /* Let content determine the height */
+  width: 100%;
+  /* Allow card to shrink */
+  max-width: 371px;
+  /* Set a max-width for desktop */
+  height: auto;
+  /* Let content determine the height */
   display: flex;
   flex-direction: column;
   background: #040404;
   color: #fff;
   font-family: 'Abel', sans-serif;
-  overflow: hidden; /* Important for keeping content inside */
+  overflow: hidden;
+  /* Important for keeping content inside */
 }
 
 .imageWrapper {
   width: 100%;
-  aspect-ratio: 3 / 4; /* Creates a responsive container with a 3:4 ratio */
+  aspect-ratio: 3 / 4;
+  /* Creates a responsive container with a 3:4 ratio */
   overflow: hidden;
   position: relative;
 }
@@ -21,22 +26,26 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease; /* Add smooth transition for hover */
+  transition: transform 0.3s ease;
+  /* Add smooth transition for hover */
 }
 
 .card:hover .image {
-  transform: scale(1.05); /* Subtle zoom effect on hover */
+  transform: scale(1.05);
+  /* Subtle zoom effect on hover */
 }
 
 .meta {
   display: flex;
   flex-direction: column;
-  padding: 1rem; /* Use consistent padding */
+  padding: 1rem;
+  /* Use consistent padding */
 }
 
 .metaBottom {
   display: flex;
-  align-items: center; /* Better alignment */
+  align-items: center;
+  /* Better alignment */
   justify-content: space-between;
   margin-top: 0.5rem;
 }
@@ -47,25 +56,31 @@
 
 .divider {
   border: none;
-  height: 1px; /* Use a fixed pixel height */
+  height: 1px;
+  /* Use a fixed pixel height */
   background-color: rgba(244, 243, 241, 1);
-  margin: 1rem 0; /* Use rem for consistent margin */
+  margin: 1rem 0;
+  /* Use rem for consistent margin */
   width: 100%;
-  opacity: 0.4; /* Slightly less opaque for subtlety */
+  opacity: 0.4;
+  /* Slightly less opaque for subtlety */
 }
 
 .title {
-  font-size: 1.1rem; /* Use rem for scalable font size */
+  font-size: 1.1rem;
+  /* Use rem for scalable font size */
   font-weight: 500;
   text-transform: uppercase;
   text-align: left;
 }
 
 .desc {
-  font-size: 0.9rem; /* Converted from vw to rem */
+  font-size: 0.9rem;
+  /* Converted from vw to rem */
   margin: 1rem 0 0.5rem 0;
   font-family: 'Abel', sans-serif;
-  color: #a1a1aa; /* Softer color for description */
+  color: #a1a1aa;
+  /* Softer color for description */
   text-align: left;
 }
 
@@ -98,7 +113,8 @@
   position: absolute;
   top: 10px;
   right: 10px;
-  background: rgba(186, 186, 186, 0.7); /* Slightly transparent */
+  background: rgba(186, 186, 186, 0.7);
+  /* Slightly transparent */
   backdrop-filter: blur(2px);
   width: 36px;
   height: 36px;
@@ -108,6 +124,35 @@
   border: none;
   cursor: pointer;
   color: #040404;
+}
+
+/* Out of Stock Styles */
+.outOfStockImage {
+  filter: blur(2px) grayscale(50%);
+  opacity: 0.6;
+}
+
+.outOfStockOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+
+.outOfStockText {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  font-family: 'Abel', sans-serif;
 }
 
 /* ================================================= */
@@ -135,9 +180,8 @@
 
 @media (max-width: 480px) {
   .metaBottom {
-    
+
     align-items: flex-start;
     gap: 0.75rem;
   }
 }
-

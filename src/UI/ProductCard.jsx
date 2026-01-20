@@ -2,15 +2,34 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import styles from "./ProductCard.module.css";
 
-const ProductCard = ({ id, image, title, desc, price, onRemove, onAddToCart, onBuyNow, variant }) => {
+const ProductCard = ({ id, image, title, desc, price, onRemove, onAddToCart, onBuyNow, variant, stock, showRemove = true }) => {
+  const isOutOfStock = stock !== undefined && stock === 0;
+
   return (
-    <div className={styles.card} onClick={onBuyNow}>
+    <div className={styles.card} onClick={!isOutOfStock ? onBuyNow : undefined}>
       {/* Image */}
       <div className={styles.imageWrapper}>
-        <img src={image} alt={title} className={styles.image} />
-        <button className={styles.wishlistBtn} onClick={() => onRemove(id)}>
-          <FontAwesomeIcon icon={faXmark} />
-        </button>
+        <img
+          src={image}
+          alt={title}
+          className={`${styles.image} ${isOutOfStock ? styles.outOfStockImage : ''}`}
+        />
+        {showRemove && onRemove && (
+          <button
+            className={styles.wishlistBtn}
+            onClick={(e) => {
+              e.stopPropagation();
+              onRemove(id);
+            }}
+          >
+            <FontAwesomeIcon icon={faXmark} />
+          </button>
+        )}
+        {isOutOfStock && (
+          <div className={styles.outOfStockOverlay}>
+            <span className={styles.outOfStockText}>OUT OF STOCK</span>
+          </div>
+        )}
       </div>
 
       {/* Details */}
@@ -19,8 +38,21 @@ const ProductCard = ({ id, image, title, desc, price, onRemove, onAddToCart, onB
         <h3 className={styles.title}>{title}</h3>
         <div className={styles.metaBottom}>
           <p className={styles.price}>₹{price}</p>
-          <button className={styles.button} onClick={() => onAddToCart(id, variant)}>
-            Add to Cart ↙
+          <button
+            className={styles.button}
+            onClick={(e) => {
+              e.stopPropagation();
+              if (!isOutOfStock) {
+                onAddToCart(id, variant);
+              }
+            }}
+            disabled={isOutOfStock}
+            style={{
+              opacity: isOutOfStock ? 0.5 : 1,
+              cursor: isOutOfStock ? 'not-allowed' : 'pointer'
+            }}
+          >
+            {isOutOfStock ? 'Out of Stock' : 'Add to Cart ↙'}
           </button>
         </div>
       </div>

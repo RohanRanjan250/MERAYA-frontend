@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./Navbar.module.css";
 import logo from "../assets/image.png";
 import { FaSearch, FaUser, FaHeart, FaShoppingBag, FaBars, FaTimes } from "react-icons/fa";
@@ -9,8 +9,12 @@ const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [query, setQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [relatedProducts, setRelatedProducts] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
   const navigate = useNavigate();
   const timeoutRef = useRef(null);
+  const searchTimeoutRef = useRef(null);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   const handleMouseEnter = () => {
@@ -25,7 +29,7 @@ const Navbar = () => {
       setShowDropdown(false);
     }, 100);
   };
-  
+
   // --- 1. Create a function to close the menu ---
   const closeMobileMenu = () => {
     setShowMobileMenu(false);
@@ -49,17 +53,49 @@ const Navbar = () => {
     }
   };
 
-  const sampleResults = [
-    "Red T-Shirt",
-    "Blue Jeans",
-    "Leather Jacket",
-    "Sneakers",
-    "Handbag",
-  ];
+  // Debounced search function
+  useEffect(() => {
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current);
+    }
 
-  const filteredResults = sampleResults.filter((item) =>
-    item.toLowerCase().includes(query.toLowerCase())
-  );
+    if (query.trim().length === 0) {
+      setSearchResults([]);
+      setRelatedProducts([]);
+      return;
+    }
+
+    setIsSearching(true);
+
+    searchTimeoutRef.current = setTimeout(async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/search/?q=${encodeURIComponent(query)}`);
+        const data = await response.json();
+        setSearchResults(data.results || []);
+        setRelatedProducts(data.related || []);
+      } catch (error) {
+        console.error("Search error:", error);
+        setSearchResults([]);
+        setRelatedProducts([]);
+      } finally {
+        setIsSearching(false);
+      }
+    }, 300); // 300ms debounce
+
+    return () => {
+      if (searchTimeoutRef.current) {
+        clearTimeout(searchTimeoutRef.current);
+      }
+    };
+  }, [query]);
+
+  const handleProductClick = (slug) => {
+    navigate(`/product/${slug}`);
+    setShowSearch(false);
+    setQuery("");
+    setSearchResults([]);
+    setRelatedProducts([]);
+  };
 
   return (
     <>
@@ -78,18 +114,17 @@ const Navbar = () => {
         <Link to="/" className={styles.logoLink}>
           <img src={logo} alt="Meerya Logo" className={styles.logoImage} />
         </Link>
-        
+
         <div className={styles.iconGroup}>
           <div
-            className={`${styles.searchWrapper} ${
-              showSearch ? styles.active : ""
-            }`}
+            className={`${styles.searchWrapper} ${showSearch ? styles.active : ""
+              }`}
           >
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search..."
+              placeholder="Search products..."
               className={styles.searchInput}
               autoFocus
             />
@@ -99,14 +134,47 @@ const Navbar = () => {
             />
             {showSearch && query && (
               <div className={styles.searchResults}>
-                {filteredResults.length > 0 ? (
-                  filteredResults.map((item, index) => (
-                    <div key={index} className={styles.resultItem}>
-                      {item}
-                    </div>
-                  ))
+                {isSearching ? (
+                  <div className={styles.loadingResult}>Searching...</div>
+                ) : searchResults.length > 0 ? (
+                  <>
+                    {searchResults.map((product) => (
+                      <div
+                        key={product.id}
+                        className={styles.resultItem}
+                        onClick={() => handleProductClick(product.slug)}
+                      >
+                        {product.image && (
+                          <img src={product.image} alt={product.name} className={styles.resultImage} />
+                        )}
+                        <div className={styles.resultInfo}>
+                          <div className={styles.resultName}>{product.name}</div>
+                          <div className={styles.resultPrice}>₹{product.selling_price}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </>
+                ) : relatedProducts.length > 0 ? (
+                  <>
+                    <div className={styles.noResult}>No exact matches. Here are some suggestions:</div>
+                    {relatedProducts.map((product) => (
+                      <div
+                        key={product.id}
+                        className={styles.resultItem}
+                        onClick={() => handleProductClick(product.slug)}
+                      >
+                        {product.image && (
+                          <img src={product.image} alt={product.name} className={styles.resultImage} />
+                        )}
+                        <div className={styles.resultInfo}>
+                          <div className={styles.resultName}>{product.name}</div>
+                          <div className={styles.resultPrice}>₹{product.selling_price}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </>
                 ) : (
-                  <div className={styles.noResult}>No results found</div>
+                  <div className={styles.noResult}>No products found</div>
                 )}
               </div>
             )}
@@ -155,7 +223,7 @@ const Navbar = () => {
         <Link to="/wallet" onClick={closeMobileMenu}>WALLET</Link>
         <Link to="/wishlist" onClick={closeMobileMenu}>WISHLIST</Link>
 
-        <hr/>
+        <hr />
         <button onClick={handleLogout}>LOGOUT</button>
       </div>
     </>

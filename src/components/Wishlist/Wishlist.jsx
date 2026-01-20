@@ -75,15 +75,15 @@ const Wishlist = () => {
     return (
       <div className={styles.container}>
         <h2 className={styles.title}>EMPTY!</h2>
-  
+
         <div className={styles.icon}>
           <img src={success} alt="success" className={styles.success}></img>
         </div>
-  
+
         <p className={styles.thankyou}>
           Your wishlist looks empty :(
         </p>
-  
+
         <div className={styles.buttons}>
           <button onClick={() => navigate("/unified")} className={styles.btn}>
             GO TO CART
@@ -113,6 +113,7 @@ const Wishlist = () => {
               variant={p.variant}
               desc=""
               price={p.price}
+              showRemove={true}
               onRemove={handleRemove}
               onAddToCart={handleAddToCart}
               onBuyNow={() => handleBuyNow(p.slug)}

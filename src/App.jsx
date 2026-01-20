@@ -13,6 +13,7 @@ import Signup from "./pages/SignupPage";
 import Login from "./pages/LoginPage";
 import Profile from "./pages/ProfilePage";
 import Wishlist from "./pages/WishlistPage";
+import AllProductsPage from "./pages/AllProductsPage";
 // import CartPage from "./pages/CartPage";
 import ProductPage from "./pages/ProductPage";
 // import Checkout from "./pages/CheckoutPage";
@@ -48,9 +49,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/myaccount/*" element={<Profile />} />
           <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/products" element={<AllProductsPage />} />
           <Route path="/product/:slug" element={<ProductPage />} />
-          <Route path="/confirmed" element={<OrderConfirmed/>}/>
-          <Route path="/unified" element={<Unified/>}/>
+          <Route path="/confirmed" element={<OrderConfirmed />} />
+          <Route path="/unified" element={<Unified />} />
         </Routes>
       </BrowserRouter>
     </ToastProvider>

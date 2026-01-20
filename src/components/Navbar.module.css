@@ -8,7 +8,8 @@
   align-items: center;
   font-family: 'Abel', sans-serif;
   min-height: 113px;
-  position: relative; /* Needed for absolute positioning of the logo */
+  position: relative;
+  /* Needed for absolute positioning of the logo */
 }
 
 .leftMenu {
@@ -69,7 +70,7 @@
   right: 0;
   background: #040404;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
   min-width: 150px;
@@ -99,7 +100,7 @@
   position: relative;
   display: flex;
   align-items: center;
-} 
+}
 
 .searchInput {
   position: absolute;
@@ -128,37 +129,88 @@
   position: absolute;
   top: calc(100% + 4px);
   right: 35px;
-  width: 300px;
+  width: 350px;
+  max-height: 400px;
+  overflow-y: auto;
   background: #fff;
   color: #333;
   border: 1px solid #ddd;
   border-radius: 4px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   z-index: 999;
 }
 
 .resultItem {
-  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
   cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.2s;
+}
+
+.resultItem:last-child {
+  border-bottom: none;
 }
 
 .resultItem:hover {
   background: #f5f5f5;
 }
 
+.resultImage {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.resultInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.resultName {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.resultPrice {
+  font-size: 13px;
+  color: #e38012;
+  font-weight: 600;
+}
+
 .noResult {
-  padding: 8px 12px;
+  padding: 12px;
   color: #666;
+  font-size: 13px;
+  text-align: center;
+}
+
+.loadingResult {
+  padding: 12px;
+  color: #666;
+  font-size: 13px;
+  text-align: center;
+  font-style: italic;
 }
 
 /* --- Mobile Menu Styles --- */
 
 /* This hides the mobile icons on desktop by default */
-.hamburger, .mobileCartIcon {
-  display: none; 
+.hamburger,
+.mobileCartIcon {
+  display: none;
   font-size: 24px;
   cursor: pointer;
-  z-index: 5; 
+  z-index: 5;
 }
 
 .mobileMenu {
@@ -190,7 +242,8 @@
   color: #f4f3f1;
 }
 
-.mobileMenu a, .mobileMenu button {
+.mobileMenu a,
+.mobileMenu button {
   color: #f4f3f1;
   text-decoration: none;
   font-size: 1.5rem;
@@ -215,7 +268,7 @@
   .navbar {
     padding: 1rem;
   }
-  
+
   /* Hide desktop-only elements */
   .leftMenu,
   .iconGroup {
@@ -223,9 +276,8 @@
   }
 
   /* Show mobile-only elements */
-  .hamburger, .mobileCartIcon {
+  .hamburger,
+  .mobileCartIcon {
     display: block;
   }
 }
-
-

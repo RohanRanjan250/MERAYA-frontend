@@ -13,35 +13,58 @@ import { useToast } from "../Context/ToastContext";
 const CartItems = ({ items, onQuantityChange, onRemove, onBuyNow }) => {
   return (
     <div className="cartItems">
-      {items.map((item) => (
-        <div key={item.id} className="item">
-          <img
-            src={item.image[0] || "https://via.placeholder.com/150"}
-            alt={item.name}
-            className="image"
-            onClick={() => onBuyNow(item.slug)}
-          />
-          <div className="details">
-            <h3>{item.name}</h3>
-            <div className="sizeLabel">
-              <p className="Size">SIZE </p>
-              <span className="whiteLine"></span>
-              <p className="selectedSize">{item.variant}</p>
-            </div>
-            <div className="actions">
-              <div className="quantity">
-                <button onClick={() => onQuantityChange(item.id, -1)}>-</button>
-                <span>{item.quantity}</span>
-                <button onClick={() => onQuantityChange(item.id, 1)}>+</button>
+      {items.map((item) => {
+        const isAtStockLimit = item.stock && item.quantity >= item.stock;
+
+        return (
+          <div key={item.id} className="item">
+            <img
+              src={item.image[0] || "https://via.placeholder.com/150"}
+              alt={item.name}
+              className="image"
+              onClick={() => onBuyNow(item.slug)}
+            />
+            <div className="details">
+              <h3>{item.name}</h3>
+              <div className="sizeLabel">
+                <p className="Size">SIZE </p>
+                <span className="whiteLine"></span>
+                <p className="selectedSize">{item.variant}</p>
               </div>
-              <button className="remove" onClick={() => onRemove(item.id)}>
-                Remove
-              </button>
+              {item.stock !== undefined && (
+                <p className="stockInfo" style={{
+                  fontSize: '0.85rem',
+                  color: item.stock < 5 ? '#ff6b6b' : '#888',
+                  marginTop: '0.5rem'
+                }}>
+                  {item.stock < 5 ? `Only ${item.stock} left in stock` : `${item.stock} available`}
+                </p>
+              )}
+              <div className="actions">
+                <div className="quantity">
+                  <button onClick={() => onQuantityChange(item.id, -1)}>-</button>
+                  <span>{item.quantity}</span>
+                  <button
+                    onClick={() => onQuantityChange(item.id, 1)}
+                    disabled={isAtStockLimit}
+                    style={{
+                      opacity: isAtStockLimit ? 0.5 : 1,
+                      cursor: isAtStockLimit ? 'not-allowed' : 'pointer'
+                    }}
+                    title={isAtStockLimit ? 'Stock limit reached' : ''}
+                  >
+                    +
+                  </button>
+                </div>
+                <button className="remove" onClick={() => onRemove(item.id)}>
+                  Remove
+                </button>
+              </div>
             </div>
+            <div className="price">₹{item.price.toFixed(2)}</div>
           </div>
-          <div className="price">₹{item.price.toFixed(2)}</div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };
@@ -514,6 +537,9 @@ export default function CheckoutFlow() {
 
   const handleQuantityChange = async (itemId, change) => {
     const action = change === 1 ? "increment" : "decrement";
+
+    // Optimistically update UI
+    const previousItems = [...cartItems];
     setCartItems(
       (prevItems) => prevItems.map((item) =>
         item.id === itemId
@@ -521,6 +547,7 @@ export default function CheckoutFlow() {
           : item
       ).filter(item => item.quantity > 0)
     );
+
     try {
       if (!isAuth) {
         navigate("/login");
@@ -529,6 +556,16 @@ export default function CheckoutFlow() {
       await changeCartQuantity(itemId, action);
     } catch (err) {
       console.error("Failed to update quantity:", err);
+
+      // Revert to previous state on error
+      setCartItems(previousItems);
+
+      // Show error message if it's a stock limit error
+      if (err?.error && err.error.includes("Stock limit")) {
+        alert(err.error);
+      } else if (err?.message) {
+        alert(err.message);
+      }
     }
   };
 
