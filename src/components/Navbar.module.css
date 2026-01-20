@@ -283,3 +283,53 @@
     display: block;
   }
 }
+/* Cart Badge Styles */
+.cartIconWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.cartBadge {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background: linear-gradient(135deg, #e38012 0%, #d07010 100%);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: 'Abel', sans-serif;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 4px;
+  box-shadow: 0 2px 6px rgba(227, 128, 18, 0.5);
+  animation: badgePop 0.3s ease-out;
+  z-index: 10;
+}
+
+@keyframes badgePop {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Mobile cart badge */
+@media (max-width: 990px) {
+  .cartBadge {
+    top: -6px;
+    right: -8px;
+    font-size: 10px;
+    min-width: 16px;
+    height: 16px;
+  }
+}

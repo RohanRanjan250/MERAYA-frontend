@@ -56,7 +56,7 @@ function App() {
           <Route path="/product/:slug" element={<ProductPage />} />
 
           {/* Protected Routes */}
-          <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path="/myaccount/*" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
           <Route path="/wallet" element={<ProtectedRoute><WalletPage /></ProtectedRoute>} />
           <Route path="/checkout" element={<ProtectedRoute><Unified /></ProtectedRoute>} />

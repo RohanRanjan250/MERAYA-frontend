@@ -12,6 +12,7 @@ const Navbar = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [cartItemCount, setCartItemCount] = useState(0);
   const navigate = useNavigate();
   const timeoutRef = useRef(null);
   const searchTimeoutRef = useRef(null);
@@ -23,6 +24,25 @@ const Navbar = () => {
   };
 
   let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
+
+  // Fetch cart item count
+  useEffect(() => {
+    const fetchCartCount = async () => {
+      if (isAuth) {
+        try {
+          const API = (await import("../API/instance")).default;
+          const response = await API.get("/cart/");
+          const items = response.data.items || [];
+          const totalCount = items.reduce((sum, item) => sum + item.quantity, 0);
+          setCartItemCount(totalCount);
+        } catch (error) {
+          console.error("Error fetching cart count:", error);
+        }
+      }
+    };
+
+    fetchCartCount();
+  }, [isAuth]);
 
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
@@ -198,12 +218,22 @@ const Navbar = () => {
             <FaHeart className={styles.icon} />
           </Link>
           <Link to="/unified">
-            <FaShoppingBag className={styles.icon} />
+            <div className={styles.cartIconWrapper}>
+              <FaShoppingBag className={styles.icon} />
+              {cartItemCount > 0 && (
+                <span className={styles.cartBadge}>{cartItemCount}</span>
+              )}
+            </div>
           </Link>
         </div>
 
         <Link to="/unified" className={styles.mobileCartIcon}>
-          <FaShoppingBag className={styles.icon} />
+          <div className={styles.cartIconWrapper}>
+            <FaShoppingBag className={styles.icon} />
+            {cartItemCount > 0 && (
+              <span className={styles.cartBadge}>{cartItemCount}</span>
+            )}
+          </div>
         </Link>
       </nav>
 

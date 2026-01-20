@@ -85,7 +85,11 @@ const OrderSummary = ({
   couponDiscount,
   appliedCoupon,
   couponError,
-  isApplyingCoupon
+  isApplyingCoupon,
+  walletBalance = 0,
+  useWallet = false,
+  setUseWallet = () => { },
+  walletDiscount = 0
 }) => {
   return (
     <div className="orderSummary">
@@ -108,11 +112,63 @@ const OrderSummary = ({
           <span>-₹{couponDiscount.toFixed(2)}</span>
         </div>
       )}
+
+      {/* Wallet Checkbox */}
+      {walletBalance > 0 && (
+        <div className="walletSection" style={{
+          padding: '12px',
+          background: useWallet ? 'rgba(227, 128, 18, 0.15)' : 'rgba(227, 128, 18, 0.05)',
+          borderRadius: '8px',
+          margin: '12px 0',
+          border: useWallet ? '2px solid #e38012' : '1px solid rgba(227, 128, 18, 0.3)',
+          transition: 'all 0.3s ease'
+        }}>
+          <label style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            cursor: 'pointer',
+            fontSize: '14px',
+            fontFamily: 'Abel, sans-serif'
+          }}>
+            <input
+              type="checkbox"
+              checked={useWallet}
+              onChange={(e) => setUseWallet(e.target.checked)}
+              style={{
+                width: '18px',
+                height: '18px',
+                cursor: 'pointer',
+                accentColor: '#e38012'
+              }}
+            />
+            <span style={{ flex: 1, color: '#333', fontWeight: useWallet ? 'bold' : 'normal' }}>
+              Use Meraya Wallet Points
+              <div style={{ fontSize: '12px', color: '#666', marginTop: '4px', fontWeight: 'normal' }}>
+                Available: ₹{walletBalance.toFixed(2)}
+              </div>
+            </span>
+          </label>
+        </div>
+      )}
+
+      {useWallet && walletDiscount > 0 && (
+        <div className="row" style={{ color: '#4caf50' }}>
+          <span>Wallet Discount</span>
+          <span>-₹{walletDiscount.toFixed(2)}</span>
+        </div>
+      )}
+
       <hr />
       <div className="row total">
         <span>TOTAL</span>
-        <span className="totalPrice">₹{(total - couponDiscount).toFixed(2)}</span>
+        <span className="totalPrice">₹{total.toFixed(2)}</span>
       </div>
+      {/* {total === 1.00 && walletDiscount > 0 && (
+        <div style={{ fontSize: '12px', color: '#666', marginTop: '8px', textAlign: 'center' }}>
+          Minimum payment of ₹1.00 required
+        </div>
+      )} */}
       <div className="row">
         <span>Estimated Delivery by</span>
         <span>{deliveryDate}</span>
@@ -146,6 +202,11 @@ const OrderSummary = ({
       <button className="checkoutBtn" onClick={onClick} disabled={isProcessing}>
         {isProcessing ? 'PROCESSING...' : label}
       </button>
+      {total === 1.00 && walletDiscount > 0 && (
+        <div style={{ fontSize: '12px', color: '#666', marginTop: '8px', textAlign: 'center' }}>
+          Minimum payment of ₹1.00 required
+        </div>
+      )}
     </div>
   );
 };
@@ -502,11 +563,30 @@ export default function CheckoutFlow() {
   const [couponCode, setCouponCode] = useState('');
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [couponDiscount, setCouponDiscount] = useState(0);
+  const [walletBalance, setWalletBalance] = useState(0);
+  const [useWallet, setUseWallet] = useState(false);
+  const [walletDiscount, setWalletDiscount] = useState(0);
   const [couponError, setCouponError] = useState('');
   const [isApplyingCoupon, setIsApplyingCoupon] = useState(false);
 
   const { showToast } = useToast();
   let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
+
+  // Fetch wallet balance
+  useEffect(() => {
+    const fetchWalletBalance = async () => {
+      if (isAuth) {
+        try {
+          const API = (await import("../API/instance")).default;
+          const response = await API.get("/wallet/");
+          setWalletBalance(response.data.balance || 0);
+        } catch (error) {
+          console.error("Error fetching wallet balance:", error);
+        }
+      }
+    };
+    fetchWalletBalance();
+  }, [isAuth]);
 
   useEffect(() => {
     if (!isAuth) {
@@ -519,7 +599,31 @@ export default function CheckoutFlow() {
   const sellingPriceTotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
   const discount = subtotal - sellingPriceTotal; // Difference between show_price and selling_price
   const shipping = 0; // Free shipping
-  const total = sellingPriceTotal + shipping; // Total is based on selling price
+
+  // Calculate wallet discount - ALWAYS apply coupon first, then wallet
+  useEffect(() => {
+    if (useWallet && walletBalance > 0) {
+      // Step 1: Calculate amount after coupon discount
+      const afterCoupon = sellingPriceTotal - couponDiscount;
+
+      // Step 2: Ensure minimum payment of ₹1.00 (Razorpay minimum)
+      const MINIMUM_PAYMENT = 1.00;
+
+      // Step 3: Maximum wallet can cover = afterCoupon - minimum payment
+      const maxWalletCanCover = Math.max(0, afterCoupon - MINIMUM_PAYMENT);
+
+      // Step 4: Wallet discount is minimum of (wallet balance, maxWalletCanCover)
+      const calculatedWalletDiscount = Math.min(walletBalance, maxWalletCanCover);
+
+      setWalletDiscount(calculatedWalletDiscount);
+    } else {
+      setWalletDiscount(0);
+    }
+  }, [useWallet, walletBalance, sellingPriceTotal, couponDiscount]);
+
+  // Calculate final total - ensure it never goes below ₹1.00 (Razorpay minimum)
+  const calculatedTotal = sellingPriceTotal - couponDiscount - walletDiscount + shipping;
+  const total = Math.max(1.00, calculatedTotal);
 
   // Recalculate coupon when cart changes
   useEffect(() => {
@@ -717,16 +821,18 @@ export default function CheckoutFlow() {
           quantity: item.quantity
         })),
         coupon_code: appliedCoupon ? appliedCoupon.coupon_code : null,
-        coupon_discount: couponDiscount || 0
+        coupon_discount: couponDiscount ? parseFloat(couponDiscount.toFixed(2)) : 0,
+        wallet_used: useWallet ? parseFloat(walletDiscount.toFixed(2)) : 0
       };
       console.log(orderPayload)
 
       try {
         const data = await OrderCreate(orderPayload);
 
+        // Backend now returns the correct amount after wallet discount
         const options = {
           key: data.key,
-          amount: data.amount,
+          amount: data.amount, // This is already calculated with wallet discount on backend
           currency: data.currency,
           name: "Meraya",
           description: "Order Payment",
@@ -882,6 +988,10 @@ export default function CheckoutFlow() {
               appliedCoupon={appliedCoupon}
               couponError={couponError}
               isApplyingCoupon={isApplyingCoupon}
+              walletBalance={walletBalance}
+              useWallet={useWallet}
+              setUseWallet={setUseWallet}
+              walletDiscount={walletDiscount}
             />
           </div>
         </div>
