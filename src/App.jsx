@@ -17,7 +17,7 @@ import AllProductsPage from "./pages/AllProductsPage";
 import WalletPage from "./pages/WalletPage";
 import ProductPage from "./pages/ProductPage";
 import { setupInterceptors } from "./API/interceptor";
-import { initializeAuth, startAutoRefresh } from "./API/authUtils";
+import { initializeAuth, startSmartRefresh } from "./API/authUtils";
 import { LandingProvider } from "./Context/LandingpageContext";
 import OrderConfirmed from "./pages/OrderConfirmedPage";
 import Unified from "./pages/UnifiedCheckoutPage";
@@ -33,8 +33,8 @@ function App() {
     setupInterceptors(); // setup interceptor first
     initializeAuth().finally(() => setAuthReady(true));
 
-    // Start automatic token refresh every 4 minutes
-    startAutoRefresh();
+    // Start smart refresh (activity-based, only when needed)
+    startSmartRefresh();
   }, []);
 
   if (!authReady) return <div>Loading...</div>;
