@@ -8,7 +8,7 @@ const isLocal =
 
 const BASE_URL = isLocal
   ? (import.meta.env.VITE_API_BASE_URL || "http://localhost:8000")
-  : "http://46.28.44.110";
+  : "https://api.meraya.co.in";
 
 const API = axios.create({
   baseURL: BASE_URL,
