@@ -1,6 +1,14 @@
 import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://192.168.1.7:8000";
+const isLocal =
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1" ||
+  window.location.hostname.startsWith("192.168.") ||
+  window.location.hostname.startsWith("10.");
+
+const BASE_URL = isLocal
+  ? (import.meta.env.VITE_API_BASE_URL || "http://localhost:8000")
+  : "http://46.28.44.110";
 
 const API = axios.create({
   baseURL: BASE_URL,
