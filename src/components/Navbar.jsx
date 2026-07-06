@@ -27,25 +27,41 @@ const Navbar = () => {
     setShowDropdown(true);
   };
 
-  let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
+  const [isAuth, setIsAuth] = useState(() => JSON.parse(localStorage.getItem("isAuthenticated")) || false);
 
   // Fetch cart item count
-  useEffect(() => {
-    const fetchCartCount = async () => {
-      if (isAuth) {
-        try {
-          const API = (await import("../API/instance")).default;
-          const response = await API.get("/cart/");
-          const items = response.data.items || [];
-          const totalCount = items.reduce((sum, item) => sum + item.quantity, 0);
-          setCartItemCount(totalCount);
-        } catch (error) {
-          console.error("Error fetching cart count:", error);
-        }
+  const fetchCartCount = async () => {
+    if (isAuth) {
+      try {
+        const API = (await import("../API/instance")).default;
+        const response = await API.get("/cart/");
+        const items = response.data.items || [];
+        const totalCount = items.reduce((sum, item) => sum + item.quantity, 0);
+        setCartItemCount(totalCount);
+      } catch (error) {
+        console.error("Error fetching cart count:", error);
       }
+    }
+  };
+
+  useEffect(() => {
+    fetchCartCount();
+
+    const handleCartUpdate = () => {
+      fetchCartCount();
+    };
+    
+    const handleAuthChange = () => {
+      setIsAuth(JSON.parse(localStorage.getItem("isAuthenticated")) || false);
     };
 
-    fetchCartCount();
+    window.addEventListener("cartUpdated", handleCartUpdate);
+    window.addEventListener("authChanged", handleAuthChange);
+    
+    return () => {
+      window.removeEventListener("cartUpdated", handleCartUpdate);
+      window.removeEventListener("authChanged", handleAuthChange);
+    };
   }, [isAuth]);
 
   const handleMouseLeave = () => {
@@ -286,7 +302,7 @@ const Navbar = () => {
 
         {/* --- 2. Add onClick to all mobile menu links and convert to <Link> --- */}
         <Link to="/" onClick={closeMobileMenu}>HOME</Link>
-        <Link to="/shop" onClick={closeMobileMenu}>SHOP</Link>
+        <Link to="/products" onClick={closeMobileMenu}>SHOP</Link>
         <Link to="/products" onClick={closeMobileMenu}>COLLECTIONS</Link>
         <Link to="/myaccount/contact" onClick={closeMobileMenu}>ACCOUNT</Link>
         <Link to="/myaccount/order" onClick={closeMobileMenu}>ORDERS</Link>

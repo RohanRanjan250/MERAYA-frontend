@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://meraya-frontend.vercel.app/sitemap.xml

@@ -2,7 +2,6 @@ import "./App.css";
 import { React, useEffect, useState } from "react";
 import { lazy, Suspense } from "react";
 import {
-  BrowserRouter as Router,
   Routes,
   Route,
   BrowserRouter,
@@ -59,7 +58,6 @@ function App() {
           <Route path="/myaccount/*" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
           <Route path="/wallet" element={<ProtectedRoute><WalletPage /></ProtectedRoute>} />
-          <Route path="/checkout" element={<ProtectedRoute><Unified /></ProtectedRoute>} />
           <Route path="/unified" element={<ProtectedRoute><Unified /></ProtectedRoute>} />
           <Route path="/confirmed" element={<ProtectedRoute><OrderConfirmed /></ProtectedRoute>} />
 
