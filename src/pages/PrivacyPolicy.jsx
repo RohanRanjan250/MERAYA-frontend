@@ -10,7 +10,7 @@ const PrivacyPolicy = () => {
             <Navbar />
             <DoubleLine />
             <div className={styles.container}>
-                <div className={styles.backgroundText}>PRIVACY</div>
+                <div className={styles.backgroundText}>MERAYA</div>
 
                 <div className={styles.content}>
                     <h1 className={styles.mainTitle}>Privacy Policy</h1>

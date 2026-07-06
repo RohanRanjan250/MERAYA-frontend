@@ -10,7 +10,7 @@ const ReturnPolicy = () => {
             <Navbar />
             <DoubleLine />
             <div className={styles.container}>
-                <div className={styles.backgroundText}>POLICY</div>
+                <div className={styles.backgroundText}>MERAYA</div>
 
                 <div className={styles.content}>
                     <h1 className={styles.mainTitle}>Meraya Return & Exchange Policy 💌</h1>

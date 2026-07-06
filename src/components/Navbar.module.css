@@ -25,9 +25,14 @@
   text-decoration: none;
 }
 
-.dropdown {
-  font-size: 10px;
-  margin-left: 4px;
+.dropdownIcon {
+  font-size: 12px;
+  margin-left: 6px;
+  transition: transform 0.3s ease;
+}
+
+.dropdownIcon.rotate {
+  transform: rotate(180deg);
 }
 
 .logoLink {
@@ -71,7 +76,7 @@
   top: 35px;
   right: 0;
   background: #040404;
-  border-radius: 8px;
+  border-radius: 0;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;

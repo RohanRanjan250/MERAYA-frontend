@@ -25,6 +25,9 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import ReturnPolicy from "./pages/ReturnPolicy";
+import ShippingPolicy from "./pages/ShippingPolicy";
+import ContactUs from "./pages/ContactUs";
+import TermsOfService from "./pages/TermsOfService";
 
 function App() {
   const [authReady, setAuthReady] = useState(false);
@@ -66,6 +69,11 @@ function App() {
           {/* Policy Pages */}
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/return-policy" element={<ReturnPolicy />} />
+          <Route path="/shipping-policy" element={<ShippingPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
+
+          {/* Contact Page */}
+          <Route path="/contact" element={<ContactUs />} />
 
           {/* 404 Catch-all - Must be last */}
           <Route path="*" element={<NotFound />} />

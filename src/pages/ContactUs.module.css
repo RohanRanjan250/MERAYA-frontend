@@ -1,0 +1,299 @@
+.container {
+    min-height: 100vh;
+    background: #040404;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.backgroundText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 15vw;
+    font-family: 'Aboreto', serif;
+    color: rgba(227, 128, 18, 0.03);
+    z-index: 1;
+    user-select: none;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.content {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.mainTitle {
+    font-family: 'Aboreto', serif;
+    font-size: 3.5rem;
+    color: #e38012;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    -webkit-text-stroke: 1px #e38012;
+}
+
+.subtitle {
+    font-family: 'Abel', sans-serif;
+    font-size: 1.2rem;
+    color: #A2A3B1;
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.contactGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(227, 128, 18, 0.3);
+    transform: translateY(-5px);
+}
+
+.iconWrapper {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 1.5rem;
+    background: linear-gradient(135deg, #e38012 0%, #d07010 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon {
+    width: 30px;
+    height: 30px;
+    color: #fff;
+}
+
+.cardTitle {
+    font-family: 'Abel', sans-serif;
+    font-size: 1.3rem;
+    color: #FBFBFB;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.cardText {
+    font-family: 'Abel', sans-serif;
+    font-size: 1.1rem;
+    color: #A2A3B1;
+    line-height: 1.8;
+    margin: 0;
+}
+
+.link {
+    font-family: 'Abel', sans-serif;
+    font-size: 1.1rem;
+    color: #e38012;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.link:hover {
+    color: #FBFBFB;
+    transform: scale(1.05);
+}
+
+/* Contact Form */
+.formSection {
+    margin: 4rem 0 3rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.formTitle {
+    font-family: 'Aboreto', serif;
+    font-size: 2rem;
+    color: #FBFBFB;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.contactForm {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 2.5rem;
+}
+
+.formGroup {
+    margin-bottom: 1.5rem;
+}
+
+.formLabel {
+    font-family: 'Abel', sans-serif;
+    font-size: 1rem;
+    color: #FBFBFB;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.formInput,
+.formTextarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    font-family: 'Abel', sans-serif;
+    font-size: 1rem;
+    color: #FBFBFB;
+    transition: all 0.3s ease;
+}
+
+.formInput:focus,
+.formTextarea:focus {
+    outline: none;
+    border-color: #e38012;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.formInput::placeholder,
+.formTextarea::placeholder {
+    color: #A2A3B1;
+}
+
+.formInput:disabled,
+.formTextarea:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.formTextarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.submitButton {
+    width: 100%;
+    background: linear-gradient(135deg, #e38012 0%, #d07010 100%);
+    border: none;
+    border-radius: 8px;
+    padding: 1rem 2rem;
+    font-family: 'Abel', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.submitButton:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(227, 128, 18, 0.3);
+}
+
+.submitButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.infoBox {
+    background: linear-gradient(135deg, #e38012 0%, #d07010 100%);
+    border-radius: 12px;
+    padding: 3rem 2rem;
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.infoTitle {
+    font-family: 'Aboreto', serif;
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.infoText {
+    font-family: 'Abel', sans-serif;
+    font-size: 1.1rem;
+    color: #fff;
+    line-height: 1.8;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 2rem 1rem;
+    }
+
+    .mainTitle {
+        font-size: 2.5rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .contactGrid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .card {
+        padding: 1.5rem;
+    }
+
+    .infoBox {
+        padding: 2rem 1.5rem;
+    }
+
+    .infoTitle {
+        font-size: 1.5rem;
+    }
+
+    .infoText {
+        font-size: 1rem;
+    }
+
+    .formSection {
+        margin: 3rem 0 2rem;
+    }
+
+    .formTitle {
+        font-size: 1.5rem;
+    }
+
+    .contactForm {
+        padding: 1.5rem;
+    }
+
+    .formLabel {
+        font-size: 0.9rem;
+    }
+
+    .formInput,
+    .formTextarea {
+        font-size: 0.9rem;
+        padding: 0.7rem 0.8rem;
+    }
+
+    .submitButton {
+        font-size: 1rem;
+        padding: 0.8rem 1.5rem;
+    }
+}

@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from "react";
 import styles from "./AllProducts.module.css";
 import ProductCard from "../../UI/ProductCard";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { addToCart } from "../../API/productmainpageAPI";
 import { useToast } from "../../Context/ToastContext";
+import { openAPI } from "../../API/instance";
 
 const AllProducts = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const categoryId = searchParams.get("category");
     const { showToast } = useToast();
 
     const loadAllProducts = async () => {
         try {
-            const response = await fetch("http://127.0.0.1:8000/get_all_products");
-            const data = await response.json();
+            const url = categoryId ? `/get_all_products?category=${categoryId}` : `/get_all_products`;
+            const response = await openAPI.get(url);
+            const data = response.data;
             console.log(data);
             setProducts(data.products || []);
         } catch (err) {
@@ -27,7 +31,7 @@ const AllProducts = () => {
 
     useEffect(() => {
         loadAllProducts();
-    }, []);
+    }, [categoryId]);
 
     const handleAddToCart = async (productId, variant) => {
         try {

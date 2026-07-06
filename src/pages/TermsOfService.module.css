@@ -44,12 +44,21 @@
     margin-bottom: 3rem;
 }
 
+.welcomeTitle {
+    font-family: 'Aboreto', serif;
+    font-size: 2.5rem;
+    color: #e38012;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
 .intro {
     font-family: 'Abel', sans-serif;
     font-size: 1.2rem;
     color: #FBFBFB;
     line-height: 1.8;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
 }
 
 .section {
@@ -58,10 +67,10 @@
 
 .sectionTitle {
     font-family: 'Abel', sans-serif;
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: #FBFBFB;
     margin-bottom: 1.5rem;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     font-weight: 700;
     -webkit-text-stroke: 0.5px #fff;
 }
@@ -79,83 +88,65 @@
     border-color: rgba(227, 128, 18, 0.3);
 }
 
-.cardText {
+.text {
     font-family: 'Abel', sans-serif;
     font-size: 1.1rem;
     color: #FBFBFB;
-    line-height: 1.6;
+    line-height: 1.8;
     margin-bottom: 1rem;
 }
 
-.subTitle {
-    font-family: 'Abel', sans-serif;
-    font-size: 1.3rem;
+.text:last-child {
+    margin-bottom: 0;
+}
+
+.link {
     color: #e38012;
-    margin: 1.5rem 0 1rem;
-    font-weight: 600;
+    text-decoration: underline;
+    transition: color 0.3s ease;
 }
 
-.list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.list li {
-    font-family: 'Abel', sans-serif;
-    font-size: 1.1rem;
+.link:hover {
     color: #FBFBFB;
-    margin-bottom: 1rem;
-    padding-left: 1.5rem;
-    position: relative;
-    line-height: 1.6;
 }
 
-.list li::before {
-    content: '•';
-    position: absolute;
-    left: 0;
-    color: #e38012;
-    font-weight: bold;
-    font-size: 1.5rem;
-}
-
-.list li strong {
-    color: #e38012;
-}
-
-.contactSection {
-    background: linear-gradient(135deg, #e38012 0%, #d07010 100%);
-    border-radius: 12px;
-    padding: 2rem;
-    text-align: center;
-    margin-top: 3rem;
-}
-
-.contactTitle {
-    font-family: 'Abel', sans-serif;
-    font-size: 1.5rem;
-    color: #fff;
-    margin-bottom: 1rem;
-    font-weight: 700;
+.contactDetails {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(227, 128, 18, 0.1);
+    border-left: 3px solid #e38012;
+    border-radius: 4px;
 }
 
 .contactText {
     font-family: 'Abel', sans-serif;
     font-size: 1.1rem;
+    color: #FBFBFB;
+    margin-bottom: 0.5rem;
+}
+
+.contactText:last-child {
+    margin-bottom: 0;
+}
+
+.contactText strong {
+    color: #e38012;
+}
+
+.closingBox {
+    background: linear-gradient(135deg, #e38012 0%, #d07010 100%);
+    border-radius: 12px;
+    padding: 2.5rem;
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.closingText {
+    font-family: 'Abel', sans-serif;
+    font-size: 1.2rem;
     color: #fff;
+    line-height: 1.8;
     margin: 0;
-}
-
-.link {
-    color: #fff;
-    text-decoration: underline;
-    font-weight: 600;
-    transition: opacity 0.3s ease;
-}
-
-.link:hover {
-    opacity: 0.8;
 }
 
 /* Mobile responsive */
@@ -168,23 +159,39 @@
         font-size: 2.5rem;
     }
 
+    .welcomeTitle {
+        font-size: 1.8rem;
+    }
+
     .intro {
         font-size: 1rem;
     }
 
     .sectionTitle {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
 
     .card {
         padding: 1.5rem;
     }
 
-    .list li {
+    .text {
         font-size: 1rem;
     }
 
-    .cardText {
+    .contactDetails {
+        padding: 1rem;
+    }
+
+    .contactText {
+        font-size: 1rem;
+    }
+
+    .closingBox {
+        padding: 1.5rem;
+    }
+
+    .closingText {
         font-size: 1rem;
     }
 }

@@ -1,12 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./Navbar.module.css";
 import logo from "../assets/image.png";
-import { FaSearch, FaUser, FaHeart, FaShoppingBag, FaBars, FaTimes } from "react-icons/fa";
+import { FaSearch, FaUser, FaHeart, FaShoppingBag, FaBars, FaTimes, FaChevronDown } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../API/authApi";
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showShopDropdown, setShowShopDropdown] = useState(false);
+  const [categories, setCategories] = useState([]);
   const [showSearch, setShowSearch] = useState(false);
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -15,6 +17,7 @@ const Navbar = () => {
   const [cartItemCount, setCartItemCount] = useState(0);
   const navigate = useNavigate();
   const timeoutRef = useRef(null);
+  const shopTimeoutRef = useRef(null);
   const searchTimeoutRef = useRef(null);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
@@ -47,6 +50,30 @@ const Navbar = () => {
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
       setShowDropdown(false);
+    }, 100);
+  };
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const API = (await import("../API/instance")).default;
+        const response = await API.get("/categories/");
+        setCategories(response.data.categories || []);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+  const handleShopMouseEnter = () => {
+    clearTimeout(shopTimeoutRef.current);
+    setShowShopDropdown(true);
+  };
+
+  const handleShopMouseLeave = () => {
+    shopTimeoutRef.current = setTimeout(() => {
+      setShowShopDropdown(false);
     }, 100);
   };
 
@@ -125,8 +152,20 @@ const Navbar = () => {
         </div>
 
         <div className={styles.leftMenu}>
-          <div className={styles.menuItem}>
-            SHOP <span className={styles.dropdown}>▼</span>
+          <div 
+            className={styles.menuItem} 
+            style={{ position: 'relative', display: 'flex', alignItems: 'center' }}
+            onMouseEnter={handleShopMouseEnter}
+            onMouseLeave={handleShopMouseLeave}
+          >
+            SHOP <FaChevronDown className={`${styles.dropdownIcon} ${showShopDropdown ? styles.rotate : ''}`} />
+            {showShopDropdown && (
+              <div className={styles.dropdownMenu} style={{ left: 0, right: 'auto', minWidth: '200px' }}>
+                {categories.map(c => (
+                  <Link key={c.id} to={`/products?category=${c.id}`}>{c.name}</Link>
+                ))}
+              </div>
+            )}
           </div>
           <Link to="/products" className={styles.menuItem}>COLLECTIONS</Link>
         </div>
