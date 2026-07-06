@@ -3,12 +3,15 @@ import styles from "./Wishlist.module.css";
 import ProductCard from "../../UI/ProductCard";
 import { fetchWishlist, removeFromWishlist, addToCartWishlist } from "../../API/wishlist";
 import { useNavigate } from "react-router-dom";
-import success from "../../assets/sad.png"
+import success from "../../assets/sad.png";
+import { useToast } from "../../Context/ToastContext";
+import { addToCart } from "../../API/productmainpageAPI";
 
 const Wishlist = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { showToast } = useToast();
   let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
 
   useEffect(() => {

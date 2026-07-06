@@ -6,6 +6,7 @@ import { OrderCreate, verifyPayment } from "../API/orderAPI"
 import styles from "./OrderConfirmed/OrderConfirmed.module.css"
 import success from "../assets/sad.png"
 import { useToast } from "../Context/ToastContext";
+import API from "../API/instance";
 
 // --- Embedded Reusable Components ---
 // In a real project, these would be in their own files and imported.
@@ -751,28 +752,20 @@ export default function CheckoutFlow() {
     setCouponError('');
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/coupon/apply/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          code: couponCode,
-          cart_total: subtotal
-        })
+      const response = await API.post('/coupon/apply/', {
+        code: couponCode,
+        cart_total: subtotal
       });
 
-      const data = await response.json();
+      const data = response.data;
 
-      if (response.ok) {
-        setAppliedCoupon(data);
-        setCouponDiscount(data.discount_amount);
-        showToast(data.message, 'success');
-      } else {
-        setCouponError(data.error);
-        showToast(data.error, 'error');
-      }
+      setAppliedCoupon(data);
+      setCouponDiscount(data.discount_amount);
+      showToast(data.message, 'success');
     } catch (error) {
-      setCouponError('Failed to apply coupon');
-      showToast('Failed to apply coupon', 'error');
+      const errMsg = error.response?.data?.error || 'Failed to apply coupon';
+      setCouponError(errMsg);
+      showToast(errMsg, 'error');
     } finally {
       setIsApplyingCoupon(false);
     }

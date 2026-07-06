@@ -16,7 +16,6 @@ import Wishlist from "./pages/WishlistPage";
 import AllProductsPage from "./pages/AllProductsPage";
 import WalletPage from "./pages/WalletPage";
 import ProductPage from "./pages/ProductPage";
-import { setupInterceptors } from "./API/interceptor";
 import { initializeAuth, startSmartRefresh } from "./API/authUtils";
 import { LandingProvider } from "./Context/LandingpageContext";
 import OrderConfirmed from "./pages/OrderConfirmedPage";
@@ -33,9 +32,7 @@ function App() {
   const [authReady, setAuthReady] = useState(false);
 
   useEffect(() => {
-    setupInterceptors(); // setup interceptor first
     initializeAuth().finally(() => setAuthReady(true));
-
     // Start smart refresh (activity-based, only when needed)
     startSmartRefresh();
   }, []);

@@ -4,6 +4,7 @@ import logo from "../assets/image.png";
 import { FaSearch, FaUser, FaHeart, FaShoppingBag, FaBars, FaTimes, FaChevronDown } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../API/authApi";
+import { openAPI } from "../API/instance";
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -116,8 +117,8 @@ const Navbar = () => {
 
     searchTimeoutRef.current = setTimeout(async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/search/?q=${encodeURIComponent(query)}`);
-        const data = await response.json();
+        const response = await openAPI.get(`/search/?q=${encodeURIComponent(query)}`);
+        const data = response.data;
         setSearchResults(data.results || []);
         setRelatedProducts(data.related || []);
       } catch (error) {
