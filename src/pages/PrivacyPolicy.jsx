@@ -3,10 +3,12 @@ import styles from './PrivacyPolicy.module.css';
 import Navbar from '../components/Navbar';
 import DoubleLine from '../UI/DoubleLine';
 import Footer from '../components/FooterSection/Footer';
+import SEO from '../components/SEO';
 
 const PrivacyPolicy = () => {
     return (
         <>
+            <SEO title="Privacy Policy" description="Meraya privacy policy." />
             <Navbar />
             <DoubleLine />
             <div className={styles.container}>

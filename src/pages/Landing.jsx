@@ -9,11 +9,13 @@ import CollegeEditionSection from '../components/CheckMore/CollegeEditionSection
 import AboutUs from '../components/AboutUs/AboutUs'
 import Upcoming from '../components/Upcoming/Upcoming'
 import Footer from '../components/FooterSection/Footer'
+import SEO from '../components/SEO'
 
 export default function Landing() {
 
   return (
     <>
+        <SEO title="Home" description="Meraya — shop trendy, quality kurtis and apparel online." />
         <Navbar />
         <DoubleLine />
         <FashionSplit />

@@ -6,6 +6,7 @@ import Product from "../components/Product/Product";
 import RelatedProducts from "../components/RelatedProduct/RelatedProduct";
 import { buyProduct } from "../API/productmainpageAPI";
 import { useParams } from "react-router-dom";
+import SEO from "../components/SEO";
 
 export default function ProductPage() {
   const { slug } = useParams(); // get slug from URL
@@ -15,7 +16,6 @@ export default function ProductPage() {
     async function fetchProduct() {
       try {
         const data = await buyProduct(slug);
-        console.log("Fetched Product:", data);
         setProduct(data);
       } catch (error) {
         console.error("Failed to fetch product:", error);
@@ -28,6 +28,7 @@ export default function ProductPage() {
 
   return (
     <>
+      <SEO title={product.name} description={product.description?.slice(0, 150)} />
       <Navbar />
       <DoubleLine />
       <Product product={product} setProduct={setProduct} />

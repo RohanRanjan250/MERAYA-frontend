@@ -3,10 +3,12 @@ import styles from './ShippingPolicy.module.css';
 import Navbar from '../components/Navbar';
 import DoubleLine from '../UI/DoubleLine';
 import Footer from '../components/FooterSection/Footer';
+import SEO from '../components/SEO';
 
 const ShippingPolicy = () => {
     return (
         <>
+            <SEO title="Shipping Policy" description="Meraya shipping policy." />
             <Navbar />
             <DoubleLine />
             <div className={styles.container}>

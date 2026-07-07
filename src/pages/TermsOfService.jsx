@@ -3,10 +3,12 @@ import styles from './TermsOfService.module.css';
 import Navbar from '../components/Navbar';
 import DoubleLine from '../UI/DoubleLine';
 import Footer from '../components/FooterSection/Footer';
+import SEO from '../components/SEO';
 
 const TermsOfService = () => {
     return (
         <>
+            <SEO title="Terms of Service" description="Meraya terms of service." />
             <Navbar />
             <DoubleLine />
             <div className={styles.container}>

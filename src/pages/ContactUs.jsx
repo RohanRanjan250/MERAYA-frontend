@@ -3,6 +3,7 @@ import styles from './ContactUs.module.css';
 import Navbar from '../components/Navbar';
 import DoubleLine from '../UI/DoubleLine';
 import Footer from '../components/FooterSection/Footer';
+import SEO from '../components/SEO';
 import { useToast } from '../Context/ToastContext';
 
 const ContactUs = () => {
@@ -54,6 +55,7 @@ const ContactUs = () => {
 
     return (
         <>
+            <SEO title="Contact Us" description="Get in touch with the Meraya team." />
             <Navbar />
             <DoubleLine />
             <div className={styles.container}>

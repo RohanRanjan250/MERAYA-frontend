@@ -89,11 +89,7 @@ const Signup = () => {
   const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
-        // Send only the id_token to your backend
-        console.log(tokenResponse)
-        console.log(tokenResponse.access_token)
         const response = await signupWithGoogle(tokenResponse.access_token);
-        console.log("Logged in user:", response.data);
         if (response.status === 200) {
           showToast('Signup successful!', 'success');
           navigate("/");

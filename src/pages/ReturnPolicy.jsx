@@ -3,10 +3,12 @@ import styles from './ReturnPolicy.module.css';
 import Navbar from '../components/Navbar';
 import DoubleLine from '../UI/DoubleLine';
 import Footer from '../components/FooterSection/Footer';
+import SEO from '../components/SEO';
 
 const ReturnPolicy = () => {
     return (
         <>
+            <SEO title="Return Policy" description="Meraya return policy." />
             <Navbar />
             <DoubleLine />
             <div className={styles.container}>

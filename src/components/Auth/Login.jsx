@@ -76,11 +76,7 @@ const Login = () => {
   const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
-        // Send only the id_token to your backend
-        console.log(tokenResponse)
-        console.log(tokenResponse.access_token)
         const response = await loginWithGoogle(tokenResponse.access_token);
-        console.log("Logged in user:", response.data);
         if (response.status === 200) {
           showToast('Login successful!', 'success');
           navigate("/");
@@ -115,7 +111,7 @@ const Login = () => {
           <span className={styles.or}>Or</span>
         </div>
 
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           {/* Email input */}
           <label>Email</label>
           <input
@@ -135,7 +131,7 @@ const Login = () => {
             <>
               {/* ✅ OTP Styled Boxes */}
               <OtpInput value={formData.otp} onChange={handleOtpChange} />
-              <button onClick={handleSubmit}>LOGIN</button>
+              <button type="submit">LOGIN</button>
             </>
           )}
 

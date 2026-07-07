@@ -10,20 +10,25 @@ const BASE_URL = isLocal
   ? (import.meta.env.VITE_API_BASE_URL || "http://localhost:8000")
   : "https://api.meraya.co.in";
 
+const REQUEST_TIMEOUT_MS = 15000;
+
 const API = axios.create({
   baseURL: BASE_URL,
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
+  timeout: REQUEST_TIMEOUT_MS,
 });
 
 export const refreshAPI = axios.create({
   baseURL: BASE_URL,
-  withCredentials: true
+  withCredentials: true,
+  timeout: REQUEST_TIMEOUT_MS,
 });
 
 export const openAPI = axios.create({
   baseURL: BASE_URL,
-  withCredentials: true
+  withCredentials: true,
+  timeout: REQUEST_TIMEOUT_MS,
 });
 
 // Axios interceptor for automatic token refresh on 401 errors
