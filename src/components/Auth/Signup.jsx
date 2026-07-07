@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import styles from "./Signup.module.css";
-import leftPhoto from "../../assets/login.png";
+import leftPhotoFallback from "../../assets/login.png";
 import { emailVerify, signup, signupWithGoogle } from "../../API/authApi.jsx"
-import logo from "../../assets/image.png";
+import logoFallback from "../../assets/image.png";
 import { FcGoogle } from "react-icons/fc";
 import OtpInput from "./OtpInput";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useToast } from "../../Context/ToastContext";
 import { useNavigate } from "react-router-dom";
+import { LOGIN_PHOTO_URL, LOGO_URL, onImgError } from "../../utils/cloudinaryImages";
+
+const leftPhoto = LOGIN_PHOTO_URL;
+const logo = LOGO_URL;
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -110,12 +114,12 @@ const Signup = () => {
     <div className={styles.container}>
       {/* Left Side */}
       <div className={styles.left}>
-        <img src={leftPhoto} alt='Meerya Logo' className={styles.leftPhoto} />
+        <img src={leftPhoto} onError={onImgError(leftPhotoFallback)} alt='Meerya Logo' className={styles.leftPhoto} />
       </div>
 
       {/* Right Side */}
       <div className={styles.right}>
-        <img src={logo} alt="Meerya Logo" className={styles.logo} />
+        <img src={logo} onError={onImgError(logoFallback)} alt="Meerya Logo" className={styles.logo} />
         <h2 className={styles.heading}>REGISTER</h2>
         <button className={styles.googleBtn} onClick={() => googleLogin()}>
           <FcGoogle className={styles.icon} />

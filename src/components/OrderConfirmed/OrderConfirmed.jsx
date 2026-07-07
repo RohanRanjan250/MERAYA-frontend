@@ -1,7 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./OrderConfirmed.module.css";
-import success from "../../assets/Success.png"
+import successFallback from "../../assets/Success.png"
+import { SUCCESS_URL, onImgError } from "../../utils/cloudinaryImages";
+
+const success = SUCCESS_URL;
 
 export default function OrderConfirmed() {
   const navigate = useNavigate();
@@ -12,7 +15,7 @@ export default function OrderConfirmed() {
       <h2 className={styles.title}>ORDER CONFIRMED</h2>
 
       <div className={styles.icon}>
-        <img src={success} alt="success" className={styles.success}></img>
+        <img src={success} onError={onImgError(successFallback)} alt="success" className={styles.success}></img>
       </div>
 
       <p className={styles.text}>

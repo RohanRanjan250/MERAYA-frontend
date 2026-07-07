@@ -1,6 +1,4 @@
 import styles from './ProductDisplay.module.css';
-import fallbackImg1 from '../../assets/kurti_3.png';
-import fallbackImg2 from '../../assets/kurti_4.png';
 import { LandingContext } from "../../Context/LandingpageContext.jsx";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect, useContext } from 'react';

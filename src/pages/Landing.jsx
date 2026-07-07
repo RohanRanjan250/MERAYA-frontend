@@ -19,19 +19,19 @@ export default function Landing() {
         <Navbar />
         <DoubleLine />
         <FashionSplit />
-        <PartitionHeader leftText="XVI" rightText="NEW ARRIVAL" />
+        <PartitionHeader leftText="XVI" rightText="TIE KNOTS" />
         <DoubleLine />
         <ProductDisplay />
         <HeroGallery />
-        <PartitionHeader leftText="XVII" rightText="CHECK MORE" />
+        <PartitionHeader leftText="XVII" rightText="VIEW ALL" />
         <DoubleLine />
         <CollegeEditionSection />
         <PartitionHeader leftText="XVIII" rightText="ABOUT US" />
         <DoubleLine />
         <AboutUs />
-        <PartitionHeader leftText="XIX" rightText="UPCOMING" />
+        {/* <PartitionHeader leftText="XIX" rightText="UPCOMING" />
         <DoubleLine />
-        <Upcoming />
+        <Upcoming /> */}
         <Footer />
     </>
   )

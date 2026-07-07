@@ -1,10 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./Navbar.module.css";
-import logo from "../assets/image.png";
+import logoFallback from "../assets/image.png";
 import { FaSearch, FaUser, FaHeart, FaShoppingBag, FaBars, FaTimes, FaChevronDown } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../API/authApi";
 import { openAPI } from "../API/instance";
+import { LOGO_URL, onImgError } from "../utils/cloudinaryImages";
+
+const logo = LOGO_URL;
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -188,7 +191,7 @@ const Navbar = () => {
         </div>
 
         <Link to="/" className={styles.logoLink}>
-          <img src={logo} alt="Meerya Logo" className={styles.logoImage} />
+          <img src={logo} onError={onImgError(logoFallback)} alt="Meerya Logo" className={styles.logoImage} />
         </Link>
 
         <div className={styles.iconGroup}>

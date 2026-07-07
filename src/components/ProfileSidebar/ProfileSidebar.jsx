@@ -1,9 +1,12 @@
 import styles from "./ProfileSidebar.module.css";
 import { NavLink } from "react-router-dom";
-import ProfileSide from "../../assets/ProfileSide.png";
+import ProfileSideFallback from "../../assets/ProfileSide.png";
 import {fetchUsername} from "../../API/myaccountAPI"
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { PROFILE_SIDE_URL, onImgError } from "../../utils/cloudinaryImages";
+
+const ProfileSide = PROFILE_SIDE_URL;
 
 const ProfileSidebar = () => {
   const [username, setUsername] = useState("User");
@@ -30,7 +33,7 @@ const ProfileSidebar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.sidebar}>
-        <img src={ProfileSide} alt="Profile Side" className={styles.bottomimage} />
+        <img src={ProfileSide} onError={onImgError(ProfileSideFallback)} alt="Profile Side" className={styles.bottomimage} />
         <div className={styles.overlay}>
           <h3 className={styles.username}>Hi, {username}</h3>
           <p className={styles.text}>You can manage your account here. Please, choose what you’d like to do.</p>

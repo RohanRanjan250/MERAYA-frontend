@@ -3,9 +3,13 @@ import styles from "./OrderHistory.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { fetchOrders, initiateReturn } from "../../API/orderAPI";
-import returnn from "../../assets/return.png";
-import success from "../../assets/Success.png";
+import returnnFallback from "../../assets/return.png";
+import successFallback from "../../assets/Success.png";
 import { useNavigate } from "react-router-dom";
+import { RETURN_URL, SUCCESS_URL, onImgError } from "../../utils/cloudinaryImages";
+
+const returnn = RETURN_URL;
+const success = SUCCESS_URL;
 
 const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
@@ -172,7 +176,7 @@ const OrderHistory = () => {
                 <div className={styles.modalContent}>
                   <h3>ARE YOU RETURNING THE ORDER?</h3>
                   <div className={styles.icon}>
-                    <img src={returnn} alt="returnn" className={styles.returnn}></img>
+                    <img src={returnn} onError={onImgError(returnnFallback)} alt="returnn" className={styles.returnn}></img>
                   </div>
                   <p>
                     Your Order no. is <span className={styles.orderId}>#ORD{selectedOrder.orderId}</span>
@@ -281,7 +285,7 @@ const OrderHistory = () => {
         <div className={styles.modalOverlay}>
           <div className={`${styles.modalContent} ${styles.confirmationContent}`}>
             <h3>RETURN PLACED</h3>
-            <div className={styles.confirmationIcon}><img src={success} alt="success" className={styles.success}></img></div>
+            <div className={styles.confirmationIcon}><img src={success} onError={onImgError(successFallback)} alt="success" className={styles.success}></img></div>
             <p>
               You Order no. is <span className={styles.orderId}>#ORD{selectedOrder.orderId}</span>
             </p>

@@ -10,7 +10,31 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  height: 80vw;
+  height: 75vw;
+}
+
+/* Figma-style "Layer blur": a solid black layer blurred with a large
+   Gaussian radius, rather than a linear gradient — matches the Figma
+   spec (#000000 fill, Layer blur 400, offset -430px from the edge). */
+.heroSection::before,
+.heroSection::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 15vw;
+  background: #000000;
+  filter: blur(400px);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.heroSection::before {
+  top: 0vw;
+}
+
+.heroSection::after {
+  bottom: 0vw;
 }
 
 .imageGrid {
@@ -71,17 +95,17 @@
 }
 
 .img4{
-  width: 19.5vw;
-  height: 26.19vw;
+  width: 20.5vw;
+  height: 20.19vw;
   aspect-ratio: 324 / 419;
-  margin-top: 10vw;
+  margin-top: 8.19vw;
 }
 
 .img5{
   width: 20.25vw;
-  height: 26.19vw;
+  height: 25.19vw;
   aspect-ratio: 324 / 419;
-  margin-top: 5vw;
+  margin-top: 2vw;
   margin-left: 1.5vw;
 }
 
@@ -90,13 +114,14 @@
   height: 21.75vw;
   aspect-ratio: 283 / 348;
   margin-right: 1.5vw;
+  
 }
 
 .img7{
   width: 22.81vw;
   height: 21.75vw;
   aspect-ratio: 365 / 348;
-  margin-top: 5vw;
+  margin-top: 5.5vw;
 }
 
 

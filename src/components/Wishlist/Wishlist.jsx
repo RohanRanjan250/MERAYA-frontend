@@ -3,9 +3,12 @@ import styles from "./Wishlist.module.css";
 import ProductCard from "../../UI/ProductCard";
 import { fetchWishlist, removeFromWishlist, addToCartWishlist } from "../../API/wishlist";
 import { useNavigate } from "react-router-dom";
-import success from "../../assets/sad.png";
+import successFallback from "../../assets/sad.png";
 import { useToast } from "../../Context/ToastContext";
 import { addToCart } from "../../API/productmainpageAPI";
+import { SAD_URL, onImgError } from "../../utils/cloudinaryImages";
+
+const success = SAD_URL;
 
 const Wishlist = () => {
   const [products, setProducts] = useState([]);
@@ -86,7 +89,7 @@ const Wishlist = () => {
         <h2 className={styles.title}>EMPTY!</h2>
 
         <div className={styles.icon}>
-          <img src={success} alt="success" className={styles.success}></img>
+          <img src={success} onError={onImgError(successFallback)} alt="success" className={styles.success}></img>
         </div>
 
         <p className={styles.thankyou}>

@@ -4,9 +4,12 @@ import { fetchCart, changeCartQuantity, removeFromCart, checkDeliveryAvailabilit
 import { getUserAddress } from "../API/myaccountAPI"
 import { OrderCreate, verifyPayment } from "../API/orderAPI"
 import styles from "./OrderConfirmed/OrderConfirmed.module.css"
-import success from "../assets/sad.png"
+import successFallback from "../assets/sad.png"
 import { useToast } from "../Context/ToastContext";
 import API from "../API/instance";
+import { SAD_URL, onImgError } from "../utils/cloudinaryImages";
+
+const success = SAD_URL;
 
 // --- Embedded Reusable Components ---
 // In a real project, these would be in their own files and imported.
@@ -931,7 +934,7 @@ export default function CheckoutFlow() {
         <h2 className={styles.title}>EMPTY!</h2>
 
         <div className={styles.icon}>
-          <img src={success} alt="success" className={styles.success}></img>
+          <img src={success} onError={onImgError(successFallback)} alt="success" className={styles.success}></img>
         </div>
 
         <p className={styles.thankyou}>
