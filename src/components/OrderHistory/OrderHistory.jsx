@@ -3,6 +3,7 @@ import styles from "./OrderHistory.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { fetchOrders, initiateReturn } from "../../API/orderAPI";
+import { submitReview } from "../../API/productmainpageAPI";
 import returnnFallback from "../../assets/return.png";
 import successFallback from "../../assets/Success.png";
 import { useNavigate } from "react-router-dom";
@@ -28,6 +29,8 @@ const OrderHistory = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [showReturnConfirmation, setShowReturnConfirmation] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [reviewDraft, setReviewDraft] = useState(null); // { orderId, productId, rating, title, description }
+  const [submittingReview, setSubmittingReview] = useState(false);
   const navigate = useNavigate();
   let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
 
@@ -64,12 +67,53 @@ const OrderHistory = () => {
     setExpandedOrder((prev) => (prev === id ? null : id));
   };
 
-  const handleRating = (orderId, rating) => {
+  const handleRating = (order, rating) => {
+    if (order.deliveryStatus !== "Delivered" || order.has_reviewed) return;
     setOrders((prevOrders) =>
-      prevOrders.map((order) =>
-        order.orderId === orderId ? { ...order, points: rating } : order
+      prevOrders.map((o) =>
+        o.orderitem_id === order.orderitem_id ? { ...o, points: rating } : o
       )
     );
+    setReviewDraft({
+      orderitemId: order.orderitem_id,
+      productId: order.product_id,
+      rating,
+      title: "",
+      description: "",
+    });
+  };
+
+  const handleReviewSubmit = async () => {
+    if (!reviewDraft || reviewDraft.rating < 1 || !reviewDraft.description.trim()) return;
+    setSubmittingReview(true);
+    try {
+      const result = await submitReview(
+        reviewDraft.productId,
+        reviewDraft.rating,
+        reviewDraft.title,
+        reviewDraft.description
+      );
+      setOrders((prevOrders) =>
+        prevOrders.map((o) =>
+          o.orderitem_id === reviewDraft.orderitemId
+            ? {
+                ...o,
+                has_reviewed: true,
+                points: result.rating,
+                rating: result.rating,
+                review_title: result.title,
+                review_description: result.description,
+              }
+            : o
+        )
+      );
+      setReviewDraft(null);
+    } catch (err) {
+      console.error("Error submitting review:", err);
+      alert(err?.error || "Something went wrong while submitting your review.");
+    } finally {
+      setSubmittingReview(false);
+    }
   };
 
   const renderStars = (order) => {
@@ -80,7 +124,7 @@ const OrderHistory = () => {
         <FontAwesomeIcon
           key={i}
           icon={faStar}
-          onClick={() => handleRating(order.orderId, i + 1)}
+          onClick={(e) => { e.stopPropagation(); handleRating(order, i + 1); }}
           className={`${styles.star} ${i < order.points ? styles.activeStar : ""}`}
         />
       );
@@ -281,10 +325,47 @@ const OrderHistory = () => {
                     ))}
                   </ul>
 
-                  <div className={styles.rating}>
-                    <span className={styles.stars}>{renderStars(order)}</span>
-                    <span>{order.points > 0 ? `You rated ${order.points}/5` : "Rate the product"}</span>
-                  </div>
+                  {order.deliveryStatus === "Delivered" && (
+                    <div className={styles.rating}>
+                      {order.has_reviewed ? (
+                        <>
+                          <span className={styles.stars}>{renderStars(order)}</span>
+                          {order.review_title && <p><strong>{order.review_title}</strong></p>}
+                          {order.review_description && <p>{order.review_description}</p>}
+                        </>
+                      ) : (
+                        <>
+                          <span className={styles.stars}>{renderStars(order)}</span>
+                          <span>{order.points > 0 ? `You rated ${order.points}/5` : "Rate the product"}</span>
+                          {reviewDraft && reviewDraft.orderitemId === order.orderitem_id && (
+                            <div onClick={(e) => e.stopPropagation()} style={{ marginTop: 8 }}>
+                              <input
+                                type="text"
+                                placeholder="Title (optional)"
+                                value={reviewDraft.title}
+                                onChange={(e) => setReviewDraft({ ...reviewDraft, title: e.target.value })}
+                                style={{ width: "100%", marginBottom: 6 }}
+                              />
+                              <textarea
+                                placeholder="Share your experience..."
+                                value={reviewDraft.description}
+                                onChange={(e) => setReviewDraft({ ...reviewDraft, description: e.target.value })}
+                                style={{ width: "100%", marginBottom: 6 }}
+                                required
+                              />
+                              <button
+                                onClick={handleReviewSubmit}
+                                disabled={submittingReview || !reviewDraft.description.trim()}
+                              >
+                                {submittingReview ? "Submitting..." : "Submit Review"}
+                              </button>{" "}
+                              <button onClick={() => setReviewDraft(null)}>Cancel</button>
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  )}
 
                   <div className={styles.moredetail}>
                     <p>Order ID: ORD{order.orderId}</p>

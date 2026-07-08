@@ -23,6 +23,20 @@ export const updateReviewReaction = async (reviewId, action) => {
   }
 };
 
+export const submitReview = async (productId, rating, title, description) => {
+  try {
+    const response = await API.post(`/reviews/create/`, {
+      product_id: productId,
+      rating,
+      title,
+      description,
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};
+
 export const toggleWishlist = async (productId, variantId) => {
   try {
     const response = await API.post(`/wishlist/${productId}/toggle/`, {variant: variantId});
