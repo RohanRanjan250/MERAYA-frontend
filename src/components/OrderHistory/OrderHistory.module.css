@@ -15,6 +15,13 @@
   transition: background 0.3s ease;
 }
 
+.emptyState {
+  text-align: center;
+  padding: 60px 0;
+  color: #ccc;
+  font-family: 'Abel', sans-serif;
+}
+
 .topRow {
   display: flex;
   align-items: flex-start;

@@ -11,6 +11,13 @@ import { RETURN_URL, SUCCESS_URL, onImgError } from "../../utils/cloudinaryImage
 const returnn = RETURN_URL;
 const success = SUCCESS_URL;
 
+const RETURN_STATUS_LABELS = {
+  Requested: "Return Requested",
+  Approved: "Return Approved — pickup pending",
+  Granted: "Refund Credited",
+  Rejected: "Return Rejected",
+};
+
 const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
   const [expandedOrder, setExpandedOrder] = useState(null);
@@ -20,6 +27,7 @@ const OrderHistory = () => {
   const [refundMethod, setRefundMethod] = useState("wallet");
   const [isChecked, setIsChecked] = useState(false);
   const [showReturnConfirmation, setShowReturnConfirmation] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
 
@@ -45,6 +53,8 @@ const OrderHistory = () => {
         setOrders(withRatings);
       } catch (err) {
         console.error("Error fetching orders:", err);
+      } finally {
+        setLoading(false);
       }
     };
     loadOrders();
@@ -107,6 +117,15 @@ const OrderHistory = () => {
     <div className={styles.container}>
       <h2 className={styles.heading}>ORDER HISTORY</h2>
 
+      {!loading && orders.length === 0 && (
+        <div className={styles.emptyState}>
+          <p>You haven't placed any orders yet.</p>
+          <button className={styles.returnBtn} onClick={() => navigate("/products")}>
+            Shop Now
+          </button>
+        </div>
+      )}
+
       {orders.map((order) => {
         const currentStepIndex = steps.indexOf(order.deliveryStatus);
 
@@ -151,7 +170,7 @@ const OrderHistory = () => {
                 <>
                   {order.return_status ? (
                     <button className={`${styles.returnBtn} ${styles.alreadyReturned}`} disabled>
-                      Already Returned
+                      {RETURN_STATUS_LABELS[order.return_status] || "Already Returned"}
                     </button>
                   ) : (
                     <button
