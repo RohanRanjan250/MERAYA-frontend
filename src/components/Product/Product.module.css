@@ -106,8 +106,29 @@
 }
 
 .description {
-  margin: 3.5vh 0vh 7vh;
+  margin: 0;
   line-height: 1.5;
+  font-family: 'Abel', sans-serif;
+  font-size: 1rem;
+  white-space: pre-line;
+}
+
+.descriptionSection {
+  margin: 3.5vh 0vh 3vh;
+}
+
+.descriptionHeading {
+  font-family: 'Abel', sans-serif;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.detailsList {
+  margin: 0;
+  padding-left: 1.2rem;
+  line-height: 1.6;
   font-family: 'Abel', sans-serif;
   font-size: 1rem;
 }
@@ -464,7 +485,7 @@
     font-size: 1.5rem; /* Adjust price font size */
   }
 
-  .description {
+  .descriptionSection {
     margin: 1.5rem 0; /* Reduce vertical margins */
   }
 

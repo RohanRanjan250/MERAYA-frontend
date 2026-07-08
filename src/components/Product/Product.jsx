@@ -178,7 +178,32 @@ export default function Product({ product, setProduct }) {
           <p className={styles.brand}>MERAYA's</p>
           <p className={styles.title}>{product.name}</p>
 
-          <p className={styles.description}>{product.description}</p>
+          <div className={styles.descriptionSection}>
+            <h3 className={styles.descriptionHeading}>Product Description</h3>
+            <p className={styles.description}>{product.description}</p>
+          </div>
+          {product.details && (
+            <div className={styles.descriptionSection}>
+              <h3 className={styles.descriptionHeading}>Details</h3>
+              <ul className={styles.detailsList}>
+                {product.details.split("\n").map((line) => line.trim()).filter(Boolean).map((line, i) => (
+                  <li key={i}>{line}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {product.composition && (
+            <div className={styles.descriptionSection}>
+              <h3 className={styles.descriptionHeading}>Composition</h3>
+              <p className={styles.description}>{product.composition}</p>
+            </div>
+          )}
+          {product.care && (
+            <div className={styles.descriptionSection}>
+              <h3 className={styles.descriptionHeading}>Care</h3>
+              <p className={styles.description}>{product.care}</p>
+            </div>
+          )}
 
           <div className={styles.priceRow}>
             <div className={styles.price}>
