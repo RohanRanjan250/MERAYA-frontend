@@ -630,30 +630,43 @@ export default function CheckoutFlow() {
   const calculatedTotal = sellingPriceTotal - couponDiscount - walletDiscount + shipping;
   const total = Math.max(1.00, calculatedTotal);
 
-  // Recalculate coupon when cart changes
+  // Re-validate the coupon against the backend whenever the cart total changes.
+  // This re-runs ALL of apply_coupon's checks (min order value, active flag,
+  // valid window, usage cap) against the current total — not just the
+  // discount math — since any of those boundaries can be crossed by adding
+  // or removing items after the coupon was first applied. Debounced so rapid
+  // +/- clicks don't spam the endpoint.
   useEffect(() => {
-    if (appliedCoupon && sellingPriceTotal > 0) {
-      // Recalculate discount based on selling price total (not show price)
-      const newDiscount = (sellingPriceTotal * appliedCoupon.discount_percent) / 100;
+    if (!appliedCoupon) return;
 
-      // Apply max discount limit if exists
-      const finalDiscount = appliedCoupon.max_discount && newDiscount > appliedCoupon.max_discount
-        ? appliedCoupon.max_discount
-        : newDiscount;
-
-      // Update discount only if it changed
-      if (Math.abs(finalDiscount - couponDiscount) > 0.01) {
-        setCouponDiscount(finalDiscount);
-      }
-    }
-
-    // Reset coupon if cart is empty
-    if (cartItems.length === 0 && appliedCoupon) {
+    if (cartItems.length === 0) {
       setAppliedCoupon(null);
       setCouponDiscount(0);
       setCouponCode('');
+      return;
     }
-  }, [cartItems, sellingPriceTotal, appliedCoupon]);
+
+    const timeoutId = setTimeout(async () => {
+      try {
+        const response = await API.post('/coupon/apply/', {
+          code: appliedCoupon.coupon_code,
+          cart_total: sellingPriceTotal,
+        });
+        setAppliedCoupon(response.data);
+        setCouponDiscount(response.data.discount_amount);
+      } catch (error) {
+        const errMsg = error.response?.data?.error || 'This coupon no longer applies to your cart.';
+        setAppliedCoupon(null);
+        setCouponDiscount(0);
+        setCouponCode('');
+        setCouponError(errMsg);
+        showToast(errMsg, 'error');
+      }
+    }, 500);
+
+    return () => clearTimeout(timeoutId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sellingPriceTotal, cartItems.length]);
 
   // Function to dynamically load the Razorpay script
   const loadScript = (src) => {
@@ -758,7 +771,7 @@ export default function CheckoutFlow() {
     try {
       const response = await API.post('/coupon/apply/', {
         code: couponCode,
-        cart_total: subtotal
+        cart_total: sellingPriceTotal
       });
 
       const data = response.data;
