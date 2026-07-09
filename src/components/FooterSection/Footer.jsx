@@ -49,7 +49,7 @@ const Footer = () => {
           <div className={styles.contactInfo}>
             <p className={styles.contactItem}>
               <strong>Corporate Office: </strong>
-              304, 2nd floor, Sai Serenity, Dwaraka Nagar,<br />
+              Sai Serenity, Dwaraka Nagar,<br />
               Banashankari, Bengaluru, Karnataka-560085
             </p>
             <p className={styles.contactItem}>

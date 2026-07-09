@@ -2,6 +2,17 @@ import React, { useState, useEffect } from "react";
 import styles from "./Address.module.css";
 import { getUserAddress, addUserAddress, updateUserAddress } from "../../API/myaccountAPI";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "../../Context/ToastContext";
+
+const REQUIRED_FIELDS = [
+  { name: "full_name", label: "Name" },
+  { name: "address_line1", label: "Address Line 1" },
+  { name: "city", label: "City" },
+  { name: "state", label: "State" },
+  { name: "pincode", label: "Pincode" },
+  { name: "phone", label: "Mobile" },
+  { name: "tag", label: "Tag" },
+];
 
 const Address = () => {
   const [selected, setSelected] = useState(0);
@@ -19,7 +30,18 @@ const Address = () => {
     tag: "",
   });
   const navigate = useNavigate();
+  const { showToast } = useToast();
   let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
+
+  const validateAddressForm = (data) => {
+    for (const field of REQUIRED_FIELDS) {
+      if (!String(data[field.name] || "").trim()) {
+        showToast(`${field.label} is required`, "error");
+        return false;
+      }
+    }
+    return true;
+  };
 
   // 🔹 Fetch addresses from backend
   const fetchAddresses = async () => {
@@ -49,6 +71,9 @@ const Address = () => {
         navigate("/login");
         return;
       }
+      if (!validateAddressForm(formData)) {
+        return;
+      }
       await updateUserAddress(addresses[index].id, formData);
       setEditingIndex(null);
       await fetchAddresses(); // ✅ reload fresh data from backend
@@ -61,6 +86,9 @@ const Address = () => {
     try {
       if (!isAuth) {
         navigate("/login");
+        return;
+      }
+      if (!validateAddressForm(formData)) {
         return;
       }
       await addUserAddress(formData);
@@ -96,14 +124,14 @@ const Address = () => {
           
           {editingIndex === index ? (
             <div className={styles.form}>
-              <input type="text" name="full_name" value={formData.full_name} onChange={handleInputChange} placeholder="Name" />
-              <input type="text" name="address_line1" value={formData.address_line1} onChange={handleInputChange} placeholder="Address Line 1" />
+              <input type="text" name="full_name" value={formData.full_name} onChange={handleInputChange} placeholder="Name" required />
+              <input type="text" name="address_line1" value={formData.address_line1} onChange={handleInputChange} placeholder="Address Line 1" required />
               <input type="text" name="address_line2" value={formData.address_line2} onChange={handleInputChange} placeholder="Address Line 2" />
-              <input type="text" name="city" value={formData.city} onChange={handleInputChange} placeholder="City" />
-              <input type="text" name="pincode" value={formData.pincode} onChange={handleInputChange} placeholder="Pincode" />
-              <input type="text" name="state" value={formData.state} onChange={handleInputChange} placeholder="State" />
-              <input type="text" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="Mobile" />
-              <input type="text" name="tag" value={formData.tag} onChange={handleInputChange} placeholder="Tag" />
+              <input type="text" name="city" value={formData.city} onChange={handleInputChange} placeholder="City" required />
+              <input type="text" name="pincode" value={formData.pincode} onChange={handleInputChange} placeholder="Pincode" required />
+              <input type="text" name="state" value={formData.state} onChange={handleInputChange} placeholder="State" required />
+              <input type="text" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="Mobile" required />
+              <input type="text" name="tag" value={formData.tag} onChange={handleInputChange} placeholder="Tag" required />
 
               <button className={styles.saveBtn} onClick={() => saveEdit(index)}>
                 SAVE
@@ -138,16 +166,16 @@ const Address = () => {
           <h2>ADD NEW ADDRESS</h2>
           <div className={styles.part}>
             <div className={styles.leftpart}>
-              <input type="text" name="full_name" value={formData.full_name} onChange={handleInputChange} placeholder="Name" />
-              <input type="text" name="address_line1" value={formData.address_line1} onChange={handleInputChange} placeholder="Address Line 1" />
+              <input type="text" name="full_name" value={formData.full_name} onChange={handleInputChange} placeholder="Name" required />
+              <input type="text" name="address_line1" value={formData.address_line1} onChange={handleInputChange} placeholder="Address Line 1" required />
               <input type="text" name="address_line2" value={formData.address_line2} onChange={handleInputChange} placeholder="Address Line 2" />
-              <input type="text" name="city" value={formData.city} onChange={handleInputChange} placeholder="City" />
+              <input type="text" name="city" value={formData.city} onChange={handleInputChange} placeholder="City" required />
             </div>
             <div className={styles.rightpart}>
-              <input type="text" name="state" value={formData.state} onChange={handleInputChange} placeholder="State" />
-              <input type="text" name="pincode" value={formData.pincode} onChange={handleInputChange} placeholder="Pincode" />
-              <input type="text" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="Mobile" />
-              <input type="text" name="tag" value={formData.tag} onChange={handleInputChange} placeholder="Tag" />
+              <input type="text" name="state" value={formData.state} onChange={handleInputChange} placeholder="State" required />
+              <input type="text" name="pincode" value={formData.pincode} onChange={handleInputChange} placeholder="Pincode" required />
+              <input type="text" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="Mobile" required />
+              <input type="text" name="tag" value={formData.tag} onChange={handleInputChange} placeholder="Tag" required />
             </div>
           </div>
           <button className={styles.saveBtn} onClick={saveNew}>

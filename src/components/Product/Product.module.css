@@ -255,6 +255,11 @@
   color: #040404;
 }
 
+.sizeBtn.soldOutSize {
+  color: #999;
+  text-decoration: line-through;
+}
+
 .actions {
   display: flex;
   gap: 1rem;
@@ -330,7 +335,8 @@
   color: #fff;
   padding: 2rem;
   font-family: 'Abel', sans-serif;
-  margin-top: 7vh;
+  margin-top: 3vh; 
+  /* not 7vh */
 }
 
 .title {

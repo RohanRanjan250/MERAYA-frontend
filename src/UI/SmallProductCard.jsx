@@ -3,13 +3,14 @@ import styles from "./SmallProductCard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { toggleWishlist } from "../API/productmainpageAPI";
+import { useToast } from "../Context/ToastContext";
 
 import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({ product, onBuyNow }) => {
-  const [inWishlist, setInWishlist] = useState(product.in_wishlist || false);
-  const [wishlistToast, setWishlistToast] = useState(false);
+  const [, setInWishlist] = useState(product.in_wishlist || false);
   const navigate = useNavigate();
+  const { showToast } = useToast();
 
   const isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
 
@@ -20,11 +21,13 @@ const ProductCard = ({ product, onBuyNow }) => {
         return;
       }
       await toggleWishlist(product.id);
-      setInWishlist((prev) => !prev);
-      setWishlistToast(true);
-      setTimeout(() => setWishlistToast(false), 2000);
+      setInWishlist((prev) => {
+        const next = !prev;
+        showToast(next ? "Added to wishlist" : "Removed from wishlist", "success");
+        return next;
+      });
     } catch (error) {
-      console.error("Failed to update wishlist:", error);
+      showToast(error.message || "Failed to update wishlist", "error");
     }
   };
 
@@ -49,12 +52,6 @@ const ProductCard = ({ product, onBuyNow }) => {
         </div>
         <p className={styles.description}>{product.description || ""}</p>
       </div>
-
-      {wishlistToast && (
-        <div className={styles.toast}>
-          {inWishlist ? "Removed from wishlist" : "Added to wishlist"}!
-        </div>
-      )}
     </div>
   );
 };

@@ -32,7 +32,8 @@ export default function ProductPage() {
       <Navbar />
       <DoubleLine />
       <Product product={product} setProduct={setProduct} />
-      <RelatedProducts heading="RELATED PRODUCTS" collectionId={product.collection_id} />
+      <RelatedProducts heading="YOU MAY ALSO LIKE" />
+      {/* collectionId={product.collection_id}  */}
       <Footer />
     </>
   );

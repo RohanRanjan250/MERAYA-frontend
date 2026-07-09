@@ -16,7 +16,9 @@ import RelatedProducts from "../RelatedProduct/RelatedProduct";
 
 export default function Product({ product, setProduct }) {
   const [selectedImage, setSelectedImage] = useState(product.images[0]);
-  const [selectedSize, setSelectedSize] = useState(product.variants?.[0]?.[1] || "");
+  const [selectedSize, setSelectedSize] = useState(
+    product.variants?.find((v) => v.stock > 0)?.size || product.variants?.[0]?.size || ""
+  );
   const [openSections, setOpenSections] = useState({});
   const toggleSection = (key) => {
     setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -27,6 +29,8 @@ export default function Product({ product, setProduct }) {
 
   // Check if product has any stock
   const hasStock = product.variants && product.variants.length > 0;
+  const selectedVariant = product.variants?.find((v) => v.size === selectedSize);
+  const isSelectedSoldOut = hasStock && selectedVariant && selectedVariant.stock === 0;
 
   const reviews = product.reviews || [];
   const totalReviews = reviews.length;
@@ -86,14 +90,14 @@ export default function Product({ product, setProduct }) {
         return;
       }
 
-      const selectedVariant = product.variants.find(variant => variant[1] === selectedSize);
+      const variant = product.variants.find(v => v.size === selectedSize);
 
-      if (!selectedVariant) {
+      if (!variant) {
         showToast("Please select a size.", "error");
         return;
       }
 
-      const variantId = selectedVariant[0];
+      const variantId = variant.id;
       // The API call returns the new status and a message
       const response = await toggleWishlist(product.id, variantId);
 
@@ -129,14 +133,19 @@ export default function Product({ product, setProduct }) {
         return;
       }
 
-      const selectedVariant = product.variants.find(variant => variant[1] === selectedSize);
+      const variant = product.variants.find(v => v.size === selectedSize);
 
-      if (!selectedVariant) {
+      if (!variant) {
         showToast("Please select a size.", "error");
         return;
       }
 
-      const variantId = selectedVariant[0];
+      if (variant.stock === 0) {
+        showToast("This size is sold out.", "error");
+        return;
+      }
+
+      const variantId = variant.id;
       await addToCart(product.id, variantId);
       showToast('Added to cart successfully!', 'success');
     } catch (err) {
@@ -207,12 +216,12 @@ export default function Product({ product, setProduct }) {
               <div className={styles.sizeOptions}>
                 {product.variants.map((variant) => (
                   <button
-                    key={variant[0]}
-                    className={`${styles.sizeBtn} ${selectedSize === variant[1] ? styles.activeSize : ""
-                      }`}
-                    onClick={() => setSelectedSize(variant[1])}
+                    key={variant.id}
+                    className={`${styles.sizeBtn} ${selectedSize === variant.size ? styles.activeSize : ""
+                      } ${variant.stock === 0 ? styles.soldOutSize : ""}`}
+                    onClick={() => setSelectedSize(variant.size)}
                   >
-                    {variant[1]}
+                    {variant.size}
                   </button>
                 ))}
               </div>
@@ -224,17 +233,19 @@ export default function Product({ product, setProduct }) {
             <button
               className={styles.cartBtn}
               onClick={handleAddToCart}
-              disabled={!hasStock}
+              disabled={!hasStock || isSelectedSoldOut}
               style={{
-                opacity: !hasStock ? 0.6 : 1,
-                cursor: !hasStock ? 'not-allowed' : 'pointer',
-                backgroundColor: !hasStock ? '#666' : ''
+                opacity: !hasStock || isSelectedSoldOut ? 0.6 : 1,
+                cursor: !hasStock || isSelectedSoldOut ? 'not-allowed' : 'pointer',
+                backgroundColor: !hasStock || isSelectedSoldOut ? '#666' : ''
               }}
             >
-              {hasStock ? (
-                <>ADD TO CART<ArrowDownLeft className={styles.arrow} /></>
-              ) : (
+              {!hasStock ? (
                 'OUT OF STOCK'
+              ) : isSelectedSoldOut ? (
+                'SOLD OUT'
+              ) : (
+                <>ADD TO CART<ArrowDownLeft className={styles.arrow} /></>
               )}
             </button>
           </div>

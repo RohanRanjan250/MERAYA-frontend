@@ -13,6 +13,103 @@
   -webkit-text-stroke: 0.5px #fff;
 }
 
+.filterToggleBtn {
+  background: transparent;
+  border: 1px solid #E6E6E6;
+  color: #FBFBFB;
+  padding: 1vh 2vw;
+  font-family: 'Abel', sans-serif;
+  font-size: 1.8vh;
+  cursor: pointer;
+}
+
+.filterToggleBtn:hover {
+  background: rgba(227, 128, 18, 0.15);
+}
+
+.filterPanel {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2vw;
+  align-items: flex-end;
+  padding: 2vh 2vw;
+  margin: 0 2vw 3vh 2vw;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid #E6E6E6;
+  font-family: 'Abel', sans-serif;
+  color: #FBFBFB;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6vh;
+  min-width: 160px;
+}
+
+.filterLabel {
+  font-size: 1.4vh;
+  color: #ccc;
+}
+
+.filterSelect,
+.filterInput {
+  background: transparent;
+  border: 1px solid #E6E6E6;
+  color: #FBFBFB;
+  padding: 1vh;
+  font-family: 'Abel', sans-serif;
+  font-size: 1.6vh;
+}
+
+.filterSelect option {
+  color: #040404;
+}
+
+.priceInputs {
+  display: flex;
+  gap: 0.6vw;
+}
+
+.priceInputs .filterInput {
+  width: 80px;
+}
+
+.filterActions {
+  display: flex;
+  gap: 1vw;
+}
+
+.applyBtn,
+.clearBtn {
+  padding: 1vh 2vw;
+  border: none;
+  cursor: pointer;
+  font-family: 'Abel', sans-serif;
+  font-size: 1.6vh;
+}
+
+.applyBtn {
+  background: #e38012;
+  color: #fff;
+}
+
+.applyBtn:hover {
+  background: #cf7208;
+}
+
+.clearBtn {
+  background: transparent;
+  border: 1px solid #E6E6E6;
+  color: #FBFBFB;
+}
+
+.clearBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
 .container {
   display: flex;
   justify-content: center;
