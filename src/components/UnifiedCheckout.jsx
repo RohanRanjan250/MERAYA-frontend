@@ -603,7 +603,7 @@ export default function CheckoutFlow() {
   const subtotal = cartItems.reduce((acc, item) => acc + (item.show_price * item.quantity), 0);
   const sellingPriceTotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
   const discount = subtotal - sellingPriceTotal; // Difference between show_price and selling_price
-  const shipping = 0; // Free shipping
+  const shipping = 49; // Flat delivery fee
 
   // Calculate wallet discount - ALWAYS apply coupon first, then wallet
   useEffect(() => {

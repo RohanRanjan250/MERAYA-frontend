@@ -64,6 +64,7 @@
   background-color: rgba(244, 243, 241, 1);
   margin: 0 1vw;
   vertical-align: middle;
+  flex-shrink: 0;
 }
 
 .buyNow {
@@ -92,6 +93,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.5vw;
+  width: 264px;
 }
 
 
@@ -117,12 +119,28 @@
   font-family: 'Khand', sans-serif;
 }
 
+.thumbName {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.thumbPrice {
+  flex-shrink: 0;
+}
+
 .thumbDesc {
   font-size: 0.8vw;
   font-weight: 300;
   color: rgba(244, 243, 241, 1);
   font-family: 'Abel', sans-serif;
   width: 264px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 

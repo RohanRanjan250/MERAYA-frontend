@@ -84,6 +84,18 @@
   text-align: left;
 }
 
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.showPrice {
+  font-size: 0.95rem;
+  color: #a1a1aa;
+  text-decoration: line-through;
+}
+
 .price {
   font-size: 1.2rem;
   font-weight: 600;

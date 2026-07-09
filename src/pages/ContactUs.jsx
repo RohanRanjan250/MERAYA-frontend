@@ -5,6 +5,7 @@ import DoubleLine from '../UI/DoubleLine';
 import Footer from '../components/FooterSection/Footer';
 import SEO from '../components/SEO';
 import { useToast } from '../Context/ToastContext';
+import API from '../API/instance';
 
 const ContactUs = () => {
     const [formData, setFormData] = useState({
@@ -39,15 +40,13 @@ const ContactUs = () => {
 
         setIsSubmitting(true);
 
-        // Simulate form submission (replace with actual API call)
         try {
-            // TODO: Replace with actual API endpoint
-            // await API.post('/contact/', formData);
+            await API.post('/contact/submit/', formData);
 
             showToast('Message sent successfully! We\'ll get back to you soon.', 'success');
             setFormData({ name: '', email: '', message: '' });
         } catch (error) {
-            showToast('Failed to send message. Please try again.', 'error');
+            showToast(error.response?.data?.error || 'Failed to send message. Please try again.', 'error');
         } finally {
             setIsSubmitting(false);
         }

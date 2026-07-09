@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import styles from "./ProductCard.module.css";
 
-const ProductCard = ({ id, image, title, desc, price, onRemove, onAddToCart, onBuyNow, variant, stock, showRemove = true }) => {
+const ProductCard = ({ id, image, title, desc, price, showPrice, onRemove, onAddToCart, onBuyNow, variant, stock, showRemove = true }) => {
   const isOutOfStock = stock !== undefined && stock === 0;
 
   return (
@@ -37,7 +37,12 @@ const ProductCard = ({ id, image, title, desc, price, onRemove, onAddToCart, onB
         <p className={styles.desc}>{desc}</p>
         <h3 className={styles.title}>{title}</h3>
         <div className={styles.metaBottom}>
-          <p className={styles.price}>₹{price}</p>
+          <div className={styles.priceRow}>
+            {showPrice && showPrice > price && (
+              <span className={styles.showPrice}>₹{showPrice}</span>
+            )}
+            <p className={styles.price}>₹{price}</p>
+          </div>
           <button
             className={styles.button}
             onClick={(e) => {

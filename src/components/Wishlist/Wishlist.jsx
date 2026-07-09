@@ -125,6 +125,7 @@ const Wishlist = () => {
               variant={p.variant}
               desc=""
               price={p.price}
+              showPrice={p.show_price}
               showRemove={true}
               onRemove={handleRemove}
               onAddToCart={handleAddToCart}

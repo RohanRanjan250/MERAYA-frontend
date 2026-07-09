@@ -235,6 +235,7 @@ const AllProducts = () => {
                                 variant={null}
                                 desc=""
                                 price={product.selling_price}
+                                showPrice={product.show_price}
                                 stock={product.stock}
                                 showRemove={false}
                                 onRemove={() => { }}

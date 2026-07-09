@@ -71,7 +71,9 @@ const CollegeEditionSection = () => {
                   />
                   <p className={styles.thumbCode}>№{item.id}</p>
                   <div className={styles.thumbTitle}>
-                    {item.name} <span className={styles.whiteLine}></span> ₹{item.selling_price}
+                    <span className={styles.thumbName}>{item.name}</span>
+                    <span className={styles.whiteLine}></span>
+                    <span className={styles.thumbPrice}>₹{item.selling_price}</span>
                   </div>
                   <p className={styles.thumbDesc}>{item.description}</p>
                 </div>
