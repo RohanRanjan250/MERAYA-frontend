@@ -17,6 +17,10 @@ import RelatedProducts from "../RelatedProduct/CartRelatedProduct";
 export default function Product({ product, setProduct }) {
   const [selectedImage, setSelectedImage] = useState(product.images[0]);
   const [selectedSize, setSelectedSize] = useState(product.variants?.[0]?.[1] || "");
+  const [openSections, setOpenSections] = useState({});
+  const toggleSection = (key) => {
+    setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
   const { showToast } = useToast();
   const navigate = useNavigate();
   let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
@@ -239,29 +243,69 @@ export default function Product({ product, setProduct }) {
           </a>
 
           <div className={styles.descriptionSection}>
-            <h3 className={styles.descriptionHeading}>Product Description</h3>
-            <p className={styles.description}>{product.description}</p>
+            <button
+              type="button"
+              className={styles.descriptionToggle}
+              onClick={() => toggleSection('description')}
+              aria-expanded={!!openSections.description}
+            >
+              <h3 className={styles.descriptionHeading}>Product Description</h3>
+              <span className={styles.descriptionChevron}>{openSections.description ? '−' : '+'}</span>
+            </button>
+            {openSections.description && (
+              <p className={styles.description}>{product.description}</p>
+            )}
           </div>
           {product.details && (
             <div className={styles.descriptionSection}>
-              <h3 className={styles.descriptionHeading}>Details</h3>
-              <ul className={styles.detailsList}>
-                {product.details.split("\n").map((line) => line.trim()).filter(Boolean).map((line, i) => (
-                  <li key={i}>{line}</li>
-                ))}
-              </ul>
+              <button
+                type="button"
+                className={styles.descriptionToggle}
+                onClick={() => toggleSection('details')}
+                aria-expanded={!!openSections.details}
+              >
+                <h3 className={styles.descriptionHeading}>Details</h3>
+                <span className={styles.descriptionChevron}>{openSections.details ? '−' : '+'}</span>
+              </button>
+              {openSections.details && (
+                <ul className={styles.detailsList}>
+                  {product.details.split("\n").map((line) => line.trim()).filter(Boolean).map((line, i) => (
+                    <li key={i}>{line}</li>
+                  ))}
+                </ul>
+              )}
             </div>
           )}
           {product.composition && (
             <div className={styles.descriptionSection}>
-              <h3 className={styles.descriptionHeading}>Composition</h3>
-              <p className={styles.description}>{product.composition}</p>
+              <button
+                type="button"
+                className={styles.descriptionToggle}
+                onClick={() => toggleSection('composition')}
+                aria-expanded={!!openSections.composition}
+              >
+                <h3 className={styles.descriptionHeading}>Composition</h3>
+                <span className={styles.descriptionChevron}>{openSections.composition ? '−' : '+'}</span>
+              </button>
+              {openSections.composition && (
+                <p className={styles.description}>{product.composition}</p>
+              )}
             </div>
           )}
           {product.care && (
             <div className={styles.descriptionSection}>
-              <h3 className={styles.descriptionHeading}>Care</h3>
-              <p className={styles.description}>{product.care}</p>
+              <button
+                type="button"
+                className={styles.descriptionToggle}
+                onClick={() => toggleSection('care')}
+                aria-expanded={!!openSections.care}
+              >
+                <h3 className={styles.descriptionHeading}>Care</h3>
+                <span className={styles.descriptionChevron}>{openSections.care ? '−' : '+'}</span>
+              </button>
+              {openSections.care && (
+                <p className={styles.description}>{product.care}</p>
+              )}
             </div>
           )}
         </div>

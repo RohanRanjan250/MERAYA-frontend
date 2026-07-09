@@ -114,15 +114,43 @@
 }
 
 .descriptionSection {
-  margin: 3.5vh 0vh 3vh;
+  margin: 0;
+  padding: 1.8vh 0;
+  border-bottom: 1px solid rgba(244, 243, 241, 0.15);
+}
+
+.descriptionToggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+  text-align: left;
 }
 
 .descriptionHeading {
   font-family: 'Abel', sans-serif;
   font-size: 1.1rem;
-  margin-bottom: 0.5rem;
+  margin: 0;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+.descriptionChevron {
+  font-size: 1.3rem;
+  color: #E38012;
+  flex-shrink: 0;
+  margin-left: 1rem;
+  line-height: 1;
+}
+
+.descriptionSection .description,
+.descriptionSection .detailsList {
+  margin-top: 1vh;
 }
 
 .detailsList {
@@ -486,7 +514,7 @@
   }
 
   .descriptionSection {
-    margin: 1.5rem 0; /* Reduce vertical margins */
+    padding: 1.2rem 0; /* Reduce vertical padding */
   }
 
   .actions {
