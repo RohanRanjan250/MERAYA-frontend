@@ -30,7 +30,7 @@ const FashionSplit = () => {
       >
         <div className={styles.textOverlay}>
           <p className={styles.brand}>MERAYA’S</p>
-          <h1 className={styles.heading}>COOL COLLEGE</h1>
+          <h1 className={styles.heading}>OFFICE CORE</h1>
         </div>
       </div>
 
@@ -40,7 +40,7 @@ const FashionSplit = () => {
       >
         <div className={styles.textOverlay}>
           <p className={styles.brand}>MERAYA’S</p>
-          <h1 className={styles.headingg}>AESTHETIC</h1>
+          <h1 className={styles.headingg}>INDIE EDIT</h1>
         </div>
       </div>
     </div>
