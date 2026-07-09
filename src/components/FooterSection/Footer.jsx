@@ -53,7 +53,7 @@ const Footer = () => {
               Banashankari, Bengaluru, Karnataka-560085
             </p>
             <p className={styles.contactItem}>
-              <strong>Email:</strong> <a href="mailto:support@meraya.com">support@meraya.com</a>
+              <strong>Email:</strong> <a href="mailto:support@meraya.com">support@meraya.co.in</a>
             </p>
             <p className={styles.contactItem}>
               <strong>Phone:</strong> <a href="tel:+919279360532">+91 9279360532</a>

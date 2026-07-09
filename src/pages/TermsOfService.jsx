@@ -16,7 +16,7 @@ const TermsOfService = () => {
 
                 <div className={styles.content}>
                     <h1 className={styles.mainTitle}>Terms of Service</h1>
-                    <p className={styles.lastUpdated}>Last Updated: January 2025</p>
+                    <p className={styles.lastUpdated}>Last Updated: July 2026</p>
 
                     {/* Introduction */}
                     <section className={styles.section}>
@@ -96,7 +96,7 @@ const TermsOfService = () => {
                         <h2 className={styles.sectionTitle}>Section 6: Returns & Exchanges</h2>
                         <div className={styles.card}>
                             <p className={styles.text}>
-                                We take pride in our products and aim to deliver the best quality. If you are not satisfied with your purchase, you can request an exchange within 7 days of delivery.
+                                We take pride in our products and aim to deliver the best quality. If you are not satisfied with your purchase, you can request an return within 7 days of delivery.
                             </p>
                             <p className={styles.text}>
                                 Products must be unused, with tags intact, and in original packaging. Custom or personalized items are non-returnable.
@@ -188,7 +188,7 @@ const TermsOfService = () => {
                             </p>
                             <div className={styles.contactDetails}>
                                 <p className={styles.contactText}><strong>Meraya Customer Support</strong></p>
-                                <p className={styles.contactText}>Email: <a href="mailto:support@meraya.com" className={styles.link}>support@meraya.com</a></p>
+                                <p className={styles.contactText}>Email: <a href="mailto:support@meraya.co.in" className={styles.link}>support@meraya.co.in</a></p>
                                 <p className={styles.contactText}>Phone: <a href="tel:+919279360532" className={styles.link}>+91 9279360532</a></p>
                             </div>
                         </div>

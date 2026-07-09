@@ -16,7 +16,7 @@ const PrivacyPolicy = () => {
 
                 <div className={styles.content}>
                     <h1 className={styles.mainTitle}>Privacy Policy</h1>
-                    <p className={styles.lastUpdated}>Last Updated: January 2025</p>
+                    <p className={styles.lastUpdated}>Last Updated: July 2026</p>
 
                     {/* Introduction */}
                     <section className={styles.section}>
@@ -128,7 +128,7 @@ const PrivacyPolicy = () => {
                         <h3 className={styles.contactTitle}>Questions About Privacy?</h3>
                         <p className={styles.contactText}>
                             If you have any questions or concerns about our Privacy Policy, please contact us at{' '}
-                            <a href="mailto:privacy@meraya.com" className={styles.link}>privacy@meraya.com</a>
+                            <a href="mailto:privacy@meraya.co.in" className={styles.link}>privacy@meraya.co.in</a>
                         </p>
                     </section>
                 </div>

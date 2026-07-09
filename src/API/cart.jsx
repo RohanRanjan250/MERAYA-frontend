@@ -36,12 +36,12 @@ export const checkDeliveryAvailability = async (pincode) => {
   }
 };
 
-export const applyCoupon = async (couponCode) => {
-  try {
-    const response = await API.post("/cart/apply-coupon/", { coupon_code: couponCode });
-    return response.data;
-  } catch (error) {
-    throw error.response?.data || error.message;
-  }
-};
+// export const applyCoupon = async (couponCode) => {
+//   try {
+//     const response = await API.post("/cart/apply-coupon/", { coupon_code: couponCode });
+//     return response.data;
+//   } catch (error) {
+//     throw error.response?.data || error.message;
+//   }
+// };
 

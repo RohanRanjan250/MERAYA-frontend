@@ -39,13 +39,13 @@ const ReturnPolicy = () => {
                                         <p>Full value after deduction, valid on your next order</p>
                                     </div>
                                 </div>
-                                <div className={styles.option}>
+                                {/* <div className={styles.option}>
                                     <span className={styles.optionIcon}>💰</span>
                                     <div>
                                         <h4>Refund to Original Payment Method</h4>
                                         <p>After deducting the ₹149 fee</p>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </section>
@@ -55,9 +55,10 @@ const ReturnPolicy = () => {
                         <h2 className={styles.sectionTitle}>Exchanges</h2>
                         <div className={styles.card}>
                             <ul className={styles.list}>
-                                <li>Exchanges are available for <strong>size or style</strong>.</li>
+                                {/* <li>Exchanges are available for <strong>size or style</strong>.</li>
                                 <li>A flat shipping fee of <strong>₹149</strong> will be charged/deducted.</li>
-                                <li>Once we receive the product back, your new piece will be shipped out.</li>
+                                <li>Once we receive the product back, your new piece will be shipped out.</li> */}
+                                <li>Exchange is currently not available.</li>
                             </ul>
                         </div>
                     </section>
@@ -78,7 +79,7 @@ const ReturnPolicy = () => {
                         <h3 className={styles.contactTitle}>Need Help?</h3>
                         <p className={styles.contactText}>
                             For any questions or to initiate a return/exchange, please contact us at{' '}
-                            <a href="mailto:support@meraya.com" className={styles.link}>support@meraya.com</a>
+                            <a href="mailto:support@meraya.co.in" className={styles.link}>support@meraya.co.in</a>
                         </p>
                     </section>
                 </div>

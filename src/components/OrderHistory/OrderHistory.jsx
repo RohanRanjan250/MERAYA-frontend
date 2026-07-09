@@ -164,7 +164,7 @@ const OrderHistory = () => {
       {!loading && orders.length === 0 && (
         <div className={styles.emptyState}>
           <p>You haven't placed any orders yet.</p>
-          <button className={styles.returnBtn} onClick={() => navigate("/products")}>
+          <button className={styles.shopNow} onClick={() => navigate("/products")}>
             Shop Now
           </button>
         </div>

@@ -16,7 +16,7 @@ const ShippingPolicy = () => {
 
                 <div className={styles.content}>
                     <h1 className={styles.mainTitle}>Shipping & Delivery Policy</h1>
-                    <p className={styles.lastUpdated}>Last Updated: January 2025</p>
+                    <p className={styles.lastUpdated}>Last Updated: July 2026</p>
 
                     {/* Shipping Timeline */}
                     <section className={styles.section}>
@@ -62,7 +62,8 @@ const ShippingPolicy = () => {
                         <h2 className={styles.sectionTitle}>What are your shipping charges?</h2>
                         <div className={styles.card}>
                             <p className={styles.freeShipping}>
-                                🎉 We offer <strong>FREE SHIPPING</strong> on all orders!
+                                {/* 🎉 We offer <strong>FREE SHIPPING</strong> on all orders! */}
+                                A flat delivery charge of ₹49 applies to all orders.
                             </p>
                         </div>
                     </section>

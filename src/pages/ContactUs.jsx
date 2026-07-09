@@ -91,7 +91,7 @@ const ContactUs = () => {
                             </div>
                             <h3 className={styles.cardTitle}>Email</h3>
                             <a href="mailto:support@meraya.com" className={styles.link}>
-                                support@meraya.com
+                                support@meraya.co.in
                             </a>
                         </div>
 

@@ -22,6 +22,17 @@
   font-family: 'Abel', sans-serif;
 }
 
+.shopNow{
+  margin-top: 15px;
+  padding: 8px 27px;
+  background: #e38012;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'Abel', sans-serif;
+}
+
 .topRow {
   display: flex;
   align-items: flex-start;

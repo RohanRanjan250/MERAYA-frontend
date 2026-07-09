@@ -266,7 +266,8 @@ const CartSummary = ({ items, address, estimatedDeliveryDate }) => {
             <p className="delivery">
               {estimatedDeliveryDate
                 ? `Estimated Delivery by ${estimatedDeliveryDate}`
-                : "Enter pincode in summary to check delivery date"}
+                : "Estimated delivery: 5–7 business days"}
+                {/* "Enter pincode in summary to check delivery date" */}
             </p>
           </div>
         </div>
@@ -972,7 +973,7 @@ export default function CheckoutFlow() {
               discount={discount}
               shipping={shipping}
               total={total}
-              deliveryDate={estimatedDeliveryDate || "3-5 business days"}
+              deliveryDate={estimatedDeliveryDate || "5-7 business days"}
               label="PROCEED TO PAYMENT"
               onClick={handleNextStep}
               isProcessing={isProcessing}
