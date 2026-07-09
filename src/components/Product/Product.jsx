@@ -267,6 +267,7 @@ export default function Product({ product, setProduct }) {
         </div>
       </div>
       <div className={styles.backgroundText}>MERAYA</div>
+      <RelatedProducts heading="RELATED PRODUCTS" collectionId={product.collection_id} />
 
       <div className={styles.reviewsSection}>
         <h2 className={styles.reviewsTitle}>REVIEWS</h2>
@@ -287,7 +288,7 @@ export default function Product({ product, setProduct }) {
             </div>
           </div>
 
-          <RelatedProducts heading="RELATED PRODUCTS" collectionId={product.collection_id} />
+          
 
           {/* Right Side - Review List */}
           <div className={styles.reviewList}>
