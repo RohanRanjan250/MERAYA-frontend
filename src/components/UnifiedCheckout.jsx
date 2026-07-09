@@ -646,6 +646,19 @@ export default function CheckoutFlow() {
       return;
     }
 
+    // Immediate, synchronous guard for the most common boundary (min order
+    // value) — don't wait on a debounced network round-trip for this one,
+    // since it's checkable instantly from data we already have.
+    if (appliedCoupon.min_order_value && sellingPriceTotal < appliedCoupon.min_order_value) {
+      const errMsg = `Minimum order value of ₹${appliedCoupon.min_order_value} required for this coupon.`;
+      setAppliedCoupon(null);
+      setCouponDiscount(0);
+      setCouponCode('');
+      setCouponError(errMsg);
+      showToast(errMsg, 'error');
+      return;
+    }
+
     const timeoutId = setTimeout(async () => {
       try {
         const response = await API.post('/coupon/apply/', {
