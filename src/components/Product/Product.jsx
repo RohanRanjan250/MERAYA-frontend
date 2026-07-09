@@ -12,7 +12,7 @@ import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import { updateReviewReaction, toggleWishlist, addToCart } from "../../API/productmainpageAPI.jsx";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../../Context/ToastContext.jsx"; // 1. Import the useToast hook
-import RelatedProducts from "../RelatedProduct/CartRelatedProduct";
+import RelatedProducts from "../RelatedProduct/RelatedProduct";
 
 export default function Product({ product, setProduct }) {
   const [selectedImage, setSelectedImage] = useState(product.images[0]);
