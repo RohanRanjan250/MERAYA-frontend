@@ -31,8 +31,8 @@ export default function ProductPage() {
       <SEO title={product.name} description={product.description?.slice(0, 150)} />
       <Navbar />
       <DoubleLine />
-      <Product product={product} setProduct={setProduct} />
-      <RelatedProducts heading="YOU MAY ALSO LIKE" collectionId={product.collection_id} />
+      <Product key={product.id} product={product} setProduct={setProduct} />
+      <RelatedProducts heading="YOU MAY ALSO LIKE" showAll />
       <Footer />
     </>
   );

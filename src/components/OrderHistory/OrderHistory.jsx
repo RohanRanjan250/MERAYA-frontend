@@ -255,16 +255,17 @@ const OrderHistory = () => {
                   />
 
                   <div className={styles.refundOptions}>
-                    <label className={styles.radioLabel}>
+                    <label className={`${styles.radioLabel} ${styles.disabledRadioLabel}`}>
                       <input
                         type="radio"
                         name={`refundMethod-${selectedOrder.orderId}`}
                         value="original"
                         checked={refundMethod === "original"}
                         onChange={() => setRefundMethod("original")}
+                        disabled
                       />
                       <span className={styles.customRadio}></span>
-                      Refund to Original Payment Method
+                      Refund to Original Payment Method (Currently Unavailable)
                     </label>
 
                     <label className={styles.radioLabel}>
@@ -338,28 +339,31 @@ const OrderHistory = () => {
                           <span className={styles.stars}>{renderStars(order)}</span>
                           <span>{order.points > 0 ? `You rated ${order.points}/5` : "Rate the product"}</span>
                           {reviewDraft && reviewDraft.orderitemId === order.orderitem_id && (
-                            <div onClick={(e) => e.stopPropagation()} style={{ marginTop: 8 }}>
+                            <div className={styles.reviewForm} onClick={(e) => e.stopPropagation()}>
                               <input
                                 type="text"
                                 placeholder="Title (optional)"
                                 value={reviewDraft.title}
                                 onChange={(e) => setReviewDraft({ ...reviewDraft, title: e.target.value })}
-                                style={{ width: "100%", marginBottom: 6 }}
+                                className={styles.reviewInput}
                               />
                               <textarea
                                 placeholder="Share your experience..."
                                 value={reviewDraft.description}
                                 onChange={(e) => setReviewDraft({ ...reviewDraft, description: e.target.value })}
-                                style={{ width: "100%", marginBottom: 6 }}
+                                className={styles.reviewTextarea}
                                 required
                               />
-                              <button
-                                onClick={handleReviewSubmit}
-                                disabled={submittingReview || !reviewDraft.description.trim()}
-                              >
-                                {submittingReview ? "Submitting..." : "Submit Review"}
-                              </button>{" "}
-                              <button onClick={() => setReviewDraft(null)}>Cancel</button>
+                              <div className={styles.reviewActions}>
+                                <button
+                                  className={styles.submitReviewBtn}
+                                  onClick={handleReviewSubmit}
+                                  disabled={submittingReview || !reviewDraft.description.trim()}
+                                >
+                                  {submittingReview ? "Submitting..." : "Submit Review"}
+                                </button>
+                                <button className={styles.cancelReviewBtn} onClick={() => setReviewDraft(null)}>Cancel</button>
+                              </div>
                             </div>
                           )}
                         </>

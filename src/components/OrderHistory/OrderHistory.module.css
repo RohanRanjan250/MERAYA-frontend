@@ -123,11 +123,73 @@
 
 .rating {
   margin-top: 10px;
-  font-size: 1.5vh; 
+  font-size: 1.5vh;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
   width: 100%;
   color: #A2A3B1;
+}
+
+.stars {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 2px;
+}
+
+.reviewForm {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.reviewInput,
+.reviewTextarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+  border: 1px solid #444;
+  background: #222;
+  color: #fff;
+  font-family: 'Abel', sans-serif;
+  font-size: 14px;
+}
+
+.reviewTextarea {
+  min-height: 60px;
+  resize: vertical;
+}
+
+.reviewActions {
+  display: flex;
+  gap: 10px;
+}
+
+.submitReviewBtn {
+  background: #E38012;
+  border: none;
+  padding: 8px 20px;
+  color: #fff;
+  cursor: pointer;
+  font-family: 'Abel', sans-serif;
+}
+
+.submitReviewBtn:disabled {
+  background: #666;
+  cursor: not-allowed;
+}
+
+.cancelReviewBtn {
+  background: transparent;
+  border: 1px solid #444;
+  padding: 8px 20px;
+  color: #fff;
+  cursor: pointer;
+  font-family: 'Abel', sans-serif;
 }
 
 .returnBtn {
@@ -347,6 +409,15 @@ input[type="radio"] {
   margin: 8px 0;
   font-size: 14px;
   color: #fff;
+}
+
+.disabledRadioLabel {
+  color: #777;
+  cursor: not-allowed;
+}
+
+.disabledRadioLabel .customRadio {
+  border-color: #555;
 }
 
 /* Circle */

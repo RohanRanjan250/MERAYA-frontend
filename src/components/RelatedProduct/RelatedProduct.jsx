@@ -1,25 +1,27 @@
 import React, { useState, useEffect } from "react";
 import ProductCard from "../../UI/SmallProductCard";
 import styles from "./RelatedProduct.module.css";
-import { fetchRelatedProducts } from "../../API/related";
+import { fetchRelatedProducts, fetchRelatedProductsCart } from "../../API/related";
 import { useNavigate } from "react-router-dom";
 
-const RelatedProducts = ({ heading, collectionId }) => {
+const RelatedProducts = ({ heading, collectionId, showAll = false }) => {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     async function getProducts() {
-      if (!collectionId) return;
+      if (!showAll && !collectionId) return;
       try {
-        const data = await fetchRelatedProducts(collectionId);
+        const data = showAll
+          ? await fetchRelatedProductsCart()
+          : await fetchRelatedProducts(collectionId);
         setProducts(data || []); // Adjust based on your API response
       } catch (err) {
         console.error("Error fetching related products:", err);
       }
     }
     getProducts();
-  }, [collectionId]);
+  }, [collectionId, showAll]);
 
   if (!products.length) return null;
 
