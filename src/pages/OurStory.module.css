@@ -1,0 +1,118 @@
+.container {
+  min-height: 100vh;
+  background: #040404;
+  padding: 4rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.backgroundText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 23.5vw;
+  font-family: 'Aboreto', serif;
+  color: rgba(227, 128, 18, 0.03);
+  z-index: 1;
+  user-select: none;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.mainTitle {
+  font-family: 'Aboreto', serif;
+  font-size: 3rem;
+  color: #e38012;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  -webkit-text-stroke: 1px #e38012;
+}
+
+.photoWrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.photo {
+  width: 100%;
+  max-width: 480px;
+  max-height: 560px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.storyCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 2.5rem;
+}
+
+.greeting {
+  font-family: 'Abel', sans-serif;
+  font-size: 1.3rem;
+  color: #FBFBFB;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.paragraph {
+  font-family: 'Abel', sans-serif;
+  font-size: 1.1rem;
+  color: #A2A3B1;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.tagline {
+  font-family: 'Aboreto', serif;
+  font-size: 1.4rem;
+  color: #e38012;
+  text-align: center;
+  margin: 2.5rem 0 0;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(227, 128, 18, 0.3);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 2rem 1rem;
+  }
+
+  .mainTitle {
+    font-size: 2rem;
+  }
+
+  .photo {
+    max-width: 100%;
+    max-height: 380px;
+  }
+
+  .storyCard {
+    padding: 1.5rem;
+  }
+
+  .greeting {
+    font-size: 1.1rem;
+  }
+
+  .paragraph {
+    font-size: 1rem;
+  }
+
+  .tagline {
+    font-size: 1.1rem;
+  }
+}

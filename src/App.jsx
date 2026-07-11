@@ -26,6 +26,7 @@ import ReturnPolicy from "./pages/ReturnPolicy";
 import ShippingPolicy from "./pages/ShippingPolicy";
 import ContactUs from "./pages/ContactUs";
 import TermsOfService from "./pages/TermsOfService";
+import OurStory from "./pages/OurStory";
 
 function App() {
   const [authReady, setAuthReady] = useState(false);
@@ -69,6 +70,9 @@ function App() {
 
           {/* Contact Page */}
           <Route path="/contact" element={<ContactUs />} />
+
+          {/* About Page */}
+          <Route path="/about-us" element={<OurStory />} />
 
           {/* 404 Catch-all - Must be last */}
           <Route path="*" element={<NotFound />} />

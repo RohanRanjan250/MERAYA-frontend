@@ -100,6 +100,10 @@ const Footer = () => {
         </div>
         <div className={styles.links}>
           <div className={styles.linkSection}>
+            <h4 className={styles.linkHeader}>COMPANY</h4>
+            <a href="/about-us">OUR STORY</a>
+          </div>
+          <div className={styles.linkSection}>
             <h4 className={styles.linkHeader}>POLICIES</h4>
             <a href="/shipping-policy">SHIPPING & DELIVERY POLICY</a>
             <a href="/return-policy">RETURN & EXCHANGE POLICY</a>
