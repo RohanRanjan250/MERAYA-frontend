@@ -46,7 +46,7 @@
 .photo {
   width: 100%;
   max-width: 480px;
-  max-height: 560px;
+  aspect-ratio: 6 / 7;
   object-fit: cover;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.1);
