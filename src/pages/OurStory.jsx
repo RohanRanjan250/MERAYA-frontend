@@ -7,9 +7,7 @@ import SEO from '../components/SEO';
 import founderPhotoFallback from '../assets/model.png';
 import { onImgError } from '../utils/cloudinaryImages';
 
-// TODO: replace with a real photo of Srishti — this is a placeholder
-// reusing an existing marketing image until one is provided.
-const founderPhoto = "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783449804/image_353_jnfqib.png";
+const founderPhoto = "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783790459/IMG_9422_1_i1ibur.png";
 
 const OurStory = () => {
   return (
