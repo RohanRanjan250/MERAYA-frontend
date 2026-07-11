@@ -7,7 +7,7 @@ import SEO from '../components/SEO';
 import founderPhotoFallback from '../assets/model.png';
 import { onImgError } from '../utils/cloudinaryImages';
 
-const founderPhoto = "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783790459/IMG_9422_1_i1ibur.png";
+const founderPhoto = "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783793201/IMG_9422_1_1_sffx2x.png";
 
 const OurStory = () => {
   return (
