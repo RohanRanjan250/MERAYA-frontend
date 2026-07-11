@@ -12,9 +12,6 @@ export function LandingProvider({ children }) {
         const response = await openAPI.get("/get_all_products");
 
         if (response.status === 200) {
-          console.log(response);
-          const isAuth = response.data.auth.isAuthenticated;
-          localStorage.setItem("isAuthenticated", JSON.stringify(isAuth));
           setData(response.data.products);
         }
       } catch (err) {

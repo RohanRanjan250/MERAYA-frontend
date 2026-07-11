@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import styles from "./Contact.module.css";
 import { getUserContact, updateUserContact } from "../../API/myaccountAPI";
 import { useNavigate } from "react-router-dom";
+import { isLoggedIn } from "../../utils/authCookie";
 
 const Contact = () => {
   const [user, setUser] = useState(null);
   const [editedUser, setEditedUser] = useState({});
   const [isEdited, setIsEdited] = useState(false);
   const navigate = useNavigate();
-  let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
+  let isAuth = isLoggedIn();
 
   useEffect(() => {
     const fetchUser = async () => {

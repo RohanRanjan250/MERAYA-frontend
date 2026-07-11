@@ -3,11 +3,12 @@ import ProductCard from "../../UI/SmallProductCard";
 import styles from "./RelatedProduct.module.css";
 import { fetchRelatedProductsCart } from "../../API/related";
 import { useNavigate } from "react-router-dom";
+import { isLoggedIn } from "../../utils/authCookie";
 
 const CartRelatedProduct = ({ heading }) => {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
-  let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
+  let isAuth = isLoggedIn();
 
   useEffect(() => {
     async function getProducts() {

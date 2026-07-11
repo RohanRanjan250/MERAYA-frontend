@@ -82,7 +82,8 @@ const Login = () => {
       try {
         const response = await loginWithGoogle(tokenResponse.access_token);
         if (response.status === 200) {
-          showToast('Login successful!', 'success');
+          const isNewUser = response.data?.message === "Signup successful";
+          showToast(isNewUser ? "Account created — welcome!" : "Login successful!", "success");
           navigate("/");
         }
       } catch (err) {

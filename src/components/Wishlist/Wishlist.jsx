@@ -7,6 +7,7 @@ import successFallback from "../../assets/sad.png";
 import { useToast } from "../../Context/ToastContext";
 import { addToCart } from "../../API/productmainpageAPI";
 import { SAD_URL, onImgError } from "../../utils/cloudinaryImages";
+import { isLoggedIn } from "../../utils/authCookie";
 
 const success = SAD_URL;
 
@@ -15,7 +16,7 @@ const Wishlist = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { showToast } = useToast();
-  let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
+  let isAuth = isLoggedIn();
 
   useEffect(() => {
     if (!isAuth) {

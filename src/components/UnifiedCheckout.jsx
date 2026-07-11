@@ -8,6 +8,7 @@ import successFallback from "../assets/sad.png"
 import { useToast } from "../Context/ToastContext";
 import API from "../API/instance";
 import { SAD_URL, onImgError } from "../utils/cloudinaryImages";
+import { isLoggedIn } from "../utils/authCookie";
 
 const success = SAD_URL;
 
@@ -575,7 +576,7 @@ export default function CheckoutFlow() {
   const [isApplyingCoupon, setIsApplyingCoupon] = useState(false);
 
   const { showToast } = useToast();
-  let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
+  let isAuth = isLoggedIn();
 
   // Fetch wallet balance
   useEffect(() => {
@@ -826,7 +827,7 @@ export default function CheckoutFlow() {
     }
     if (step === "address") {
       if (!selectedAddress) {
-        alert("Please select a delivery address.");
+        showToast("Please select a delivery address.", "error");
         return;
       }
       setStep("summary");

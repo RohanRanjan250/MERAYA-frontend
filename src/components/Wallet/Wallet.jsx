@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import styles from "./Wallet.module.css";
 import { useNavigate } from "react-router-dom";
 import { getWallet } from "../../API/walletAPI";
+import { isLoggedIn } from "../../utils/authCookie";
 
 const Wallet = () => {
     const [balance, setBalance] = useState(0);
     const [transactions, setTransactions] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
-    let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
+    let isAuth = isLoggedIn();
 
     useEffect(() => {
         if (!isAuth) {

@@ -1,5 +1,6 @@
 // authUtils.js - OPTIMIZED VERSION
 import { refreshAPI } from "./instance";
+import { clearLoggedInFlag } from "../utils/authCookie";
 
 let lastRefreshTime = 0;
 let refreshingPromise = null;
@@ -56,7 +57,6 @@ export const initializeAuth = async () => {
   // Only refresh if token is expired or missing
   if (!isTokenExpiringSoon(60)) {
     console.log("Token still valid, skipping refresh");
-    localStorage.setItem("isAuthenticated", JSON.stringify(true));
     return;
   }
 
@@ -72,7 +72,6 @@ export const initializeAuth = async () => {
         const expiresIn = res.data?.expires_in || 300;
         setTokenExpiry(expiresIn);
 
-        localStorage.setItem("isAuthenticated", JSON.stringify(true));
         return res.data;
       })
       .catch(err => {
@@ -81,7 +80,7 @@ export const initializeAuth = async () => {
         // Handle 401 - refresh token expired or invalid
         if (err.response?.status === 401) {
           console.log("Refresh token expired or invalid");
-          localStorage.setItem("isAuthenticated", JSON.stringify(false));
+          clearLoggedInFlag();
           localStorage.removeItem('tokenExpiry');
 
           // Redirect to login if on a protected page
@@ -134,11 +133,10 @@ export const startSmartRefresh = () => {
 
       const expiresIn = res.data?.expires_in || 300;
       setTokenExpiry(expiresIn);
-      localStorage.setItem("isAuthenticated", JSON.stringify(true));
     } catch (err) {
       console.error("Background refresh failed:", err);
       if (err.response?.status === 401) {
-        localStorage.setItem("isAuthenticated", JSON.stringify(false));
+        clearLoggedInFlag();
         localStorage.removeItem('tokenExpiry');
       }
     }
@@ -153,10 +151,9 @@ export const refreshToken = async () => {
     const res = await refreshAPI.get("/refresh");
     const expiresIn = res.data?.expires_in || 300;
     setTokenExpiry(expiresIn);
-    localStorage.setItem("isAuthenticated", JSON.stringify(true));
     return res;
   } catch (err) {
-    localStorage.setItem("isAuthenticated", JSON.stringify(false));
+    clearLoggedInFlag();
     localStorage.removeItem('tokenExpiry');
     throw err;
   }

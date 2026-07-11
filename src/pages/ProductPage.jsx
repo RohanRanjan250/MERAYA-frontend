@@ -13,6 +13,12 @@ export default function ProductPage() {
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
+    // Navigating here from Related/You May Also Like is client-side routing on
+    // the same route, so the scroll position carries over from wherever the
+    // user clicked — without this, the page content changes underneath them
+    // with no visual cue that a different product just loaded.
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
     async function fetchProduct() {
       try {
         const data = await buyProduct(slug);

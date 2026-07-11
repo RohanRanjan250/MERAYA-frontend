@@ -3,11 +3,6 @@ import API from "./instance";
 export const buyProduct = async (slug) => {
   try {
     const response = await API.get(`/get_product_detail/${slug}`);
-    if (response.status === 200) {
-          console.log(response);
-          const isAuth = response.data.auth.isAuthenticated;
-          localStorage.setItem("isAuthenticated", JSON.stringify(isAuth));
-    }
     return response.data;
   } catch (error) {
     throw error.response?.data || error.message;

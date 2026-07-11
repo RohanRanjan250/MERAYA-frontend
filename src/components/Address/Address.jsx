@@ -3,6 +3,7 @@ import styles from "./Address.module.css";
 import { getUserAddress, addUserAddress, updateUserAddress } from "../../API/myaccountAPI";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../../Context/ToastContext";
+import { isLoggedIn } from "../../utils/authCookie";
 
 const REQUIRED_FIELDS = [
   { name: "full_name", label: "Name" },
@@ -31,7 +32,7 @@ const Address = () => {
   });
   const navigate = useNavigate();
   const { showToast } = useToast();
-  let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
+  let isAuth = isLoggedIn();
 
   const validateAddressForm = (data) => {
     for (const field of REQUIRED_FIELDS) {

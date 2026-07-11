@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../API/authApi";
 import { openAPI } from "../API/instance";
 import { LOGO_URL, onImgError } from "../utils/cloudinaryImages";
+import { isLoggedIn } from "../utils/authCookie";
 
 const logo = LOGO_URL;
 
@@ -30,7 +31,7 @@ const Navbar = () => {
     setShowDropdown(true);
   };
 
-  const [isAuth, setIsAuth] = useState(() => JSON.parse(localStorage.getItem("isAuthenticated")) || false);
+  const [isAuth, setIsAuth] = useState(() => isLoggedIn());
 
   // Fetch cart item count
   const fetchCartCount = async () => {
@@ -55,7 +56,7 @@ const Navbar = () => {
     };
     
     const handleAuthChange = () => {
-      setIsAuth(JSON.parse(localStorage.getItem("isAuthenticated")) || false);
+      setIsAuth(isLoggedIn());
     };
 
     window.addEventListener("cartUpdated", handleCartUpdate);

@@ -99,6 +99,9 @@ const TermsOfService = () => {
                                 We take pride in our products and aim to deliver the best quality. If you are not satisfied with your purchase, you can request an return within 7 days of delivery.
                             </p>
                             <p className={styles.text}>
+                                In case of order cancellations or approved monetary refunds, the amount will be credited back to the customer's original mode of payment within 5–7 business days.
+                            </p>
+                            <p className={styles.text}>
                                 Products must be unused, with tags intact, and in original packaging. Custom or personalized items are non-returnable.
                             </p>
                             <p className={styles.text}>
@@ -164,7 +167,7 @@ const TermsOfService = () => {
                         <h2 className={styles.sectionTitle}>Section 11: Governing Law</h2>
                         <div className={styles.card}>
                             <p className={styles.text}>
-                                These Terms are governed by the laws of India. Any disputes will be resolved through arbitration in accordance with the Arbitration and Conciliation Act, 1996, with Mumbai, Maharashtra, as the venue.
+                                These Terms are governed by the laws of India. Any disputes will be resolved through arbitration in accordance with the Arbitration and Conciliation Act, 1996, with Bengaluru, Karnataka, as the venue.
                             </p>
                         </div>
                     </section>
@@ -184,18 +187,23 @@ const TermsOfService = () => {
                         <h2 className={styles.sectionTitle}>Section 13: Contact Us</h2>
                         <div className={styles.card}>
                             <p className={styles.text}>
-                                For any questions about these Terms or our services, please contact us at:
+                                For any general questions about these Terms, orders, or our services, please contact our support team. For website technical errors or UX issues, please reach out to our development crew.
                             </p>
                             <div className={styles.contactDetails}>
                                 <p className={styles.contactText}><strong>Meraya Customer Support</strong></p>
                                 <p className={styles.contactText}>Email: <a href="mailto:support@meraya.co.in" className={styles.link}>support@meraya.co.in</a></p>
                                 <p className={styles.contactText}>Phone: <a href="tel:+919279360532" className={styles.link}>+91 9279360532</a></p>
+                                <p className={styles.contactText}><strong>Technical Support & Bug Reports:</strong></p>
+                                <p className={styles.contactText}>Email: <a href="mailto:tech@meraya.co.in" className={styles.link}>tech@meraya.co.in</a></p>
                             </div>
                         </div>
                     </section>
 
                     {/* Closing */}
                     <div className={styles.closingBox}>
+                        <p className={styles.closingText} style={{ marginBottom: '15px', fontWeight: '500' }}>
+                            Meraya is a proprietary brand owned and operated completely by Srishti Rathor.
+                        </p>
                         <p className={styles.closingText}>
                             Thank you for choosing Meraya. We are delighted to be a part of your journey in celebrating Indian heritage and style!
                         </p>

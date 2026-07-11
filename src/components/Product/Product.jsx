@@ -13,6 +13,7 @@ import { updateReviewReaction, toggleWishlist, addToCart } from "../../API/produ
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../../Context/ToastContext.jsx"; // 1. Import the useToast hook
 import RelatedProducts from "../RelatedProduct/RelatedProduct";
+import { isLoggedIn } from "../../utils/authCookie";
 
 export default function Product({ product, setProduct }) {
   const [selectedImage, setSelectedImage] = useState(product.images[0]);
@@ -25,7 +26,7 @@ export default function Product({ product, setProduct }) {
   };
   const { showToast } = useToast();
   const navigate = useNavigate();
-  let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
+  let isAuth = isLoggedIn();
 
   // Check if product has any stock
   const hasStock = product.variants && product.variants.length > 0;

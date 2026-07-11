@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { toggleWishlist } from "../API/productmainpageAPI";
 import { useToast } from "../Context/ToastContext";
+import { isLoggedIn } from "../utils/authCookie";
 
 import { useNavigate } from "react-router-dom";
 
@@ -12,7 +13,7 @@ const ProductCard = ({ product, onBuyNow }) => {
   const navigate = useNavigate();
   const { showToast } = useToast();
 
-  const isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
+  const isAuth = isLoggedIn();
 
   const handleWishlist = async () => {
     try {

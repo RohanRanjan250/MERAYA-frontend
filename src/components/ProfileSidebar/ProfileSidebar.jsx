@@ -5,13 +5,14 @@ import {fetchUsername} from "../../API/myaccountAPI"
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { PROFILE_SIDE_URL, onImgError } from "../../utils/cloudinaryImages";
+import { isLoggedIn } from "../../utils/authCookie";
 
 const ProfileSide = PROFILE_SIDE_URL;
 
 const ProfileSidebar = () => {
   const [username, setUsername] = useState("User");
   const navigate = useNavigate();
-  let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
+  let isAuth = isLoggedIn();
 
   useEffect(() => {
     const fetchUser = async () => {

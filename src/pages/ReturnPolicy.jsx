@@ -46,6 +46,13 @@ const ReturnPolicy = () => {
                                         <p>After deducting the ₹149 fee</p>
                                     </div>
                                 </div> */}
+                                <div className={styles.option}>
+                                    <span className={styles.optionIcon}>💰</span>
+                                    <div>
+                                        <h4>Refund to Original Payment Source</h4>
+                                        <p>In case of order cancellations or approved monetary refunds, the amount will be credited back to the customer's original mode of payment within 5–7 business days</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </section>

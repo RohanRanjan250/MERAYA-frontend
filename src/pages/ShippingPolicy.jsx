@@ -39,10 +39,10 @@ const ShippingPolicy = () => {
                         <h2 className={styles.sectionTitle}>Do you offer reverse pickup for exchanges?</h2>
                         <div className={styles.card}>
                             <p className={styles.text}>
-                                Yes, we do offer reverse pickup for eligible items' exchanges within India.
+                                No, we currently do not offer exchanges. You may return your item for store credit and place a new order.
                             </p>
                             <p className={styles.text}>
-                                Sometimes, for some addresses, reverse pickup facility may not be available. In that case we may ask you to ship the product back to us at your own cost and risk.
+                                Sometimes, for some addresses, reverse pickup facility for return may not be available. In that case we may ask you to ship the product back to us at your own cost and risk.
                             </p>
                         </div>
                     </section>

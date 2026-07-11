@@ -1,4 +1,5 @@
 import axios from "axios";
+import { clearLoggedInFlag } from "../utils/authCookie";
 
 const isLocal =
   window.location.hostname === "localhost" ||
@@ -86,7 +87,7 @@ API.interceptors.response.use(
 
         // Refresh failed - redirect to login
         console.error("Token refresh failed, redirecting to login");
-        localStorage.setItem("isAuthenticated", JSON.stringify(false));
+        clearLoggedInFlag();
 
         // Only redirect if not already on login/signup page
         const publicPaths = ['/login', '/signup', '/'];

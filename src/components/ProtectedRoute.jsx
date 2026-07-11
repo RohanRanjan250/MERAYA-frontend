@@ -1,7 +1,8 @@
 import { Navigate } from 'react-router-dom';
+import { isLoggedIn } from '../utils/authCookie';
 
 const ProtectedRoute = ({ children }) => {
-    const isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
+    const isAuth = isLoggedIn();
 
     if (!isAuth) {
         // Redirect to login if not authenticated

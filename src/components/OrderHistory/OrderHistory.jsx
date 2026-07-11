@@ -8,6 +8,7 @@ import returnnFallback from "../../assets/return.png";
 import successFallback from "../../assets/Success.png";
 import { useNavigate } from "react-router-dom";
 import { RETURN_URL, SUCCESS_URL, onImgError } from "../../utils/cloudinaryImages";
+import { isLoggedIn } from "../../utils/authCookie";
 
 const returnn = RETURN_URL;
 const success = SUCCESS_URL;
@@ -32,7 +33,7 @@ const OrderHistory = () => {
   const [reviewDraft, setReviewDraft] = useState(null); // { orderId, productId, rating, title, description }
   const [submittingReview, setSubmittingReview] = useState(false);
   const navigate = useNavigate();
-  let isAuth = JSON.parse(localStorage.getItem("isAuthenticated"));
+  let isAuth = isLoggedIn();
 
   const steps = ["Order placed", "Processing", "Packaging", "Out for delivery", "Delivered"];
 
