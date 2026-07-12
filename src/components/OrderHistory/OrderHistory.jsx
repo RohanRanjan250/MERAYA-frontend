@@ -9,6 +9,7 @@ import successFallback from "../../assets/Success.png";
 import { useNavigate } from "react-router-dom";
 import { RETURN_URL, SUCCESS_URL, onImgError, optimizeImage } from "../../utils/cloudinaryImages";
 import { isLoggedIn } from "../../utils/authCookie";
+import { useToast } from "../../Context/ToastContext";
 
 const returnn = RETURN_URL;
 const success = SUCCESS_URL;
@@ -54,6 +55,7 @@ const OrderHistory = () => {
   const [submittingReview, setSubmittingReview] = useState(false);
   const navigate = useNavigate();
   let isAuth = isLoggedIn();
+  const { showToast } = useToast();
 
   const steps = ["Order placed", "Shipped", "Out for delivery", "Delivered"];
 
@@ -213,11 +215,11 @@ const OrderHistory = () => {
               handleCloseExchangeModal();
               setShowExchangeConfirmation(true);
             } else {
-              alert("Payment verification failed. Please contact support.");
+              showToast("Payment verification failed. Please contact support.", "error");
             }
           } catch (error) {
             console.error("Exchange payment verification error:", error);
-            alert("Payment verification failed. Please contact support with your payment ID: " + response.razorpay_payment_id);
+            showToast("Payment verification failed. Please contact support with your payment ID: " + response.razorpay_payment_id, "error");
           } finally {
             setIsExchanging(false);
           }
@@ -234,7 +236,7 @@ const OrderHistory = () => {
       paymentObject.open();
     } catch (err) {
       console.error("Error initiating exchange:", err);
-      alert(err?.error || "Something went wrong while initiating the exchange.");
+      showToast(err?.error || "Something went wrong while initiating the exchange.", "error");
       setIsExchanging(false);
     }
   };
@@ -297,7 +299,11 @@ const OrderHistory = () => {
 
               {order.deliveryStatus === "Delivered" && (
                 <>
-                  {order.return_status ? (
+                  {order.is_exchange_replacement ? (
+                    <button className={`${styles.returnBtn} ${styles.alreadyReturned}`} disabled>
+                      Not Eligible (Received via Exchange)
+                    </button>
+                  ) : order.return_status ? (
                     <button className={`${styles.returnBtn} ${styles.alreadyReturned}`} disabled>
                       {RETURN_STATUS_LABELS[order.return_status] || "Already Returned"}
                     </button>
