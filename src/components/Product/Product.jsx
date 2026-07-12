@@ -6,7 +6,7 @@ import { ArrowDownLeft } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 import { faShareFromSquare } from "@fortawesome/free-regular-svg-icons";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { faIndianRupeeSign } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import { updateReviewReaction, toggleWishlist, addToCart } from "../../API/productmainpageAPI.jsx";
@@ -15,12 +15,23 @@ import { useToast } from "../../Context/ToastContext.jsx"; // 1. Import the useT
 import RelatedProducts from "../RelatedProduct/RelatedProduct";
 import { isLoggedIn } from "../../utils/authCookie";
 
+const SIZE_CHART_SIZES = ["XS", "S", "M", "L", "XL"];
+const SIZE_CHART_ROWS = [
+  { label: "LENGTH", values: [51.6, 52, 52, 52.75, 53] },
+  { label: "SHOULDER", values: [14, 14.5, 15, 15.5, 16] },
+  { label: "CHEST", values: [32, 34, 36, 38, 40] },
+  { label: "WAIST", values: [26, 28, 30, 32, 34] },
+  { label: "HIP", values: [35, 37, 39, 41, 43] },
+  { label: "SLEEVE LENGTH", values: [22.6, 23, 23, 23.75, 24.25] },
+];
+
 export default function Product({ product, setProduct }) {
   const [selectedImage, setSelectedImage] = useState(product.images[0]);
   const [selectedSize, setSelectedSize] = useState(
     product.variants?.find((v) => v.stock > 0)?.size || product.variants?.[0]?.size || ""
   );
   const [openSections, setOpenSections] = useState({});
+  const [showSizeChart, setShowSizeChart] = useState(false);
   const toggleSection = (key) => {
     setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }));
   };
@@ -210,7 +221,14 @@ export default function Product({ product, setProduct }) {
                   <span className={styles.whiteLine}></span>
                   <p className={styles.selectedSize}>{selectedSize}</p>
                 </div>
-                <a href="#" className={styles.sizeChart}>
+                <a
+                  href="#"
+                  className={styles.sizeChart}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowSizeChart(true);
+                  }}
+                >
                   VIEW SIZE CHART
                 </a>
               </div>
@@ -368,11 +386,7 @@ export default function Product({ product, setProduct }) {
                 </p>
 
                 <div className={styles.userInfo}>
-                  <img
-                    src={`https://i.pravatar.cc/40?u=${review.username}`}
-                    alt="user"
-                    className={styles.avatar}
-                  />
+                  <FontAwesomeIcon icon={faUserCircle} className={styles.avatar} />
                   <span className={styles.username}>{review.username}</span>
                 </div>
               </div>
@@ -380,6 +394,43 @@ export default function Product({ product, setProduct }) {
           </div>
         </div>
       </div>
+
+      {showSizeChart && (
+        <div className={styles.sizeChartOverlay} onClick={() => setShowSizeChart(false)}>
+          <div className={styles.sizeChartModal} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.sizeChartHeader}>
+              <h3>Size Chart (in inches)</h3>
+              <button
+                className={styles.sizeChartClose}
+                onClick={() => setShowSizeChart(false)}
+                aria-label="Close size chart"
+              >
+                &times;
+              </button>
+            </div>
+            <table className={styles.sizeChartTable}>
+              <thead>
+                <tr>
+                  <th>DESCRIPTION</th>
+                  {SIZE_CHART_SIZES.map((size) => (
+                    <th key={size}>{size}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {SIZE_CHART_ROWS.map((row) => (
+                  <tr key={row.label}>
+                    <td>{row.label}</td>
+                    {row.values.map((value, i) => (
+                      <td key={i}>{value}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

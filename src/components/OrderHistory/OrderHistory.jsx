@@ -207,7 +207,9 @@ const OrderHistory = () => {
 
                 <div className={styles.priceSection}>
                   <p className={styles.price}>{order.price}</p>
-                  <p className={styles.date}>{order.date}</p>
+                  {order.deliveryStatus !== "Delivered" && (
+                    <p className={styles.date}>{order.date}</p>
+                  )}
                 </div>
               </div>
 

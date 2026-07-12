@@ -459,6 +459,7 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
+  color: #A2A3B1;
 }
 
 .username {
@@ -593,4 +594,72 @@
     align-items: flex-start;
     gap: 1rem;
   }
+}
+/* Size chart modal */
+.sizeChartOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.sizeChartModal {
+  background: #0d0d0d;
+  color: #f4f3f1;
+  border-radius: 8px;
+  padding: 1.5rem;
+  max-width: 600px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  font-family: 'Abel', sans-serif;
+}
+
+.sizeChartHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.sizeChartHeader h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  letter-spacing: 0.5px;
+}
+
+.sizeChartClose {
+  background: none;
+  border: none;
+  color: #f4f3f1;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.sizeChartTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sizeChartTable th,
+.sizeChartTable td {
+  border: 1px solid #444;
+  padding: 0.6rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.sizeChartTable th {
+  background: #1a1a1a;
+  color: #e38012;
+}
+
+.sizeChartTable td:first-child {
+  text-align: left;
+  color: #bbb;
 }

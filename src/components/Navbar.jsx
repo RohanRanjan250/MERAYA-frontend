@@ -184,8 +184,16 @@ const Navbar = () => {
       {announcement && (
         <div className={styles.marqueeBar}>
           <div className={styles.marqueeTrack}>
-            <span>{announcement}</span>
-            <span>{announcement}</span>
+            {/* Repeated enough times (and duplicated as a whole below) so the
+                strip stays continuously full — however short the message or
+                wide the screen, there's always another copy sliding in from
+                the right at the same gap, never a blank stretch of bar. */}
+            {Array.from({ length: 12 }).map((_, i) => (
+              <span key={`a-${i}`}>{announcement}</span>
+            ))}
+            {Array.from({ length: 12 }).map((_, i) => (
+              <span key={`b-${i}`}>{announcement}</span>
+            ))}
           </div>
         </div>
       )}
