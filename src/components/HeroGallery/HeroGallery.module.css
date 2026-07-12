@@ -78,6 +78,8 @@
   width: 27.44vw;
   height: 26.19vw;
   aspect-ratio: 439 / 419;
+  object-fit: cover;
+  object-position: top;
 }
 
 .img2 {

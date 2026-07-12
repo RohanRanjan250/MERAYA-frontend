@@ -17,8 +17,7 @@ const ReturnPolicy = () => {
                 <div className={styles.content}>
                     <h1 className={styles.mainTitle}>Meraya Return & Exchange Policy 💌</h1>
                     <p className={styles.intro}>
-                        We want you to be happy with your Meraya purchase, but in case something doesn't work out,
-                        here's how returns & exchanges work:
+                        We want you to love what you wear from Meraya. If something isn't quite right, we're here to help.
                     </p>
 
                     {/* Returns Section */}
@@ -26,34 +25,11 @@ const ReturnPolicy = () => {
                         <h2 className={styles.sectionTitle}>Returns</h2>
                         <div className={styles.card}>
                             <ul className={styles.list}>
-                                <li>Returns are accepted within <strong>7 days of delivery</strong>.</li>
-                                <li>A flat shipping fee of <strong>₹149</strong> will be deducted to cover logistics.</li>
+                                <li>Returns can be requested within <strong>7 days of receiving your order</strong>.</li>
+                                <li>We currently do not offer refunds to the original payment method.</li>
+                                <li>Once your returned product passes our quality check, you'll receive the amount as <strong>Meraya Store Credit</strong>, which can be used on any future purchase.</li>
+                                <li>A <strong>₹150 handling and shipping fee</strong> will be deducted from the store credit issued for every return.</li>
                             </ul>
-
-                            <h3 className={styles.subTitle}>Refund Options:</h3>
-                            <div className={styles.options}>
-                                <div className={styles.option}>
-                                    <span className={styles.optionIcon}>💳</span>
-                                    <div>
-                                        <h4>Store Credit</h4>
-                                        <p>Full value after deduction, valid on your next order</p>
-                                    </div>
-                                </div>
-                                {/* <div className={styles.option}>
-                                    <span className={styles.optionIcon}>💰</span>
-                                    <div>
-                                        <h4>Refund to Original Payment Method</h4>
-                                        <p>After deducting the ₹149 fee</p>
-                                    </div>
-                                </div> */}
-                                <div className={styles.option}>
-                                    <span className={styles.optionIcon}>💰</span>
-                                    <div>
-                                        <h4>Refund to Original Payment Source</h4>
-                                        <p>In case of order cancellations or approved monetary refunds, the amount will be credited back to the customer's original mode of payment within 5–7 business days</p>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </section>
 
@@ -62,24 +38,43 @@ const ReturnPolicy = () => {
                         <h2 className={styles.sectionTitle}>Exchanges</h2>
                         <div className={styles.card}>
                             <ul className={styles.list}>
-                                {/* <li>Exchanges are available for <strong>size or style</strong>.</li>
-                                <li>A flat shipping fee of <strong>₹149</strong> will be charged/deducted.</li>
-                                <li>Once we receive the product back, your new piece will be shipped out.</li> */}
-                                <li>Exchange is currently not available.</li>
+                                <li>Need a different size? We've got you.</li>
+                                <li>Size exchanges can be requested within <strong>7 days of delivery</strong>, subject to availability.</li>
+                                <li>A <strong>₹150 shipping charge</strong> will apply for every exchange request.</li>
+                                <li>If the requested size is unavailable, we'll issue the product value as Meraya Store Credit instead.</li>
                             </ul>
                         </div>
                     </section>
 
                     {/* Conditions Section */}
                     <section className={styles.section}>
-                        <h2 className={styles.sectionTitle}>Conditions</h2>
+                        <h2 className={styles.sectionTitle}>Return & Exchange Conditions</h2>
                         <div className={styles.card}>
                             <ul className={styles.list}>
-                                <li>Items must be <strong>unworn, unused</strong>, with all original tags and packaging intact.</li>
-                                <li>Requests must be raised within <strong>7 days of delivery</strong>.</li>
+                                <li>Products must be <strong>unused, unwashed</strong>, and in their original condition, with all tags and packaging intact.</li>
+                                <li>Items that show signs of wear, washing, damage, or alterations will not be eligible for return or exchange.</li>
+                                <li>Products purchased during special sales, clearance events, or marked as <strong>Final Sale</strong> cannot be returned or exchanged unless they arrive damaged or incorrect.</li>
                             </ul>
                         </div>
                     </section>
+
+                    {/* Damaged or Defective Items Section */}
+                    <section className={styles.section}>
+                        <h2 className={styles.sectionTitle}>Damaged or Defective Items</h2>
+                        <div className={styles.card}>
+                            <p>
+                                If you receive a damaged, defective, or incorrect item, please contact us within{' '}
+                                <strong>48 hours of delivery</strong> with your order number and clear photos at{' '}
+                                <a href="mailto:support@meraya.co.in" className={styles.link}>support@meraya.co.in</a>,
+                                and we'll make it right immediately.
+                            </p>
+                        </div>
+                    </section>
+
+                    <p className={styles.intro}>
+                        Thank you for supporting Meraya. Every piece is thoughtfully made, and we truly appreciate
+                        your patience and understanding as a growing brand.
+                    </p>
 
                     {/* Contact Section */}
                     <section className={styles.contactSection}>

@@ -5,8 +5,8 @@ import leftImgFallback from '../../assets/kurti1.png';
 import rightImgFallback from '../../assets/kurti2.png';
 import { openAPI } from '../../API/instance';
 
-const LEFT_IMG_URL = "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783449361/image_360_us0mvu.png";
-const RIGHT_IMG_URL = "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783449361/image_361_cli7sv.png";
+const LEFT_IMG_URL = "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783886685/pink_shirtnew_2_p9tzpn.png";
+const RIGHT_IMG_URL = "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783886685/red_kurtinew_2_a6uuuz.png";
 
 const findCollectionId = (collections, nameFragment) => {
   const match = collections.find((c) => c.name?.toLowerCase().includes(nameFragment));

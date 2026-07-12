@@ -307,6 +307,10 @@ const OrderHistory = () => {
                     <button className={`${styles.returnBtn} ${styles.alreadyReturned}`} disabled>
                       {RETURN_STATUS_LABELS[order.return_status] || "Already Returned"}
                     </button>
+                  ) : order.within_return_window === false ? (
+                    <button className={`${styles.returnBtn} ${styles.alreadyReturned}`} disabled>
+                      Return/Exchange Window Expired (7 Days)
+                    </button>
                   ) : (
                     <>
                       <button
@@ -426,7 +430,7 @@ const OrderHistory = () => {
                     Your Order no. is <span className={styles.orderId}>#ORD{selectedOrder.orderId}</span>
                   </p>
                   <p style={{ color: '#e38012', fontWeight: 'bold' }}>
-                    An extra ₹{selectedOrder.exchange_delivery_fee || 149} delivery charge applies for exchanges, as per policy.
+                    An extra ₹{selectedOrder.exchange_delivery_fee || 150} delivery charge applies for exchanges, as per policy.
                   </p>
 
                   <div className={styles.refundOptions}>
@@ -461,7 +465,7 @@ const OrderHistory = () => {
                       disabled={!exchangeChecked || !selectedExchangeVariant || isExchanging}
                       onClick={handleExchangeSubmit}
                     >
-                      {isExchanging ? "PROCESSING..." : `PAY ₹${selectedOrder.exchange_delivery_fee || 149} & EXCHANGE`}
+                      {isExchanging ? "PROCESSING..." : `PAY ₹${selectedOrder.exchange_delivery_fee || 150} & EXCHANGE`}
                     </button>
                     <button
                       className={styles.cancelBtn}
