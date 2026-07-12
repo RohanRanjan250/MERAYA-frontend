@@ -20,6 +20,7 @@ const Navbar = () => {
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [cartItemCount, setCartItemCount] = useState(0);
+  const [announcement, setAnnouncement] = useState('');
   const navigate = useNavigate();
   const timeoutRef = useRef(null);
   const shopTimeoutRef = useRef(null);
@@ -85,6 +86,19 @@ const Navbar = () => {
       }
     };
     fetchCategories();
+  }, []);
+
+  // Top-of-site marquee banner, admin-controlled from the dashboard.
+  useEffect(() => {
+    const fetchAnnouncement = async () => {
+      try {
+        const response = await openAPI.get("/announcement/");
+        setAnnouncement(response.data.is_active ? response.data.message : '');
+      } catch (error) {
+        console.error("Error fetching announcement:", error);
+      }
+    };
+    fetchAnnouncement();
   }, []);
 
   const handleShopMouseEnter = () => {
@@ -167,6 +181,14 @@ const Navbar = () => {
 
   return (
     <>
+      {announcement && (
+        <div className={styles.marqueeBar}>
+          <div className={styles.marqueeTrack}>
+            <span>{announcement}</span>
+            <span>{announcement}</span>
+          </div>
+        </div>
+      )}
       <nav className={styles.navbar}>
         <div className={styles.hamburger} onClick={() => setShowMobileMenu(!showMobileMenu)}>
           <FaBars />
@@ -277,7 +299,7 @@ const Navbar = () => {
           <Link to="/wishlist">
             <FaHeart className={styles.icon} />
           </Link>
-          <Link to="/unified">
+          <Link to="/checkout">
             <div className={styles.cartIconWrapper}>
               <FaShoppingBag className={styles.icon} />
               {cartItemCount > 0 && (
@@ -287,7 +309,7 @@ const Navbar = () => {
           </Link>
         </div>
 
-        <Link to="/unified" className={styles.mobileCartIcon}>
+        <Link to="/checkout" className={styles.mobileCartIcon}>
           <div className={styles.cartIconWrapper}>
             <FaShoppingBag className={styles.icon} />
             {cartItemCount > 0 && (

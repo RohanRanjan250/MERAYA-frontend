@@ -98,7 +98,7 @@ const Wishlist = () => {
         </p>
 
         <div className={styles.buttons}>
-          <button onClick={() => navigate("/unified")} className={styles.btn}>
+          <button onClick={() => navigate("/checkout")} className={styles.btn}>
             GO TO CART
           </button>
           <button onClick={() => navigate("/")} className={styles.btnn}>

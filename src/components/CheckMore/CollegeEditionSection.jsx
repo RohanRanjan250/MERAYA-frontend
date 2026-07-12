@@ -42,11 +42,14 @@ const CollegeEditionSection = () => {
         {/* RIGHT SIDE */}
         <div className={styles.collegeEditionRight}>
           <div className={styles.collegeEditionText}>
-            <p className={styles.editionCode}>№{thumbnails[0].id}</p>
+            <p className={styles.editionCode}>№01</p>
             <h2 className={styles.editionTitle}>MERAYA’S {thumbnails[0].name}</h2>
             <p className={styles.editionDescription}>
               {thumbnails[0].description} <span className={styles.whiteLine}></span>
             </p>
+            {thumbnails[0].is_out_of_stock && (
+              <p style={{ color: '#ff6b6b', fontWeight: 'bold' }}>OUT OF STOCK</p>
+            )}
             <button
               className={styles.buyNow}
               onClick={() => handleBuyNow(thumbnails[0].slug)} // ✅ send product id
@@ -69,12 +72,15 @@ const CollegeEditionSection = () => {
                     alt={item.name}
                     className={styles.thumbImg}
                   />
-                  <p className={styles.thumbCode}>№{item.id}</p>
+                  <p className={styles.thumbCode}>№{String(index + 2).padStart(2, '0')}</p>
                   <div className={styles.thumbTitle}>
                     <span className={styles.thumbName}>{item.name}</span>
                     <span className={styles.whiteLine}></span>
                     <span className={styles.thumbPrice}>₹{item.selling_price}</span>
                   </div>
+                  {item.is_out_of_stock && (
+                    <p style={{ color: '#ff6b6b', fontWeight: 'bold', fontSize: '0.8rem' }}>OUT OF STOCK</p>
+                  )}
                   <p className={styles.thumbDesc}>{item.description}</p>
                 </div>
               ))}

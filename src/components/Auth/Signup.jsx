@@ -60,7 +60,7 @@ const Signup = () => {
       }
     } catch (err) {
       console.error("verify failed", err);
-      showToast(err.message || 'Failed to send OTP', 'error');
+      showToast(err.error || err.message || 'Failed to send OTP', 'error');
       setOtpSent(false); // Hide OTP input on failure
     }
   };
@@ -86,7 +86,7 @@ const Signup = () => {
       }
     } catch (err) {
       console.error("Signup failed:", err);
-      showToast(err.message || 'Signup failed', 'error');
+      showToast(err.error || err.message || 'Signup failed', 'error');
     }
   };
 

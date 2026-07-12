@@ -820,7 +820,55 @@ export default function CheckoutFlow() {
     navigate(`/product/${slug}`);
   };
 
+  // Re-fetches the cart from the backend (source of truth for stock) right
+  // before every "proceed" action. Zero-stock items are removed automatically;
+  // items whose quantity now exceeds available stock block the user from
+  // continuing. This is what catches the race where someone else bought the
+  // last unit between this user loading the cart and clicking proceed.
+  const validateCartStock = async () => {
+    try {
+      const freshCart = await fetchCart();
+      const freshItems = freshCart.items || [];
+
+      const outOfStock = freshItems.filter((item) => (item.stock ?? 0) <= 0);
+      const overStock = freshItems.filter((item) => (item.stock ?? 0) > 0 && item.quantity > item.stock);
+      const remaining = freshItems.filter((item) => (item.stock ?? 0) > 0);
+
+      if (outOfStock.length > 0) {
+        await Promise.all(outOfStock.map((item) => removeFromCart(item.id).catch(() => {})));
+      }
+
+      setCartItems(remaining);
+
+      if (outOfStock.length > 0) {
+        const names = outOfStock.map((item) => item.name).join(", ");
+        showToast(`${names} ${outOfStock.length > 1 ? "are" : "is"} out of stock and ${outOfStock.length > 1 ? "have" : "has"} been removed from your cart.`, "error");
+        return false;
+      }
+
+      if (overStock.length > 0) {
+        const names = overStock.map((item) => item.name).join(", ");
+        showToast(`Not enough stock left for ${names}. Please reduce the quantity before continuing.`, "error");
+        return false;
+      }
+
+      if (remaining.length === 0) {
+        showToast("Your cart is empty.", "error");
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.error("Stock validation failed:", error);
+      showToast("Could not verify stock availability. Please try again.", "error");
+      return false;
+    }
+  };
+
   const handleNextStep = async () => {
+    const stockOk = await validateCartStock();
+    if (!stockOk) return;
+
     if (step === "cart") {
       setStep("address");
       return;
@@ -877,7 +925,9 @@ export default function CheckoutFlow() {
 
               if (verificationResult.success) {
                 console.log("Payment verified successfully");
-                navigate('/confirmed');
+                navigate('/confirmed', {
+                  state: { orderId: data.order_id, items: cartItems, total },
+                });
               } else {
                 console.error("Payment verification failed");
                 alert('Payment verification failed. Please contact support.');
@@ -907,7 +957,8 @@ export default function CheckoutFlow() {
 
       } catch (error) {
         console.error("Payment initiation failed:", error);
-        alert(`Error: ${error.message || 'An unexpected error occurred.'}`);
+        const errMsg = error.error || error.message || "An unexpected error occurred.";
+        showToast(errMsg, "error");
       } finally {
         setIsProcessing(false);
       }

@@ -1,3 +1,29 @@
+/* --- Top announcement marquee --- */
+.marqueeBar {
+  background-color: #e38012;
+  color: #040404;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 8px 0;
+}
+
+.marqueeTrack {
+  display: inline-flex;
+  animation: marqueeScroll 18s linear infinite;
+}
+
+.marqueeTrack span {
+  padding-right: 4rem;
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 /* --- Base Navbar Styles --- */
 .navbar {
   background-color: #040404;

@@ -43,6 +43,15 @@ const ProductCard = ({ product, onBuyNow }) => {
         <button className={styles.wishlistBtn} onClick={handleWishlist}>
           <FontAwesomeIcon icon={faHeart} />
         </button>
+        {product.is_out_of_stock && (
+          <div style={{
+            position: 'absolute', bottom: 0, left: 0, right: 0,
+            background: 'rgba(0,0,0,0.7)', color: '#ff6b6b',
+            textAlign: 'center', padding: '4px 0', fontSize: '0.8rem', fontWeight: 'bold',
+          }}>
+            OUT OF STOCK
+          </div>
+        )}
       </div>
       <div className={styles.details}>
         <p className={styles.brand}>MERAYA's</p>

@@ -31,7 +31,7 @@ export const emailloginverify = async (email) => {
     console.log(response);
     return response ;
   }catch (err){
-    throw err.message ;
+    throw err.response?.data || err.message ;
   }
 }
 

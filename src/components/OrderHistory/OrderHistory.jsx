@@ -35,7 +35,7 @@ const OrderHistory = () => {
   const navigate = useNavigate();
   let isAuth = isLoggedIn();
 
-  const steps = ["Order placed", "Processing", "Packaging", "Out for delivery", "Delivered"];
+  const steps = ["Order placed", "Shipped", "Out for delivery", "Delivered"];
 
   useEffect(() => {
     const loadOrders = async () => {
@@ -46,7 +46,7 @@ const OrderHistory = () => {
         }
         const data = await fetchOrders();
         console.log(data)
-        const allowedStatuses = ["Order placed", "Processing", "Packaging", "Out for delivery", "Delivered"];
+        const allowedStatuses = ["Order placed", "Shipped", "Out for delivery", "Delivered"];
         const filteredOrders = (data.orders || []).filter(order =>
           allowedStatuses.includes(order.deliveryStatus)
         );

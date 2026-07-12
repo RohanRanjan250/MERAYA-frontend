@@ -51,8 +51,9 @@ const Login = () => {
       }
     } catch (err) {
       console.error("OTP send failed", err);
-      setError(err.message || "Failed to send OTP. Try again!");
-      showToast(err.message || 'Failed to send OTP', 'error');
+      const errMsg = err.error || err.message || "Failed to send OTP. Try again!";
+      setError(errMsg);
+      showToast(errMsg, 'error');
       setOtpSent(false); // Hide OTP input on failure
     }
   };
