@@ -15,9 +15,44 @@
   flex: 1;
 }
 
+.mainImageWrapper {
+  position: relative;
+}
+
 .mainImage {
   width: 100%;
   min-height: 30rem;
+}
+
+.slideArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(4, 4, 4, 0.55);
+  color: #f4f3f1;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: background 0.2s ease;
+  z-index: 2;
+}
+
+.slideArrow:hover {
+  background: rgba(227, 128, 18, 0.85);
+}
+
+.slideArrowLeft {
+  left: 12px;
+}
+
+.slideArrowRight {
+  right: 12px;
 }
 
 .thumbnails {

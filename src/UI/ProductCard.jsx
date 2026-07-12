@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { ArrowDownLeft } from "lucide-react";
 import { optimizeImage } from "../utils/cloudinaryImages";
 import styles from "./ProductCard.module.css";
 
@@ -59,7 +60,7 @@ const ProductCard = ({ id, image, title, desc, price, showPrice, onRemove, onAdd
                 cursor: isOutOfStock ? 'not-allowed' : 'pointer'
               }}
             >
-              {isOutOfStock ? 'Out of Stock' : 'Add to Cart ↙'}
+              {isOutOfStock ? 'Out of Stock' : <>Add to Cart <ArrowDownLeft size={16} style={{ verticalAlign: 'middle' }} /></>}
             </button>
           )}
         </div>

@@ -6,7 +6,7 @@ import { ArrowDownLeft } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 import { faShareFromSquare } from "@fortawesome/free-regular-svg-icons";
-import { faStar, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { faStar, faUserCircle, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { faIndianRupeeSign } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import { updateReviewReaction, toggleWishlist, addToCart } from "../../API/productmainpageAPI.jsx";
@@ -39,6 +39,17 @@ export default function Product({ product, setProduct }) {
   const { showToast } = useToast();
   const navigate = useNavigate();
   let isAuth = isLoggedIn();
+
+  const currentImageIndex = product.images.indexOf(selectedImage);
+  const showSlideArrows = product.images.length > 1;
+  const handlePrevImage = () => {
+    const prevIndex = (currentImageIndex - 1 + product.images.length) % product.images.length;
+    setSelectedImage(product.images[prevIndex]);
+  };
+  const handleNextImage = () => {
+    const nextIndex = (currentImageIndex + 1) % product.images.length;
+    setSelectedImage(product.images[nextIndex]);
+  };
 
   // Check if product has any stock
   const hasStock = product.variants && product.variants.length > 0;
@@ -172,11 +183,33 @@ export default function Product({ product, setProduct }) {
       <div className={styles.container}>
         {/* Left Section - Images */}
         <div className={styles.left}>
-          <img
-            src={optimizeImage(selectedImage, 800)}
-            alt={product.title}
-            className={styles.mainImage}
-          />
+          <div className={styles.mainImageWrapper}>
+            <img
+              src={optimizeImage(selectedImage, 800)}
+              alt={product.title}
+              className={styles.mainImage}
+            />
+            {showSlideArrows && (
+              <>
+                <button
+                  type="button"
+                  className={`${styles.slideArrow} ${styles.slideArrowLeft}`}
+                  onClick={handlePrevImage}
+                  aria-label="Previous image"
+                >
+                  <FontAwesomeIcon icon={faChevronLeft} />
+                </button>
+                <button
+                  type="button"
+                  className={`${styles.slideArrow} ${styles.slideArrowRight}`}
+                  onClick={handleNextImage}
+                  aria-label="Next image"
+                >
+                  <FontAwesomeIcon icon={faChevronRight} />
+                </button>
+              </>
+            )}
+          </div>
           <div className={styles.thumbnails}>
             {product.images.map((img, index) => (
               <img

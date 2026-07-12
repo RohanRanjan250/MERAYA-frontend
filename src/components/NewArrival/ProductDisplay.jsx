@@ -2,6 +2,7 @@ import styles from './ProductDisplay.module.css';
 import { LandingContext } from "../../Context/LandingpageContext.jsx";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect, useContext } from 'react';
+import { ArrowDownLeft } from "lucide-react";
 import { optimizeImage } from "../../utils/cloudinaryImages";
 
 const shuffleArray = (array) => {
@@ -83,7 +84,7 @@ const ProductDisplay = () => {
                  {/* Format price, handle missing price */}
                 <p>₹{product1.selling_price ? product1.selling_price.toFixed(2) : "N/A"}</p>
                  {/* Link button to handleBuyNow with the product's slug */}
-                <button onClick={() => handleBuyNow(product1.slug)}>VIEW ↙</button>
+                <button onClick={() => handleBuyNow(product1.slug)}>VIEW <ArrowDownLeft size={16} style={{ verticalAlign: 'middle' }} /></button>
               </div>
             </div>
             <hr className={styles.divider} />
@@ -109,7 +110,7 @@ const ProductDisplay = () => {
               <h3>{product2.name || "Product Title"}</h3>
               <div className={styles.metaBottom}>
                 <p>₹{product2.selling_price ? product2.selling_price.toFixed(2) : "N/A"}</p>
-                <button onClick={() => handleBuyNow(product2.slug)}>VIEW ↙</button>
+                <button onClick={() => handleBuyNow(product2.slug)}>VIEW <ArrowDownLeft size={16} style={{ verticalAlign: 'middle' }} /></button>
               </div>
             </div>
             <hr className={styles.divider} />
