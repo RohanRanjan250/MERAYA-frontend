@@ -10,6 +10,12 @@
   font-family: 'Abel', sans-serif;
 }
 
+@media (max-width: 600px) {
+  .container {
+    padding: 0 1.25rem;
+  }
+}
+
 .title {
   font-size: 22px;
   font-weight: 500;

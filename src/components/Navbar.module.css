@@ -10,7 +10,7 @@
 
 .marqueeTrack {
   display: inline-flex;
-  animation: marqueeScroll 24s linear infinite;
+  animation: marqueeScroll 34s linear infinite;
 }
 
 .marqueeTrack span {
@@ -293,6 +293,30 @@
   border: 0;
   border-top: 1px solid #333;
   margin: 1rem 0;
+}
+
+.mobileShopToggle {
+  color: #f4f3f1;
+  font-size: 1.5rem;
+  padding: 1rem 0;
+  font-family: 'Abel', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.mobileShopDropdown {
+  display: flex;
+  flex-direction: column;
+  padding-left: 1rem;
+  border-left: 2px solid #333;
+  margin-bottom: 0.5rem;
+}
+
+.mobileShopDropdown a {
+  font-size: 1.1rem;
+  padding: 0.6rem 0;
 }
 
 /* ================================================= */

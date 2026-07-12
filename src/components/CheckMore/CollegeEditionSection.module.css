@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Khand:wght@500&family=Meddon&display=swap');
 
 .collegeEditionSection {
-  width: 100vw;
+  width: 100%;
+  overflow-x: hidden;
   background-color: #040404;
   color: rgba(244, 243, 241, 1);
   padding: 4vw 0vw 0vw 3vw;
@@ -273,6 +274,7 @@
 
   .collegeThumbCard {
     width: 100%;
+    min-width: 0;
   }
 
   .thumbImg {

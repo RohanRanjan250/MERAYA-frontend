@@ -3,8 +3,8 @@
   /* Allow card to shrink */
   max-width: 371px;
   /* Set a max-width for desktop */
-  height: auto;
-  /* Let content determine the height */
+  height: 100%;
+  /* Stretch to match the tallest card in the same grid row */
   display: flex;
   flex-direction: column;
   background: #040404;
@@ -38,6 +38,9 @@
 .meta {
   display: flex;
   flex-direction: column;
+  flex: 1;
+  /* Fill the stretched card so equal-height rows also align content evenly */
+  justify-content: space-between;
   padding: 1rem;
   /* Use consistent padding */
 }

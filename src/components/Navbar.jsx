@@ -26,6 +26,7 @@ const Navbar = () => {
   const shopTimeoutRef = useRef(null);
   const searchTimeoutRef = useRef(null);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [showMobileShopDropdown, setShowMobileShopDropdown] = useState(false);
 
   const handleMouseEnter = () => {
     clearTimeout(timeoutRef.current);
@@ -336,7 +337,24 @@ const Navbar = () => {
 
         {/* --- 2. Add onClick to all mobile menu links and convert to <Link> --- */}
         <Link to="/" onClick={closeMobileMenu}>HOME</Link>
-        <Link to="/products" onClick={closeMobileMenu}>SHOP</Link>
+
+        <div
+          className={styles.mobileShopToggle}
+          onClick={() => setShowMobileShopDropdown((prev) => !prev)}
+        >
+          SHOP <FaChevronDown className={`${styles.dropdownIcon} ${showMobileShopDropdown ? styles.rotate : ''}`} />
+        </div>
+        {showMobileShopDropdown && (
+          <div className={styles.mobileShopDropdown}>
+            <Link to="/products" onClick={closeMobileMenu}>All Products</Link>
+            {categories.map((c) => (
+              <Link key={c.id} to={`/products?category=${c.id}`} onClick={closeMobileMenu}>
+                {c.name}
+              </Link>
+            ))}
+          </div>
+        )}
+
         <Link to="/products" onClick={closeMobileMenu}>COLLECTIONS</Link>
         <Link to="/myaccount/contact" onClick={closeMobileMenu}>ACCOUNT</Link>
         <Link to="/myaccount/order" onClick={closeMobileMenu}>ORDERS</Link>
