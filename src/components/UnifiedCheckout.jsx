@@ -9,6 +9,7 @@ import { useToast } from "../Context/ToastContext";
 import API from "../API/instance";
 import { SAD_URL, onImgError, optimizeImage } from "../utils/cloudinaryImages";
 import { isLoggedIn } from "../utils/authCookie";
+import { trackBeginCheckout, trackAddShippingInfo, trackAddPaymentInfo, trackPurchase } from "../utils/analytics";
 
 const success = SAD_URL;
 
@@ -705,10 +706,15 @@ export default function CheckoutFlow() {
           fetchCart(),
           getUserAddress(),
         ]);
-        setCartItems(cartData.items || []);
+        const items = cartData.items || [];
+        setCartItems(items);
         setAddresses(addressData || []);
         if (addressData && addressData.length > 0) {
           setSelectedAddress(addressData[0]);
+        }
+        if (items.length > 0) {
+          const total = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+          trackBeginCheckout(items, total);
         }
       } catch (error) {
         console.error("Failed to load checkout data:", error);
@@ -879,12 +885,14 @@ export default function CheckoutFlow() {
         showToast("Please select a delivery address.", "error");
         return;
       }
+      trackAddShippingInfo(cartItems, sellingPriceTotal);
       setStep("summary");
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
     if (step === "summary") {
       window.scrollTo({ top: 0, behavior: "smooth" });
+      trackAddPaymentInfo(cartItems, total);
       setIsProcessing(true);
 
       const orderPayload = {
@@ -928,6 +936,7 @@ export default function CheckoutFlow() {
 
               if (verificationResult.success) {
                 console.log("Payment verified successfully");
+                trackPurchase(data.order_id, cartItems, total);
                 navigate('/confirmed', {
                   state: { orderId: data.order_id, items: cartItems, total },
                 });

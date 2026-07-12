@@ -15,6 +15,7 @@ import { useToast } from "../../Context/ToastContext.jsx"; // 1. Import the useT
 import RelatedProducts from "../RelatedProduct/RelatedProduct";
 import { isLoggedIn } from "../../utils/authCookie";
 import { optimizeImage } from "../../utils/cloudinaryImages";
+import { trackViewItem, trackAddToCart } from "../../utils/analytics";
 
 const SIZE_CHART_SIZES = ["XS", "S", "M", "L", "XL"];
 const SIZE_CHART_ROWS = [
@@ -39,6 +40,11 @@ export default function Product({ product, setProduct }) {
   const { showToast } = useToast();
   const navigate = useNavigate();
   let isAuth = isLoggedIn();
+
+  useEffect(() => {
+    trackViewItem(product);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product.id]);
 
   const currentImageIndex = product.images.indexOf(selectedImage);
   const showSlideArrows = product.images.length > 1;
@@ -171,6 +177,7 @@ export default function Product({ product, setProduct }) {
 
       const variantId = variant.id;
       await addToCart(product.id, variantId);
+      trackAddToCart(product, variant.size);
       showToast('Added to cart successfully!', 'success');
     } catch (err) {
       console.error("Error adding to cart:", err);
