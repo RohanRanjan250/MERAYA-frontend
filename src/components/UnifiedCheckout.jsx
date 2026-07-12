@@ -871,6 +871,7 @@ export default function CheckoutFlow() {
 
     if (step === "cart") {
       setStep("address");
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
     if (step === "address") {
@@ -879,9 +880,11 @@ export default function CheckoutFlow() {
         return;
       }
       setStep("summary");
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
     if (step === "summary") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
       setIsProcessing(true);
 
       const orderPayload = {

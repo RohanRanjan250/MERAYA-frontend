@@ -143,8 +143,8 @@
   justify-content: space-between;
   flex-wrap: wrap;
   font-size: 0.75vw;
-  padding-top: 2vw;
-  margin-bottom: 2vw;
+  padding-top: 0.8vw;
+  margin-bottom: 0.5vw;
 }
 
 .leftBottom {
@@ -375,5 +375,9 @@
 
   .links {
     align-items: flex-start;
+  }
+
+  .links a {
+    text-decoration: none;
   }
 }
