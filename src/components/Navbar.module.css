@@ -9,11 +9,11 @@
 
 .marqueeTrack {
   display: inline-flex;
-  animation: marqueeScroll 18s linear infinite;
+  animation: marqueeScroll 12s linear infinite;
 }
 
 .marqueeTrack span {
-  padding-right: 4rem;
+  padding-right: 8rem;
   font-family: 'Abel', sans-serif;
   font-weight: bold;
   letter-spacing: 0.5px;
