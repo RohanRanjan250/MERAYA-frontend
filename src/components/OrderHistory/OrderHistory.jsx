@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./OrderHistory.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
-import { fetchOrders, initiateReturn } from "../../API/orderAPI";
+import { fetchOrders, initiateReturn, initiateExchange, verifyPayment } from "../../API/orderAPI";
 import { submitReview } from "../../API/productmainpageAPI";
 import returnnFallback from "../../assets/return.png";
 import successFallback from "../../assets/Success.png";
@@ -18,6 +18,21 @@ const RETURN_STATUS_LABELS = {
   Approved: "Return Approved — pickup pending",
   Granted: "Refund Credited",
   Rejected: "Return Rejected",
+  Exchanged: "Exchange in Progress",
+};
+
+const loadScript = (src) => {
+  return new Promise((resolve) => {
+    if (document.querySelector(`script[src="${src}"]`)) {
+      resolve(true);
+      return;
+    }
+    const script = document.createElement("script");
+    script.src = src;
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
 };
 
 const OrderHistory = () => {
@@ -29,6 +44,11 @@ const OrderHistory = () => {
   const [refundMethod, setRefundMethod] = useState("wallet");
   const [isChecked, setIsChecked] = useState(false);
   const [showReturnConfirmation, setShowReturnConfirmation] = useState(false);
+  const [showExchangeModal, setShowExchangeModal] = useState(false);
+  const [selectedExchangeVariant, setSelectedExchangeVariant] = useState("");
+  const [exchangeChecked, setExchangeChecked] = useState(false);
+  const [isExchanging, setIsExchanging] = useState(false);
+  const [showExchangeConfirmation, setShowExchangeConfirmation] = useState(false);
   const [loading, setLoading] = useState(true);
   const [reviewDraft, setReviewDraft] = useState(null); // { orderId, productId, rating, title, description }
   const [submittingReview, setSubmittingReview] = useState(false);
@@ -38,30 +58,35 @@ const OrderHistory = () => {
   const steps = ["Order placed", "Shipped", "Out for delivery", "Delivered"];
 
   useEffect(() => {
-    const loadOrders = async () => {
-      try {
-        if (!isAuth) {
-          navigate("/login");
-          return;
-        }
-        const data = await fetchOrders();
-        console.log(data)
-        const allowedStatuses = ["Order placed", "Shipped", "Out for delivery", "Delivered"];
-        const filteredOrders = (data.orders || []).filter(order =>
-          allowedStatuses.includes(order.deliveryStatus)
-        );
-        const withRatings = filteredOrders.map(order => ({
-          ...order,
-          points: order.rating || 0,
-        }));
-        setOrders(withRatings);
-      } catch (err) {
-        console.error("Error fetching orders:", err);
-      } finally {
-        setLoading(false);
+    loadScript("https://checkout.razorpay.com/v1/checkout.js");
+  }, []);
+
+  const loadOrders = async () => {
+    try {
+      if (!isAuth) {
+        navigate("/login");
+        return;
       }
-    };
+      const data = await fetchOrders();
+      const allowedStatuses = ["Order placed", "Shipped", "Out for delivery", "Delivered"];
+      const filteredOrders = (data.orders || []).filter(order =>
+        allowedStatuses.includes(order.deliveryStatus)
+      );
+      const withRatings = filteredOrders.map(order => ({
+        ...order,
+        points: order.rating || 0,
+      }));
+      setOrders(withRatings);
+    } catch (err) {
+      console.error("Error fetching orders:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     loadOrders();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const toggleExpand = (id) => {
@@ -149,11 +174,68 @@ const OrderHistory = () => {
         reason,
         refundMethod
       );
-      handleCloseModal(); 
+      handleCloseModal();
       setShowReturnConfirmation(true);
     } catch (err) {
       console.error("Error submitting return:", err);
       alert("Something went wrong while placing the return.");
+    }
+  };
+
+  const handleCloseExchangeModal = () => {
+    setShowExchangeModal(false);
+    setSelectedExchangeVariant("");
+    setExchangeChecked(false);
+  };
+
+  const handleExchangeSubmit = async () => {
+    if (!selectedOrder || !selectedExchangeVariant) return;
+    setIsExchanging(true);
+    try {
+      const data = await initiateExchange(selectedOrder.orderitem_id, Number(selectedExchangeVariant));
+
+      const options = {
+        key: data.key,
+        amount: data.amount,
+        currency: data.currency,
+        name: "Meraya",
+        description: "Exchange delivery fee",
+        order_id: data.razorpay_order_id,
+        handler: async function (response) {
+          try {
+            const verificationResult = await verifyPayment({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+              order_id: data.order_id,
+            });
+            if (verificationResult.success) {
+              handleCloseExchangeModal();
+              setShowExchangeConfirmation(true);
+            } else {
+              alert("Payment verification failed. Please contact support.");
+            }
+          } catch (error) {
+            console.error("Exchange payment verification error:", error);
+            alert("Payment verification failed. Please contact support with your payment ID: " + response.razorpay_payment_id);
+          } finally {
+            setIsExchanging(false);
+          }
+        },
+        modal: {
+          ondismiss: function () {
+            setIsExchanging(false);
+          },
+        },
+        theme: { color: "#e38012" },
+      };
+
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+    } catch (err) {
+      console.error("Error initiating exchange:", err);
+      alert(err?.error || "Something went wrong while initiating the exchange.");
+      setIsExchanging(false);
     }
   };
 
@@ -220,16 +302,30 @@ const OrderHistory = () => {
                       {RETURN_STATUS_LABELS[order.return_status] || "Already Returned"}
                     </button>
                   ) : (
-                    <button
-                      className={styles.returnBtn}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setSelectedOrder(order);
-                        setShowReturnModal(true);
-                      }}
-                    >
-                      Return
-                    </button>
+                    <>
+                      <button
+                        className={styles.returnBtn}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedOrder(order);
+                          setShowReturnModal(true);
+                        }}
+                      >
+                        Return
+                      </button>
+                      {order.available_variants && order.available_variants.length > 0 && (
+                        <button
+                          className={styles.returnBtn}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedOrder(order);
+                            setShowExchangeModal(true);
+                          }}
+                        >
+                          Exchange
+                        </button>
+                      )}
+                    </>
                   )}
                 </>
               )}
@@ -314,7 +410,65 @@ const OrderHistory = () => {
                 </div>
               </div>
             )}
-            
+
+            {/* EXCHANGE FORM MODAL */}
+            {showExchangeModal && selectedOrder && selectedOrder.orderId === order.orderId && (
+              <div className={styles.modalOverlay}>
+                <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+                  <h3>EXCHANGE THIS ITEM?</h3>
+                  <p>
+                    Your Order no. is <span className={styles.orderId}>#ORD{selectedOrder.orderId}</span>
+                  </p>
+                  <p style={{ color: '#e38012', fontWeight: 'bold' }}>
+                    An extra ₹{selectedOrder.exchange_delivery_fee || 149} delivery charge applies for exchanges, as per policy.
+                  </p>
+
+                  <div className={styles.refundOptions}>
+                    <label style={{ display: 'block', marginBottom: 8 }}>Choose new size:</label>
+                    <select
+                      value={selectedExchangeVariant}
+                      onChange={(e) => setSelectedExchangeVariant(e.target.value)}
+                      className={styles.reasonBox}
+                    >
+                      <option value="">Select a size</option>
+                      {(selectedOrder.available_variants || []).map((v) => (
+                        <option key={v.id} value={v.id}>{v.size}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className={styles.checkboxGroup}>
+                    <label className={styles.checkboxLabel}>
+                      <input
+                        type="checkbox"
+                        checked={exchangeChecked}
+                        onChange={(e) => setExchangeChecked(e.target.checked)}
+                      />
+                      <span className={styles.customCheckbox}></span>
+                      Accept Terms & Conditions
+                    </label>
+                  </div>
+
+                  <div className={styles.modalButtons}>
+                    <button
+                      className={styles.returnConfirmBtn}
+                      disabled={!exchangeChecked || !selectedExchangeVariant || isExchanging}
+                      onClick={handleExchangeSubmit}
+                    >
+                      {isExchanging ? "PROCESSING..." : `PAY ₹${selectedOrder.exchange_delivery_fee || 149} & EXCHANGE`}
+                    </button>
+                    <button
+                      className={styles.cancelBtn}
+                      onClick={handleCloseExchangeModal}
+                      disabled={isExchanging}
+                    >
+                      CANCEL
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* ... (rest of your expanded section JSX remains unchanged) ... */}
             <div className={styles.expandedSection}>
               {expandedOrder === order.orderId && (
@@ -400,6 +554,31 @@ const OrderHistory = () => {
             <button
               className={styles.cancelBtnn}
               onClick={() => setShowReturnConfirmation(false)}
+            >
+              CLOSE
+            </button>
+          </div>
+        </div>
+      )}
+
+      {showExchangeConfirmation && selectedOrder && (
+        <div className={styles.modalOverlay}>
+          <div className={`${styles.modalContent} ${styles.confirmationContent}`}>
+            <h3>EXCHANGE CONFIRMED</h3>
+            <div className={styles.confirmationIcon}><img src={success} onError={onImgError(successFallback)} alt="success" className={styles.success}></img></div>
+            <p>Your replacement order has been placed for the new size.</p>
+            <p>
+              Please ship back the original item from order{" "}
+              <span className={styles.orderId}>#ORD{selectedOrder.orderId}</span> to complete the exchange.
+            </p>
+            <p>You will receive the confirmation email shortly with full details.</p>
+            <button
+              className={styles.cancelBtnn}
+              onClick={() => {
+                setShowExchangeConfirmation(false);
+                setLoading(true);
+                loadOrders();
+              }}
             >
               CLOSE
             </button>

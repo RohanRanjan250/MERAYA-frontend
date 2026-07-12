@@ -44,3 +44,16 @@ export const verifyPayment = async (paymentData) => {
     throw error.response?.data || error.message;
   }
 };
+
+export const initiateExchange = async (orderItemId, newVariantId) => {
+  try {
+    const response = await API.post("/orders/exchange/initiate", {
+      order_item_id: orderItemId,
+      new_variant_id: newVariantId,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Exchange initiation failed:", error);
+    throw error.response?.data || error.message;
+  }
+};
