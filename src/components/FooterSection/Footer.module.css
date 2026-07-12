@@ -143,8 +143,8 @@
   justify-content: space-between;
   flex-wrap: wrap;
   font-size: 0.75vw;
-  padding-top: 0.8vw;
-  margin-bottom: 0.5vw;
+  padding-top: 2vw;
+  margin-bottom: 2vw;
 }
 
 .leftBottom {
@@ -315,6 +315,8 @@
   .bottom {
     font-size: 3.5vw;
     gap: 4vw;
+    padding-top: 1vw;
+    margin-bottom: 0.5vw;
   }
 
   .linkHeader {

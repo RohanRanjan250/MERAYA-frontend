@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import styles from './CollegeEditionSection.module.css';
 import { LandingContext } from "../../Context/LandingpageContext.jsx";
 import { useNavigate } from "react-router-dom";
+import { optimizeImage } from "../../utils/cloudinaryImages";
 
 const CollegeEditionSection = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const CollegeEditionSection = () => {
         {/* LEFT SIDE */}
         <div className={styles.collegeEditionLeft}>
           <img
-            src={thumbnails[0].images[0]}
+            src={optimizeImage(thumbnails[0].images[0], 700)}
             alt={thumbnails[0].name}
             className={styles.mainModelImg}
           />
@@ -68,7 +69,7 @@ const CollegeEditionSection = () => {
                   style={{ cursor: "pointer" }}
                 >
                   <img
-                    src={item.images[0]}
+                    src={optimizeImage(item.images[0], 400)}
                     alt={item.name}
                     className={styles.thumbImg}
                   />

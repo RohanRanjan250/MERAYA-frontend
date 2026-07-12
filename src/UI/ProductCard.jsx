@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { optimizeImage } from "../utils/cloudinaryImages";
 import styles from "./ProductCard.module.css";
 
 const ProductCard = ({ id, image, title, desc, price, showPrice, onRemove, onAddToCart, onBuyNow, variant, stock, showRemove = true, showAddToCart = true }) => {
@@ -10,7 +11,7 @@ const ProductCard = ({ id, image, title, desc, price, showPrice, onRemove, onAdd
       {/* Image */}
       <div className={styles.imageWrapper}>
         <img
-          src={image}
+          src={optimizeImage(image, 500)}
           alt={title}
           className={`${styles.image} ${isOutOfStock ? styles.outOfStockImage : ''}`}
         />

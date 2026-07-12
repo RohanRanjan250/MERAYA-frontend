@@ -2,6 +2,7 @@ import styles from './ProductDisplay.module.css';
 import { LandingContext } from "../../Context/LandingpageContext.jsx";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect, useContext } from 'react';
+import { optimizeImage } from "../../utils/cloudinaryImages";
 
 const shuffleArray = (array) => {
   let currentIndex = array.length, randomIndex;
@@ -66,7 +67,7 @@ const ProductDisplay = () => {
         {product1 ? (
           <div className={styles.card}>
             <img
-              src={product1.images[0] || "https://placehold.co/400x500/cccccc/ffffff?text=Image+Not+Available"}
+              src={optimizeImage(product1.images[0], 500) || "https://placehold.co/400x500/cccccc/ffffff?text=Image+Not+Available"}
               alt={product1.name || "Product Image"}
               className={styles.productImg} // Use productImg for both
               loading="lazy"
@@ -95,7 +96,7 @@ const ProductDisplay = () => {
         {product2 ? (
           <div className={styles.card}>
             <img
-              src={product2.images[0] || "https://placehold.co/400x500/cccccc/ffffff?text=Image+Not+Available"}
+              src={optimizeImage(product2.images[0], 500) || "https://placehold.co/400x500/cccccc/ffffff?text=Image+Not+Available"}
               alt={product2.name || "Product Image"}
               className={styles.productIm} 
               loading="lazy"

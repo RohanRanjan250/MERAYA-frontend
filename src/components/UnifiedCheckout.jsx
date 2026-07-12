@@ -7,7 +7,7 @@ import styles from "./OrderConfirmed/OrderConfirmed.module.css"
 import successFallback from "../assets/sad.png"
 import { useToast } from "../Context/ToastContext";
 import API from "../API/instance";
-import { SAD_URL, onImgError } from "../utils/cloudinaryImages";
+import { SAD_URL, onImgError, optimizeImage } from "../utils/cloudinaryImages";
 import { isLoggedIn } from "../utils/authCookie";
 
 const success = SAD_URL;
@@ -24,7 +24,7 @@ const CartItems = ({ items, onQuantityChange, onRemove, onBuyNow }) => {
         return (
           <div key={item.id} className="item">
             <img
-              src={item.image[0] || "https://via.placeholder.com/150"}
+              src={optimizeImage(item.image[0], 200) || "https://via.placeholder.com/150"}
               alt={item.name}
               className="image"
               onClick={() => onBuyNow(item.slug)}
@@ -255,7 +255,7 @@ const CartSummary = ({ items, address, estimatedDeliveryDate }) => {
     <div className="cartSummaryContainer">
       {items.map((item) => (
         <div key={item.id} className="itemCard">
-          <img src={item.image[0]} alt={item.name} className="image" />
+          <img src={optimizeImage(item.image[0], 200)} alt={item.name} className="image" />
           <div className="details">
             <h3>{item.name}</h3>
             <p className="price">₹{item.price.toFixed(2)}</p>

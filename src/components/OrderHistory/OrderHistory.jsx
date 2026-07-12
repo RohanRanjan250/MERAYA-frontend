@@ -7,7 +7,7 @@ import { submitReview } from "../../API/productmainpageAPI";
 import returnnFallback from "../../assets/return.png";
 import successFallback from "../../assets/Success.png";
 import { useNavigate } from "react-router-dom";
-import { RETURN_URL, SUCCESS_URL, onImgError } from "../../utils/cloudinaryImages";
+import { RETURN_URL, SUCCESS_URL, onImgError, optimizeImage } from "../../utils/cloudinaryImages";
 import { isLoggedIn } from "../../utils/authCookie";
 
 const returnn = RETURN_URL;
@@ -183,7 +183,7 @@ const OrderHistory = () => {
             {/* ... (rest of your order card JSX remains unchanged) ... */}
             <div>
               <div className={styles.topRow}>
-                <img src={order.image} alt={order.title} className={styles.image} />
+                <img src={optimizeImage(order.image, 200)} alt={order.title} className={styles.image} />
 
                 <div className={styles.details}>
                   <h3>{order.title}</h3>

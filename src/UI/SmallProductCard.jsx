@@ -5,6 +5,7 @@ import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { toggleWishlist } from "../API/productmainpageAPI";
 import { useToast } from "../Context/ToastContext";
 import { isLoggedIn } from "../utils/authCookie";
+import { optimizeImage } from "../utils/cloudinaryImages";
 
 import { useNavigate } from "react-router-dom";
 
@@ -37,7 +38,7 @@ const ProductCard = ({ product, onBuyNow }) => {
     <div className={styles.card} onClick={onBuyNow}>
       <div className={styles.imageWrapper}>
         <img
-          src={product.images?.[0] || "https://via.placeholder.com/150"}
+          src={optimizeImage(product.images?.[0], 300) || "https://via.placeholder.com/150"}
           alt={product.name}
         />
         <button className={styles.wishlistBtn} onClick={handleWishlist}>

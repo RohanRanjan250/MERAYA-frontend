@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "../../Context/ToastContext.jsx"; // 1. Import the useToast hook
 import RelatedProducts from "../RelatedProduct/RelatedProduct";
 import { isLoggedIn } from "../../utils/authCookie";
+import { optimizeImage } from "../../utils/cloudinaryImages";
 
 const SIZE_CHART_SIZES = ["XS", "S", "M", "L", "XL"];
 const SIZE_CHART_ROWS = [
@@ -172,7 +173,7 @@ export default function Product({ product, setProduct }) {
         {/* Left Section - Images */}
         <div className={styles.left}>
           <img
-            src={selectedImage}
+            src={optimizeImage(selectedImage, 800)}
             alt={product.title}
             className={styles.mainImage}
           />
@@ -180,7 +181,7 @@ export default function Product({ product, setProduct }) {
             {product.images.map((img, index) => (
               <img
                 key={index}
-                src={img}
+                src={optimizeImage(img, 150)}
                 alt={`thumb-${index}`}
                 className={`${styles.thumb} ${selectedImage === img ? styles.active : ""
                   }`}

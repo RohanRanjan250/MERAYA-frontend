@@ -5,7 +5,7 @@ import { FaSearch, FaUser, FaHeart, FaShoppingBag, FaBars, FaTimes, FaChevronDow
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../API/authApi";
 import { openAPI } from "../API/instance";
-import { LOGO_URL, onImgError } from "../utils/cloudinaryImages";
+import { LOGO_URL, onImgError, optimizeImage } from "../utils/cloudinaryImages";
 import { isLoggedIn } from "../utils/authCookie";
 
 const logo = LOGO_URL;
@@ -256,7 +256,7 @@ const Navbar = () => {
                         onClick={() => handleProductClick(product.slug)}
                       >
                         {product.image && (
-                          <img src={product.image} alt={product.name} className={styles.resultImage} />
+                          <img src={optimizeImage(product.image, 80)} alt={product.name} className={styles.resultImage} />
                         )}
                         <div className={styles.resultInfo}>
                           <div className={styles.resultName}>{product.name}</div>
@@ -275,7 +275,7 @@ const Navbar = () => {
                         onClick={() => handleProductClick(product.slug)}
                       >
                         {product.image && (
-                          <img src={product.image} alt={product.name} className={styles.resultImage} />
+                          <img src={optimizeImage(product.image, 80)} alt={product.name} className={styles.resultImage} />
                         )}
                         <div className={styles.resultInfo}>
                           <div className={styles.resultName}>{product.name}</div>

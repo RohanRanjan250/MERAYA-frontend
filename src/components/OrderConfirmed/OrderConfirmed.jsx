@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./OrderConfirmed.module.css";
 import successFallback from "../../assets/Success.png"
-import { SUCCESS_URL, onImgError } from "../../utils/cloudinaryImages";
+import { SUCCESS_URL, onImgError, optimizeImage } from "../../utils/cloudinaryImages";
 
 const success = SUCCESS_URL;
 
@@ -48,7 +48,7 @@ export default function OrderConfirmed() {
               }}
             >
               <img
-                src={item.image?.[0]}
+                src={optimizeImage(item.image?.[0], 120)}
                 alt={item.name}
                 style={{ width: 56, height: 72, objectFit: 'cover' }}
               />
