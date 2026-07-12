@@ -264,12 +264,20 @@
   }
 
   .collegeThumbnails {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 4vw;
     margin-top: 4vw;
+    overflow-x: visible;
   }
 
   .collegeThumbCard {
-    width: 60vw;
+    width: 100%;
+  }
+
+  .thumbImg {
+    width: 100%;
+    height: 30vw;
   }
 
   .thumbCode {

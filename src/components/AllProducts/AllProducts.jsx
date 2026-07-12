@@ -238,6 +238,7 @@ const AllProducts = () => {
                                 showPrice={product.show_price}
                                 stock={product.stock}
                                 showRemove={false}
+                                showAddToCart={false}
                                 onRemove={() => { }}
                                 onAddToCart={handleAddToCart}
                                 onBuyNow={() => handleBuyNow(product.slug)}

@@ -513,6 +513,17 @@
     min-height: auto; /* Remove fixed min-height */
   }
 
+  .thumbnails {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    padding-bottom: 0.5rem;
+  }
+
+  .thumb {
+    flex-shrink: 0;
+  }
+
   .title {
     font-size: 1.5rem; /* Reduce title font size for smaller screens */
   }

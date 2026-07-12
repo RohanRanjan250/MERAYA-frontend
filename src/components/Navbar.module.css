@@ -10,7 +10,7 @@
 
 .marqueeTrack {
   display: inline-flex;
-  animation: marqueeScroll 12s linear infinite;
+  animation: marqueeScroll 24s linear infinite;
 }
 
 .marqueeTrack span {

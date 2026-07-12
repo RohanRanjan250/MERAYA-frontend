@@ -219,4 +219,8 @@
   .container {
     min-height: 20vh;
   }
+
+  .grid {
+    gap: 1vh 2vw;
+  }
 }

@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import styles from "./ProductCard.module.css";
 
-const ProductCard = ({ id, image, title, desc, price, showPrice, onRemove, onAddToCart, onBuyNow, variant, stock, showRemove = true }) => {
+const ProductCard = ({ id, image, title, desc, price, showPrice, onRemove, onAddToCart, onBuyNow, variant, stock, showRemove = true, showAddToCart = true }) => {
   const isOutOfStock = stock !== undefined && stock === 0;
 
   return (
@@ -43,22 +43,24 @@ const ProductCard = ({ id, image, title, desc, price, showPrice, onRemove, onAdd
             )}
             <p className={styles.price}>₹{price}</p>
           </div>
-          <button
-            className={styles.button}
-            onClick={(e) => {
-              e.stopPropagation();
-              if (!isOutOfStock) {
-                onAddToCart(id, variant);
-              }
-            }}
-            disabled={isOutOfStock}
-            style={{
-              opacity: isOutOfStock ? 0.5 : 1,
-              cursor: isOutOfStock ? 'not-allowed' : 'pointer'
-            }}
-          >
-            {isOutOfStock ? 'Out of Stock' : 'Add to Cart ↙'}
-          </button>
+          {showAddToCart && (
+            <button
+              className={styles.button}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (!isOutOfStock) {
+                  onAddToCart(id, variant);
+                }
+              }}
+              disabled={isOutOfStock}
+              style={{
+                opacity: isOutOfStock ? 0.5 : 1,
+                cursor: isOutOfStock ? 'not-allowed' : 'pointer'
+              }}
+            >
+              {isOutOfStock ? 'Out of Stock' : 'Add to Cart ↙'}
+            </button>
+          )}
         </div>
       </div>
       <hr className={styles.divider} />
