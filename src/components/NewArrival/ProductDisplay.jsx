@@ -59,7 +59,7 @@ const ProductDisplay = () => {
           our latest arrivals bring the perfect blend of comfort, culture, and closet-core style.
         </p>
         <p className={styles.introText}>
-          From breathable cotton kurtas with Gen Z cuts to fusion coords that go from 9am to post-sunset plans —
+          From breathable cotton kurtas with Gen Z cuts to corporate fashion that go from 9am to post-sunset plans —
           it’s all about keeping it easy, expressive, and unapologetically you.
         </p>
       </div>

@@ -51,10 +51,8 @@ const Signup = () => {
     try {
       const response = await emailVerify(formData.email);
       if (response?.status === 200) {
-        console.log("OTP sent");
         showToast('OTP sent successfully! Check your email', 'success');
       } else {
-        console.log("Unexpected response", response);
         showToast('Failed to send OTP', 'error');
         setOtpSent(false); // Hide OTP input on failure
       }
@@ -77,7 +75,6 @@ const Signup = () => {
 
     try {
       const data = await signup(formData);
-      console.log(data);
       if (data.status === 200 || data.status === 201) {
         showToast('Signup successful! Redirecting...', 'success');
         setTimeout(() => navigate("/login"), 1500);

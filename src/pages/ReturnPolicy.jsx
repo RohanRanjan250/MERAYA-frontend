@@ -62,7 +62,7 @@ const ReturnPolicy = () => {
                     <section className={styles.section}>
                         <h2 className={styles.sectionTitle}>Damaged or Defective Items</h2>
                         <div className={styles.card}>
-                            <p>
+                            <p className={styles.cardText}>
                                 If you receive a damaged, defective, or incorrect item, please contact us within{' '}
                                 <strong>48 hours of delivery</strong> with your order number and clear photos at{' '}
                                 <a href="mailto:support@meraya.co.in" className={styles.link}>support@meraya.co.in</a>,

@@ -37,13 +37,13 @@ const CartItems = ({ items, onQuantityChange, onRemove, onBuyNow }) => {
                 <span className="whiteLine"></span>
                 <p className="selectedSize">{item.variant}</p>
               </div>
-              {item.stock !== undefined && (
+              {item.stock !== undefined && item.stock <= 2 && (
                 <p className="stockInfo" style={{
                   fontSize: '0.85rem',
-                  color: item.stock < 5 ? '#ff6b6b' : '#888',
+                  color: '#ff6b6b',
                   marginTop: '0.5rem'
                 }}>
-                  {item.stock < 5 ? `Only ${item.stock} left in stock` : `${item.stock} available`}
+                  {`Only ${item.stock} left in stock`}
                 </p>
               )}
               <div className="actions">
@@ -907,7 +907,6 @@ export default function CheckoutFlow() {
         coupon_discount: couponDiscount ? parseFloat(couponDiscount.toFixed(2)) : 0,
         wallet_used: useWallet ? parseFloat(walletDiscount.toFixed(2)) : 0
       };
-      console.log(orderPayload)
 
       try {
         const data = await OrderCreate(orderPayload);
@@ -921,8 +920,6 @@ export default function CheckoutFlow() {
           description: "Order Payment",
           order_id: data.razorpay_order_id,
           handler: async function (response) {
-            console.log("Payment response received:", response);
-
             try {
               // Verify payment signature with backend before showing success
               const verificationData = {
@@ -935,7 +932,6 @@ export default function CheckoutFlow() {
               const verificationResult = await verifyPayment(verificationData);
 
               if (verificationResult.success) {
-                console.log("Payment verified successfully");
                 trackPurchase(data.order_id, cartItems, total);
                 navigate('/confirmed', {
                   state: { orderId: data.order_id, items: cartItems, total },
@@ -951,7 +947,6 @@ export default function CheckoutFlow() {
           },
           modal: {
             ondismiss: function () {
-              console.log("Payment modal closed by user");
               setIsProcessing(false);
             }
           },
@@ -986,7 +981,7 @@ export default function CheckoutFlow() {
       case "cart":
         return <CartItems items={cartItems} onQuantityChange={handleQuantityChange} onRemove={handleRemoveItem} onBuyNow={handleBuyNow} />;
       case "address":
-        return <AddressSelection addresses={addresses} selectedAddress={selectedAddress} onSelect={handleSelectAddress} onClick={nav} onRemove={(a) => console.log("Remove", a)} />;
+        return <AddressSelection addresses={addresses} selectedAddress={selectedAddress} onSelect={handleSelectAddress} onClick={nav} onRemove={() => {}} />;
       case "summary":
         // --- PASS DATE TO SUMMARY ---
         return <CartSummary items={cartItems} address={selectedAddress} estimatedDeliveryDate={estimatedDeliveryDate} />;

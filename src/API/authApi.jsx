@@ -4,7 +4,6 @@ import API from "./instance";
 export const login = async (formData) => {
   try {
     const response = await API.post("/login", formData);
-    console.log(response.data) ;
     return response;
 
   } catch (error) {
@@ -17,7 +16,6 @@ export const login = async (formData) => {
 export const emailVerify = async (email) => {
   try{
     const response  = await API.post("/signupotp",{'email':email});
-    console.log(response);
     return response ;
   }catch (err){
     throw err.response?.data || err.message ;
@@ -28,7 +26,6 @@ export const emailVerify = async (email) => {
 export const emailloginverify = async (email) => {
   try{
     const response  = await API.post("/loginotp",{'email':email});
-    console.log(response);
     return response ;
   }catch (err){
     throw err.response?.data || err.message ;

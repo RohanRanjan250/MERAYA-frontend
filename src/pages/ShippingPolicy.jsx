@@ -39,10 +39,10 @@ const ShippingPolicy = () => {
                         <h2 className={styles.sectionTitle}>Do you offer reverse pickup for exchanges?</h2>
                         <div className={styles.card}>
                             <p className={styles.text}>
-                                No, we currently do not offer exchanges. You may return your item for store credit and place a new order.
+                                es. However, a ₹150 handling and shipping fee will be deducted from the store credit issued for every return, and a ₹150 shipping charge applies to every size exchange request.
                             </p>
                             <p className={styles.text}>
-                                Sometimes, for some addresses, reverse pickup facility for return may not be available. In that case we may ask you to ship the product back to us at your own cost and risk.
+                                Please note that for certain pin codes, reverse pickup facility may not be available. In those rare instances, we may ask you to ship the product back to our facility at your own cost and risk.
                             </p>
                         </div>
                     </section>

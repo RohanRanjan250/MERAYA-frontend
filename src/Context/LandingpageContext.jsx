@@ -15,7 +15,7 @@ export function LandingProvider({ children }) {
           setData(response.data.products);
         }
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     }
     fetchLandingData()

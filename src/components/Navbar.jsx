@@ -126,13 +126,11 @@ const Navbar = () => {
         const response = await logout();
         if (response.status === 200) {
           window.location.href = "/";
-        } else {
-          console.log("some error occured");
         }
       }
       closeMobileMenu(); // Also close menu on logout
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 

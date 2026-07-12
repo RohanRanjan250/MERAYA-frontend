@@ -42,10 +42,8 @@ const Login = () => {
     try {
       const response = await emailloginverify(formData.email);
       if (response.status === 200) {
-        console.log("OTP sent");
         showToast('OTP sent successfully! Check your email', 'success');
       } else {
-        console.log("Unexpected response", response);
         showToast('Failed to send OTP', 'error');
         setOtpSent(false); // Hide OTP input on failure
       }

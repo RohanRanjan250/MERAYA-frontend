@@ -7,7 +7,7 @@ import img5Fallback from '../../assets/img5.png';
 import img6Fallback from '../../assets/img6.png';
 import img7Fallback from '../../assets/img7.png';
 
-const img1 = "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783449803/image_357_q0exvz.png";
+const img1 = "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783885824/Gemini_Generated_Image_lj47jdlj47jdlj47_lptrb9.jpg";
 const img2 = "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783449803/image_358_weulza.png";
 const img3 = "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783449803/image_354_ghhjtq.png";
 const img4 = "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783449804/image_359_vodeei.png";
@@ -41,9 +41,9 @@ const HeroGallery = () => {
       </div>
 
       <div className={styles.centerText}>
-        <p className={styles.subtitle}>EVERGREEN</p>
-        <h1 className={styles.title}>College Edition</h1>
-        <a href="#" className={styles.link}>SHOP COLLECTION</a>
+        <p className={styles.subtitle}>DISCOVER</p>
+        <h1 className={styles.title}>Latest Collection</h1>
+        <a href="#" className={styles.link}>SHOP NOW</a>
       </div>
     </section>
   );

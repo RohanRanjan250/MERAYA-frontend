@@ -19,7 +19,6 @@ const Contact = () => {
           return;
         }
         const res = await getUserContact();
-        console.log("API response:", res);
         const mappedUser = {
           name: res.name,
           phone: res.phone,
@@ -47,7 +46,6 @@ const Contact = () => {
         navigate("/login");
         return;
       }
-      console.log(editedUser)
       await updateUserContact(editedUser);
       setUser(editedUser);
       setIsEdited(false);

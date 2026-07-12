@@ -75,7 +75,7 @@ const ContactUs = () => {
                             </div>
                             <h3 className={styles.cardTitle}>Corporate Office</h3>
                             <p className={styles.cardText}>
-                                304, 2nd floor, Sai Serenity,<br />
+                                Sai Serenity,<br />
                                 Dwaraka Nagar, Banashankari,<br />
                                 Bengaluru, Karnataka-560085
                             </p>

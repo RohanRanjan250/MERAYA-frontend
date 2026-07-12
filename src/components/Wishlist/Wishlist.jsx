@@ -27,7 +27,6 @@ const Wishlist = () => {
   const loadWishlist = async () => {
     try {
       const data = await fetchWishlist();
-      console.log(data)
       setProducts(data.items || []);
     } catch (err) {
       console.error("Error fetching wishlist:", err);
@@ -67,7 +66,6 @@ const Wishlist = () => {
       setProducts((prev) => prev.filter((p) => p.product_id !== productId));
 
       // 2. Add to cart
-      console.log(variant)
       // Assuming variant has an 'id' property for variantId
       await addToCart(productId, variant.id); // Using addToCart from cart API
       showToast('Added to cart successfully!', 'success');

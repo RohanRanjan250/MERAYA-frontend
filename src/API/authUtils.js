@@ -56,7 +56,6 @@ export const initializeAuth = async () => {
 
   // Only refresh if token is expired or missing
   if (!isTokenExpiringSoon(60)) {
-    console.log("Token still valid, skipping refresh");
     return;
   }
 
@@ -66,8 +65,6 @@ export const initializeAuth = async () => {
   if (!refreshingPromise) {
     refreshingPromise = refreshAPI.get("/refresh")
       .then(res => {
-        console.log("Access token refreshed on startup");
-
         // Store token expiry (default 5 minutes if not provided)
         const expiresIn = res.data?.expires_in || 300;
         setTokenExpiry(expiresIn);
@@ -75,11 +72,8 @@ export const initializeAuth = async () => {
         return res.data;
       })
       .catch(err => {
-        console.log("No valid refresh token, user might need to log in again.");
-
         // Handle 401 - refresh token expired or invalid
         if (err.response?.status === 401) {
-          console.log("Refresh token expired or invalid");
           clearLoggedInFlag();
           localStorage.removeItem('tokenExpiry');
 
@@ -116,20 +110,17 @@ export const startSmartRefresh = () => {
   setInterval(async () => {
     // Skip if user is inactive
     if (!isUserActive(INACTIVITY_THRESHOLD)) {
-      console.log("User inactive, skipping background refresh");
       return;
     }
 
     // Skip if token is still valid
     if (!isTokenExpiringSoon(60)) {
-      console.log("Token still valid, skipping background refresh");
       return;
     }
 
     // User is active and token is expiring - refresh it
     try {
       const res = await refreshAPI.get("/refresh");
-      console.log("Token auto-refreshed (user active, token expiring)");
 
       const expiresIn = res.data?.expires_in || 300;
       setTokenExpiry(expiresIn);

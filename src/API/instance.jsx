@@ -74,7 +74,6 @@ API.interceptors.response.use(
       try {
         // Attempt to refresh the token
         await refreshAPI.get("/refresh");
-        console.log("Token refreshed after 401");
 
         isRefreshing = false;
         processQueue(null);

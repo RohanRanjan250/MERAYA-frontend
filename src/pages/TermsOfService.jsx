@@ -96,13 +96,13 @@ const TermsOfService = () => {
                         <h2 className={styles.sectionTitle}>Section 6: Returns & Exchanges</h2>
                         <div className={styles.card}>
                             <p className={styles.text}>
-                                We take pride in our products and aim to deliver the best quality. If you are not satisfied with your purchase, you can request an return within 7 days of delivery.
+                                We take pride in our products and aim to deliver the best quality. If you are not satisfied with your purchase, you can request a return or size exchange within 7 days of delivery, subject to our guidelines.
                             </p>
                             <p className={styles.text}>
-                                In case of order cancellations or approved monetary refunds, the amount will be credited back to the customer's original mode of payment within 5–7 business days.
+                                All approved returns are processed exclusively as Meraya Store Credit (minus a ₹150 logistics fee). In the event of direct store-initiated order cancellations or verified damaged arrivals where replacements are unavailable, monetary refunds will be credited back to the customer's original mode of payment within 5–7 business days.
                             </p>
                             <p className={styles.text}>
-                                Products must be unused, with tags intact, and in original packaging. Custom or personalized items are non-returnable.
+                                Products must be entirely unused, unwashed, and in their original packaging with all tags intact to qualify. For our full structural breakdown, please refer to our dedicated Returns & Exchanges Policy.
                             </p>
                             <p className={styles.text}>
                                 For more details, please refer to our <a href="/return-policy" className={styles.link}>Return Policy</a>.
