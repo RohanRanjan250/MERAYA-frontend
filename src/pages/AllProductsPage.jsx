@@ -8,7 +8,10 @@ import SEO from '../components/SEO'
 const AllProductsPage = () => {
     return (
         <>
-            <SEO title="Shop All Products" description="Browse the full Meraya collection." />
+            {/* path is pinned to the bare /products URL so filter query strings
+                (?category=, ?collection=, etc.) don't get indexed as separate
+                duplicate pages */}
+            <SEO title="Shop All Products" description="Browse the full Meraya collection." path="/products" />
             <Navbar />
             <DoubleLine />
             <AllProducts />

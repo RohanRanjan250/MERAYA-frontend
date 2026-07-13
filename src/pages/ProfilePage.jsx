@@ -9,6 +9,7 @@ import Footer from "../components/FooterSection/Footer";
 import Address from "../components/Address/Address"
 import OrderHistory from "../components/OrderHistory/OrderHistory";
 import { useLocation } from "react-router-dom";
+import SEO from "../components/SEO";
 
 
 export default function ProfilePage() {
@@ -36,6 +37,7 @@ export default function ProfilePage() {
 
   return (
     <>
+      <SEO title="My Account" description="Manage your Meraya account." noIndex />
       <Navbar />
       <DoubleLine />
       <BreadCrumb items={breadcrumbItems}/>

@@ -9,7 +9,7 @@ import SEO from "../components/SEO";
 export default function UnifiedCheckoutPage() {
   return (
     <>
-      <SEO title="Checkout" description="Complete your Meraya order securely." />
+      <SEO title="Checkout" description="Complete your Meraya order securely." noIndex />
       <Navbar />
       <DoubleLine />
       <BreadCrumb items={[{ label: "Homepage", link: "/" }, { label: "Cart" }]} />

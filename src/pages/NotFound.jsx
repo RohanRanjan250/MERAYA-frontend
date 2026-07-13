@@ -1,12 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './NotFound.module.css';
+import SEO from '../components/SEO';
 
 const NotFound = () => {
     const navigate = useNavigate();
 
     return (
         <div className={styles.container}>
+            <SEO title="Page Not Found" description="This page doesn't exist on Meraya." noIndex />
             <div className={styles.content}>
                 <h1 className={styles.errorCode}>404</h1>
                 <h2 className={styles.title}>Page Not Found</h2>
