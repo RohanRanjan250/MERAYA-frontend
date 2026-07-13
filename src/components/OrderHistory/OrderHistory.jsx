@@ -178,6 +178,10 @@ const OrderHistory = () => {
       );
       handleCloseModal();
       setShowReturnConfirmation(true);
+      // Without this, order.return_status stays stale in local state and
+      // the Return/Exchange buttons keep showing as clickable, letting the
+      // customer submit a second request the backend will just reject anyway.
+      await loadOrders();
     } catch (err) {
       console.error("Error submitting return:", err);
       alert("Something went wrong while placing the return.");
