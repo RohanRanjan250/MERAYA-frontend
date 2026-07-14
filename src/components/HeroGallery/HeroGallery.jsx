@@ -6,14 +6,17 @@ import img4Fallback from '../../assets/img4.png';
 import img5Fallback from '../../assets/img5.png';
 import img6Fallback from '../../assets/img6.png';
 import img7Fallback from '../../assets/img7.png';
+import { optimizeImage } from '../../utils/cloudinaryImages';
 
-const img1 = "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783885824/Gemini_Generated_Image_lj47jdlj47jdlj47_lptrb9.jpg";
-const img2 = "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783449803/image_358_weulza.png";
-const img3 = "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783449803/image_354_ghhjtq.png";
-const img4 = "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783449804/image_359_vodeei.png";
-const img5 = "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783449971/image_353_1_y9smmz.png";
-const img6 = "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783449803/image_356_kuift0.png";
-const img7 = "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783449803/image_355_nycjub.png";
+// These were being served completely raw (no f_auto/q_auto/width cap) —
+// img1 alone was a 10MB+ original, on every single homepage visit.
+const img1 = optimizeImage("https://res.cloudinary.com/dx2u1zlph/image/upload/v1783885824/Gemini_Generated_Image_lj47jdlj47jdlj47_lptrb9.jpg", 800);
+const img2 = optimizeImage("https://res.cloudinary.com/dx2u1zlph/image/upload/v1783449803/image_358_weulza.png", 800);
+const img3 = optimizeImage("https://res.cloudinary.com/dx2u1zlph/image/upload/v1783449803/image_354_ghhjtq.png", 800);
+const img4 = optimizeImage("https://res.cloudinary.com/dx2u1zlph/image/upload/v1783449804/image_359_vodeei.png", 800);
+const img5 = optimizeImage("https://res.cloudinary.com/dx2u1zlph/image/upload/v1783449971/image_353_1_y9smmz.png", 800);
+const img6 = optimizeImage("https://res.cloudinary.com/dx2u1zlph/image/upload/v1783449803/image_356_kuift0.png", 800);
+const img7 = optimizeImage("https://res.cloudinary.com/dx2u1zlph/image/upload/v1783449803/image_355_nycjub.png", 800);
 
 const onImgError = (fallback) => (e) => { e.target.onerror = null; e.target.src = fallback; };
 

@@ -4,9 +4,19 @@ import styles from './FashionSplit.module.css';
 import leftImgFallback from '../../assets/kurti1.png';
 import rightImgFallback from '../../assets/kurti2.png';
 import { openAPI } from '../../API/instance';
+import { optimizeImage } from '../../utils/cloudinaryImages';
 
-const LEFT_IMG_URL = "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783892073/WhatsApp_Image_2026-07-13_at_02.50.41_1_ba7piz.png";
-const RIGHT_IMG_URL = "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783449361/image_361_cli7sv.png";
+// These render as full-bleed, full-viewport-height backgrounds (each half
+// spans ~50% of viewport width x 100vh — see FashionSplit.module.css), so
+// they need a much larger source than a typical card/thumbnail image.
+const LEFT_IMG_URL = optimizeImage(
+  "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783892073/WhatsApp_Image_2026-07-13_at_02.50.41_1_ba7piz.png",
+  1600
+);
+const RIGHT_IMG_URL = optimizeImage(
+  "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783449361/image_361_cli7sv.png",
+  1600
+);
 
 const findCollectionId = (collections, nameFragment) => {
   const match = collections.find((c) => c.name?.toLowerCase().includes(nameFragment));

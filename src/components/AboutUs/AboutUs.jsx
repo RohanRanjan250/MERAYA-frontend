@@ -2,9 +2,10 @@ import React from 'react';
 import styles from './AboutUs.module.css';
 import modelImageFallback from '../../assets/model.png';
 import handImageFallback from '../../assets/hand.png';
+import { optimizeImage } from '../../utils/cloudinaryImages';
 
-const modelImage = "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783449804/image_353_jnfqib.png";
-const handImage = "https://res.cloudinary.com/dx2u1zlph/image/upload/v1783450263/hand_qr3p5b.png";
+const modelImage = optimizeImage("https://res.cloudinary.com/dx2u1zlph/image/upload/v1783449804/image_353_jnfqib.png", 800);
+const handImage = optimizeImage("https://res.cloudinary.com/dx2u1zlph/image/upload/v1783450263/hand_qr3p5b.png", 800);
 const onImgError = (fallback) => (e) => { e.target.onerror = null; e.target.src = fallback; };
 
 const AboutUs = () => {
