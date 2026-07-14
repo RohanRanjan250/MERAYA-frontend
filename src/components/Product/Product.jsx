@@ -46,19 +46,6 @@ export default function Product({ product, setProduct }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product.id]);
 
-  // Cloudinary generates each optimized size on the FIRST request for it —
-  // that transform (not the download itself) is what was making image
-  // switches feel slow. Fire all of them off in the background as soon as
-  // the page loads, so by the time someone actually clicks a thumbnail or
-  // slide arrow, the browser (and Cloudinary's cache) already has it ready.
-  useEffect(() => {
-    product.images.forEach((img) => {
-      const preload = new Image();
-      preload.src = optimizeImage(img, 800);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [product.id]);
-
   const currentImageIndex = product.images.indexOf(selectedImage);
   const showSlideArrows = product.images.length > 1;
   const handlePrevImage = () => {
@@ -234,7 +221,7 @@ export default function Product({ product, setProduct }) {
             {product.images.map((img, index) => (
               <img
                 key={index}
-                src={optimizeImage(img, 150)}
+                src={optimizeImage(img, 80)}
                 alt={`thumb-${index}`}
                 className={`${styles.thumb} ${selectedImage === img ? styles.active : ""
                   }`}
@@ -322,7 +309,7 @@ export default function Product({ product, setProduct }) {
               )}
             </button>
           </div>
-          <a href="#" className={styles.delivery}>
+          <a href="/shipping-policy" className={styles.delivery}>
             DELIVERY T&C
           </a>
 
