@@ -221,7 +221,7 @@ export default function Product({ product, setProduct }) {
             {product.images.map((img, index) => (
               <img
                 key={index}
-                src={optimizeImage(img, 80)}
+                src={optimizeImage(img, 150)}
                 alt={`thumb-${index}`}
                 className={`${styles.thumb} ${selectedImage === img ? styles.active : ""
                   }`}
