@@ -70,7 +70,10 @@ const Login = () => {
         showToast(errorMsg, 'error');
       }
     } catch (err) {
-      const errorMsg = err.message || "Something went wrong. Try again!";
+      // err is the backend's {error: "..."} body (e.g. a rate-limit 429),
+      // not always a JS Error — err.message alone misses that and falls
+      // through to a generic message instead of showing the real reason.
+      const errorMsg = err.error || err.message || "Something went wrong. Try again!";
       setError(errorMsg);
       showToast(errorMsg, 'error');
     }
@@ -87,7 +90,7 @@ const Login = () => {
         }
       } catch (err) {
         console.error("Google Login failed:", err);
-        showToast('Google login failed', 'error');
+        showToast(err.error || err.message || 'Google login failed', 'error');
       }
     },
     onError: () => {

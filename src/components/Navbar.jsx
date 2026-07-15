@@ -7,10 +7,12 @@ import { logout } from "../API/authApi";
 import { openAPI } from "../API/instance";
 import { LOGO_URL, onImgError, optimizeImage } from "../utils/cloudinaryImages";
 import { isLoggedIn } from "../utils/authCookie";
+import { useToast } from "../Context/ToastContext";
 
 const logo = LOGO_URL;
 
 const Navbar = () => {
+  const { showToast } = useToast();
   const [showDropdown, setShowDropdown] = useState(false);
   const [showShopDropdown, setShowShopDropdown] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -158,6 +160,9 @@ const Navbar = () => {
         console.error("Search error:", error);
         setSearchResults([]);
         setRelatedProducts([]);
+        if (error.response?.status === 429) {
+          showToast(error.response?.data?.error || "Too many searches — please slow down a moment.", "error");
+        }
       } finally {
         setIsSearching(false);
       }
@@ -168,6 +173,7 @@ const Navbar = () => {
         clearTimeout(searchTimeoutRef.current);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
   const handleProductClick = (slug) => {

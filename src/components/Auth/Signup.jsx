@@ -97,7 +97,7 @@ const Signup = () => {
         }
       } catch (err) {
         console.error("Google Login failed:", err);
-        showToast('Google signup failed', 'error');
+        showToast(err.error || err.message || 'Google signup failed', 'error');
       }
     },
     onError: () => {
