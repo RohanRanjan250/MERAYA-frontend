@@ -1,131 +1,123 @@
-# 🛍️ Meraya - E-commerce Platform
+# 🛍️ Meraya — Customer Storefront
 
 ## 🚀 Overview
 
-**Meraya** is a fully functional e-commerce website developed for a startup clothing brand based in India.  
-This project serves as the **online storefront**, enabling customers to browse products, manage their accounts, and complete purchases securely.  
+**Meraya** is a fully functional e-commerce platform for an Indian clothing brand. This repository is the **customer-facing storefront** — the public shopping website — built as a React single-page app.
 
-It combines a **modern React frontend** with a **robust Django + MySQL backend** to deliver a complete, production-ready shopping experience.
+Meraya is split across **three separate repositories**, not one monorepo:
 
-> 💡 *From product discovery to secure checkout, Meraya offers a smooth and scalable e-commerce workflow.*
+| Repo | What it is | Where it runs |
+|---|---|---|
+| `MERAYA-frontend` (this repo) | The customer storefront | Self-hosted on a VPS, behind Cloudflare — `https://meraya.co.in` |
+| [`MERAYA-backend`](https://github.com/RohanRanjan250/MERAYA-backend) | Django + MySQL API | Same VPS, behind Cloudflare — `https://api.meraya.co.in` |
+| [`MERAYA_ADMIN-frontend`](https://github.com/RohanRanjan250/MERAYA_ADMIN-frontend) | The staff-only admin dashboard | Vercel — `https://admin.meraya.co.in` |
+
+This repo only contains the storefront's frontend code — to run the full system locally you'll also need the backend repo running (see its own README for setup).
+
+> 💡 *From product discovery to secure checkout, returns, and exchanges — this is the customer's entire shopping journey.*
 
 ---
 
 ## ✨ Features
 
-- 👤 **User Authentication:** Secure signup, login (with optional Google OAuth), and password management.  
-- 👗 **Product Catalog:** Browse products by category, view detailed product pages with image galleries and size/variant selection.  
-- 🛒 **Shopping Cart:** Add/remove items, update quantities, and maintain a persistent cart for logged-in users.  
-- ❤️ **Wishlist:** Save favorite items for later.  
-- 👛 **User Profile Management:** Update contact info, manage saved addresses, and view order history.  
-- 🔒 **Secure Checkout:** Multi-step checkout (Cart → Address → Summary → Payment).  
-- 💳 **Payment Integration:** Razorpay payment gateway with support for UPI, Cards, and Netbanking.  
-- 📦 **Order Management (Backend):** Order creation, user association, payment linking, and status tracking.  
-- 📱 **Responsive Design:** Seamless experience across desktop, tablet, and mobile devices.  
+- 👤 **Authentication** — email OTP sign-in/sign-up (no passwords) and Google OAuth, with automatic session refresh.
+- 👗 **Product Catalog** — browse by category/collection, filter and sort, search with live suggestions, detailed product pages with an image gallery, size selection, and a size chart.
+- 🛒 **Shopping Cart** — add/remove items, adjust quantities, live stock validation.
+- ❤️ **Wishlist** — save items for later, move them straight to cart.
+- 👛 **Account Management** — contact info, saved addresses, order history.
+- 💰 **Wallet** — store-credit balance from refunds, viewable transaction history.
+- 🏷️ **Coupons** — apply discount codes at checkout, including free-shipping coupons.
+- 🔒 **Checkout** — a 3-step flow (Cart → Address → Summary) with live stock re-validation at every step.
+- 💳 **Payments** — Razorpay integration (Cards, UPI, Netbanking).
+- 📦 **Order Tracking** — a delivery status timeline (Order placed → Shipped → Out for delivery → Delivered).
+- ↩️ **Returns & Exchanges** — request a return or a size exchange within the return window, with live status updates.
+- ⭐ **Reviews** — rate and review delivered products, like/dislike other reviews.
+- 📣 **Site Announcement Banner** — an admin-controlled marquee shown across the storefront.
+- 📈 **Analytics** — Google Analytics 4 ecommerce event tracking (view item, add to cart, checkout funnel, purchase).
+- 🔍 **SEO** — per-page meta tags, canonical URLs, JSON-LD structured data (Product/Organization/BreadcrumbList), and an auto-generated sitemap that pulls real product URLs from the live catalog on every build.
+- 📱 **Responsive Design** — works across desktop, tablet, and mobile.
 
 ---
 
 ## 🛠️ Tech Stack
 
 | Layer | Technologies |
-|-------|---------------|
-| **Frontend** | React.js, React Router, Context API, CSS Modules |
-| **Backend** | Django, Django REST Framework (DRF), Simple JWT |
-| **Database** | MySQL |
-| **Payment Gateway** | Razorpay |
-| **Image Hosting** | Cloudinary |
-| **Deployment** | Frontend: Vercel / Netlify <br> Backend: Render / DigitalOcean / Hostinger VPS (Nginx + Gunicorn) |
+|---|---|
+| **Build tool** | Vite |
+| **Framework** | React 19 |
+| **Routing** | React Router v7 |
+| **State/data** | Context API (`ToastContext`, `LandingpageContext`), Axios |
+| **Auth** | `@react-oauth/google`, JWT via httpOnly cookies (issued by the backend) |
+| **Icons** | FontAwesome, `react-icons`, `lucide-react` |
+| **Images** | Cloudinary (on-the-fly optimization via `f_auto,q_auto,w_{width}` URL transforms) |
+| **Payments** | Razorpay Checkout.js (loaded client-side) |
+| **Analytics** | Google Analytics 4 (`gtag.js`) |
+| **Deployment** | Self-hosted VPS (nginx serving the static build), Cloudflare in front |
 
 ---
 
-## ⚙️ Setup and Installation
+## ⚙️ Local Setup
 
-### 🧩 Prerequisites
-Ensure you have the following installed:
+### Prerequisites
 
-- Node.js and npm (or yarn)
-- Python 3.x and pip
-- MySQL Server
-- Git
+- Node.js (18+) and npm
+- The [`MERAYA-backend`](https://github.com/RohanRanjan250/MERAYA-backend) repo running locally (this frontend has nothing to talk to without it)
+
+### 1. Clone and install
+
+```bash
+git clone https://github.com/RohanRanjan250/MERAYA-frontend.git
+cd MERAYA-frontend
+npm install
+```
+
+### 2. Environment variables
+
+Copy `.env.example` to `.env` and fill in real values:
+
+```bash
+cp .env.example .env
+```
+
+| Variable | Purpose |
+|---|---|
+| `VITE_API_BASE_URL` | The backend's base URL. Locally this is `http://localhost:8000` (**no** `/api` prefix — the backend's routes aren't namespaced under one). In production this is `https://api.meraya.co.in`, hardcoded as a fallback in `src/API/instance.jsx` when the hostname isn't `localhost`/a LAN IP. |
+| `VITE_GOOGLE_CLIENT_ID` | The Google OAuth Client ID used for "Sign in with Google." Must have `http://localhost:5173` (or whichever port you run on) listed as an authorized JavaScript origin in Google Cloud Console, or Google sign-in will fail with `origin_mismatch`. |
+
+### 3. Run the dev server
+
+```bash
+npm run dev
+```
+
+Vite's default port is **`http://localhost:5173`** (not 3000).
+
+### 4. Build for production
+
+```bash
+npm run build
+```
+
+This also automatically runs `scripts/generate-sitemap.mjs` afterward (via the `postbuild` npm hook), which fetches the current live product catalog and regenerates `dist/sitemap.xml` with a real `<url>` entry per product, alongside the static pages. No separate step needed — it's part of `npm run build`.
 
 ---
 
-### 🗂️ 1. Clone the Repository
+## 📁 Project Structure (high level)
 
-```bash
-git clone <your-repository-url>
-cd <project-directory-name>
+```
+src/
+├── API/              # axios wrappers, one file per backend domain (auth, cart, orders, wishlist, ...)
+├── components/       # feature components (Product, Navbar, UnifiedCheckout, OrderHistory, ...)
+├── Context/          # ToastContext, LandingpageContext
+├── pages/            # route-level page components, one per URL
+├── UI/               # small shared presentational components (cards, breadcrumbs, dividers)
+└── utils/            # cloudinaryImages (image optimization), analytics (GA4), authCookie
+scripts/
+└── generate-sitemap.mjs   # runs after every build, regenerates dist/sitemap.xml
 ```
 
-### 🐍 2. Backend Setup (Django)
-```bash
-cd backend  # Navigate to backend folder
+---
 
-# Create and activate a virtual environment
-python -m venv venv
-source venv/bin/activate   # On Windows: venv\Scripts\activate
+## 🚀 Deployment
 
-# Install dependencies
-pip install -r requirements.txt
-```
-### 🧱 Database Setup
-```bash
-1. Create a MySQL database named meraya (or your chosen name).
-
-2. Update database settings in meraya/settings.py.
-
-🔑 Environment Variables (.env)
-DJANGO_SECRET_KEY='your_strong_secret_key'
-DEBUG=True
-DATABASE_NAME='meraya'
-DATABASE_USER='your_db_user'
-DATABASE_PASSWORD='your_db_password'
-DATABASE_HOST='localhost'
-DATABASE_PORT='3306'
-RAZORPAY_KEY_ID='your_razorpay_test_key_id'
-RAZORPAY_KEY_SECRET='your_razorpay_test_key_secret'
-RAZORPAY_WEBHOOK_SECRET='your_razorpay_webhook_secret'
-CORS_ALLOWED_ORIGINS='http://localhost:3000,http://127.0.0.1:3000'
-
-🧩 Apply Migrations
-python manage.py migrate
-
-
-(If using managed=False models, ensure the tables already exist in MySQL.)
-
-▶️ Run the Backend Server
-python manage.py runserver 0.0.0.0:8000
-
-
-Backend API: http://localhost:8000
-```
-
-### ⚛️ 3. Frontend Setup (React)
-```bash
-cd ../frontend  # Navigate to frontend folder
-
-# Install dependencies
-npm install   # or yarn install
-
-🌐 Environment Variables (.env)
-VITE_API_BASE_URL=http://localhost:8000/api
-
-▶️ Run the Frontend Server
-npm run dev   # or yarn dev
-
-
-Frontend runs at http://localhost:3000
- or http://localhost:5173
-```
-
-▶️ Running the Project
-```bash
-
-Start MySQL server
-
-Run Django backend → python manage.py runserver
-
-Run React frontend → npm run dev
-
-Visit http://localhost:3000
-```
+Production builds are deployed to a self-hosted VPS: nginx serves the static `dist/` output directly, with Cloudflare sitting in front for CDN/SSL/DDoS protection. There is no serverless/Vercel deployment for this repo — only the separate admin dashboard repo is on Vercel.
